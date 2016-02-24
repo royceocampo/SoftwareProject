@@ -40,7 +40,6 @@ public class ProductManage {
 			}
 @@ -54,106 +40,10 @@ public class ProductManage {
 	 * Create contents of the window.
-	 * @wbp.parser.entryPoint
 	 */
 	protected void createContents() {
 		shlRareGlobalFoods = new Shell();
