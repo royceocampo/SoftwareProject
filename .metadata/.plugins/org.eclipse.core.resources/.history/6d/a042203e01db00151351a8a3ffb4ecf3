@@ -42,7 +42,7 @@ public class ProductManage {
 	protected void createContents() {
 		shell = new Shell();
 		shell.setSize(450, 300);
-		shell.setText("Rare Global Food Trading Corp.");
+		shell.setText("SWT Application");
 
 	}
 
