@@ -9,7 +9,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.TableTree;
-import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -19,7 +18,7 @@ import org.eclipse.swt.graphics.Point;
 
 public class ProductManage {
 
-	protected Shell shlRareGlobalFoods;
+	protected Shell shlProductManage;
 	private Text txtSearch;
 	protected Shell shell;
 
@@ -43,14 +42,14 @@ public class ProductManage {
 	 * @wbp.parser.entryPoint
 	 */
 	protected void createContents() {
-		shlRareGlobalFoods = new Shell();
-		shlRareGlobalFoods.setMinimumSize(new Point(500, 200));
-		shlRareGlobalFoods.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
-		shlRareGlobalFoods.setSize(450, 324);
-		shlRareGlobalFoods.setText("Rare Global Food Trading Corp.");
+		shlProductManage = new Shell();
+		shlProductManage.setMinimumSize(new Point(500, 200));
+		shlProductManage.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
+		shlProductManage.setSize(450, 324);
+		shlProductManage.setText("Rare Global Food Trading Corp.");
 		
-		Menu menu = new Menu(shlRareGlobalFoods, SWT.BAR);
-		shlRareGlobalFoods.setMenuBar(menu);
+		Menu menu = new Menu(shlProductManage, SWT.BAR);
+		shlProductManage.setMenuBar(menu);
 		
 		MenuItem mntmHome = new MenuItem(menu, SWT.NONE);
 		mntmHome.setText("Home");
@@ -62,27 +61,29 @@ public class ProductManage {
 		mntmProduct.setText("Product");
 		
 		MenuItem mntmInventory = new MenuItem(menu, SWT.NONE);
-		mntmInventory.setText("Inventory");
+		mntmInventory.setText("Inventory History");
 		
-		Label lblProductInventory = new Label(shlRareGlobalFoods, SWT.NONE);
+		Label lblProductInventory = new Label(shlProductManage, SWT.NONE);
 		lblProductInventory.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
 		lblProductInventory.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_RED));
 		lblProductInventory.setFont(SWTResourceManager.getFont("Segoe UI", 18, SWT.NORMAL));
 		lblProductInventory.setBounds(10, 10, 249, 38);
 		lblProductInventory.setText("Product Management");
 		
-		Label lblViewBy = new Label(shlRareGlobalFoods, SWT.NONE);
+		Label lblViewBy = new Label(shlProductManage, SWT.NONE);
 		lblViewBy.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
 		lblViewBy.setBounds(10, 54, 55, 15);
 		lblViewBy.setText("View By:");
 		
-		CCombo combo = new CCombo(shlRareGlobalFoods, SWT.BORDER);
+		CCombo combo = new CCombo(shlProductManage, SWT.BORDER);
 		combo.setBounds(71, 54, 106, 21);
 		
-		CCombo combo_1 = new CCombo(shlRareGlobalFoods, SWT.BORDER);
+		CCombo combo_1 = new CCombo(shlProductManage, SWT.BORDER);
 		combo_1.setBounds(183, 54, 106, 21);
 		
-		TableTree tableTree = new TableTree(shlRareGlobalFoods, SWT.BORDER | SWT.FULL_SELECTION);
+		TableTree tableTree = new TableTree(shlProductManage, SWT.BORDER | SWT.FULL_SELECTION);
+		tableTree.getTable().setLinesVisible(true);
+		tableTree.getTable().setHeaderVisible(true);
 		tableTree.setBounds(27, 87, 397, 117);
 		
 		TableColumn tblclmnProduct = new TableColumn(tableTree.getTable(), SWT.NONE);
@@ -117,13 +118,13 @@ public class ProductManage {
 		tblclmnWeight.setWidth(100);
 		tblclmnWeight.setText("Weight");
 		
-		Button btnNewButton = new Button(shlRareGlobalFoods, SWT.NONE);
+		Button btnNewButton = new Button(shlProductManage, SWT.NONE);
 		btnNewButton.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
 		btnNewButton.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 		btnNewButton.setBounds(27, 223, 95, 21);
 		btnNewButton.setText("Add Product");
 		
-		Button btnEdit = new Button(shlRareGlobalFoods, SWT.NONE);
+		Button btnEdit = new Button(shlProductManage, SWT.NONE);
 		btnEdit.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -134,13 +135,13 @@ public class ProductManage {
 		btnEdit.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
 		btnEdit.setBounds(143, 223, 95, 21);
 		
-		Button btnDelete = new Button(shlRareGlobalFoods, SWT.NONE);
+		Button btnDelete = new Button(shlProductManage, SWT.NONE);
 		btnDelete.setText("Delete");
 		btnDelete.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 		btnDelete.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
 		btnDelete.setBounds(255, 223, 95, 21);
 		
-		txtSearch = new Text(shlRareGlobalFoods, SWT.BORDER);
+		txtSearch = new Text(shlProductManage, SWT.BORDER);
 		txtSearch.setText("Search");
 		txtSearch.setBounds(297, 54, 127, 21);
 		shell = new Shell();
