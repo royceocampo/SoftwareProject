@@ -9,6 +9,8 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
 
 public class Home {
 
@@ -49,7 +51,7 @@ public class Home {
 	 */
 	protected void createContents() {
 		shlRareGlobalFood = new Shell();
-		shlRareGlobalFood.setMinimumSize(new Point(500, 350));
+		shlRareGlobalFood.setMinimumSize(new Point(500, 360));
 		shlRareGlobalFood.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
 		shlRareGlobalFood.setSize(450, 300);
 		shlRareGlobalFood.setText("Rare Global Food Trading Corp.");
@@ -60,7 +62,7 @@ public class Home {
 		lblTodayDate.setAlignment(SWT.CENTER);
 		lblTodayDate.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
 		lblTodayDate.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.NORMAL));
-		lblTodayDate.setBounds(115, 10, 263, 23);
+		lblTodayDate.setBounds(116, 10, 263, 23);
 		lblTodayDate.setText("Satuday, February 20, 2016");
 		
 		Label lblOrdersTo = new Label(shlRareGlobalFood, SWT.NONE);
@@ -97,11 +99,11 @@ public class Home {
 		Label lblProductsToBe = new Label(shlRareGlobalFood, SWT.NONE);
 		lblProductsToBe.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
 		lblProductsToBe.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.NORMAL));
-		lblProductsToBe.setBounds(10, 194, 240, 15);
+		lblProductsToBe.setBounds(10, 183, 240, 15);
 		lblProductsToBe.setText("Products to be ordered from suppliers: ");
 		
 		table = new Table(shlRareGlobalFood, SWT.BORDER | SWT.FULL_SELECTION);
-		table.setBounds(10, 215, 464, 86);
+		table.setBounds(10, 204, 464, 86);
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
 		
@@ -122,14 +124,14 @@ public class Home {
 		lblDate.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.NORMAL));
 		lblDate.setAlignment(SWT.RIGHT);
 		lblDate.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
-		lblDate.setBounds(267, 194, 90, 15);
+		lblDate.setBounds(267, 183, 90, 15);
 		lblDate.setText("Delivery Date: ");
 		
 		Label lblDeliveryDate = new Label(shlRareGlobalFood, SWT.NONE);
 		lblDeliveryDate.setAlignment(SWT.RIGHT);
 		//2 days after machine time.
 		lblDeliveryDate.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
-		lblDeliveryDate.setBounds(363, 194, 111, 15);
+		lblDeliveryDate.setBounds(363, 183, 111, 15);
 		lblDeliveryDate.setText("February 22, 2016");
 		
 		Button btnAddOrder = new Button(shlRareGlobalFood, SWT.NONE);
@@ -147,5 +149,20 @@ public class Home {
 		btnOrderDetails.setEnabled(false);
 		btnOrderDetails.setBounds(207, 39, 80, 25);
 		btnOrderDetails.setText("Order Details");
+		
+		Menu menu = new Menu(shlRareGlobalFood, SWT.BAR);
+		shlRareGlobalFood.setMenuBar(menu);
+		
+		MenuItem mntmHome = new MenuItem(menu, SWT.NONE);
+		mntmHome.setText("Home");
+		
+		MenuItem mntmOrder = new MenuItem(menu, SWT.NONE);
+		mntmOrder.setText("Order");
+		
+		MenuItem mntmProduct = new MenuItem(menu, SWT.NONE);
+		mntmProduct.setText("Product");
+		
+		MenuItem mntmInventoryHistory = new MenuItem(menu, SWT.NONE);
+		mntmInventoryHistory.setText("Inventory History");
 	}
 }
