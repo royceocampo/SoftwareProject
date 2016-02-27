@@ -1,24 +1,26 @@
 package gui;
 
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.SWT;
-import org.eclipse.wb.swt.SWTResourceManager;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.widgets.Spinner;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Spinner;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.wb.swt.SWTResourceManager;
+
+import classes.Product;
 
 public class AddProduct {
 
 	protected Shell shlAddProduct;
-	private Text text;
-	private Text text_1;
-	private Text text_2;
+	private Text txtProdName;
+	private Text txtBrand;
+	private Text txtPackaging;
 
 	/**
 	 * Launch the application.
@@ -58,16 +60,17 @@ public class AddProduct {
 		shlAddProduct.setSize(339, 300);
 		shlAddProduct.setText("Rare Global Food Trading Corp. Add Product");
 		
-		Button button = new Button(shlAddProduct, SWT.NONE);
-		button.addSelectionListener(new SelectionAdapter() {
+		Button buttonSubmit = new Button(shlAddProduct, SWT.NONE);
+		buttonSubmit.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				Product.addProduct();
 			}
 		});
-		button.setText("Submit");
-		button.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
-		button.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
-		button.setBounds(126, 214, 120, 37);
+		buttonSubmit.setText("Submit");
+		buttonSubmit.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
+		buttonSubmit.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
+		buttonSubmit.setBounds(126, 214, 120, 37);
 		
 		Label lblProductName = new Label(shlAddProduct, SWT.NONE);
 		lblProductName.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.NORMAL));
@@ -105,23 +108,23 @@ public class AddProduct {
 		lblPrice.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
 		lblPrice.setBounds(60, 184, 42, 26);
 		
-		text = new Text(shlAddProduct, SWT.BORDER);
-		text.setBounds(126, 26, 120, 26);
+		txtProdName = new Text(shlAddProduct, SWT.BORDER);
+		txtProdName.setBounds(126, 26, 120, 26);
 		
-		text_1 = new Text(shlAddProduct, SWT.BORDER);
-		text_1.setBounds(126, 120, 120, 26);
+		txtBrand = new Text(shlAddProduct, SWT.BORDER);
+		txtBrand.setBounds(126, 120, 120, 26);
 		
-		text_2 = new Text(shlAddProduct, SWT.BORDER);
-		text_2.setBounds(126, 152, 120, 26);
+		txtPackaging = new Text(shlAddProduct, SWT.BORDER);
+		txtPackaging.setBounds(126, 152, 120, 26);
 		
-		Spinner spinner = new Spinner(shlAddProduct, SWT.BORDER);
-		spinner.setBounds(126, 186, 120, 22);
+		Spinner spinPrice = new Spinner(shlAddProduct, SWT.BORDER);
+		spinPrice.setBounds(126, 186, 120, 22);
 		
-		Combo combo = new Combo(shlAddProduct, SWT.NONE);
-		combo.setBounds(126, 58, 120, 26);
+		Combo comboCategory = new Combo(shlAddProduct, SWT.NONE);
+		comboCategory.setBounds(126, 58, 120, 26);
 		
-		Combo combo_1 = new Combo(shlAddProduct, SWT.NONE);
-		combo_1.setBounds(126, 91, 120, 23);
+		Combo comboSubtype = new Combo(shlAddProduct, SWT.NONE);
+		comboSubtype.setBounds(126, 91, 120, 23);
 
 	}
 }
