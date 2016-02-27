@@ -1,0 +1,22 @@
+package classes;
+
+import gui.AddProduct;
+
+public class Products {
+	public static void addProduct(){	
+		String productName = AddProduct.txtProdName.getText();
+		String prodCategory = AddProduct.cmbCategory.getSelectedItem().toString();
+		String prodSubtype = AddProduct.cmbSubtype.getSelectedItem().toString();
+		String prodBrand = AddProduct.txtBrand.getText();
+		String prodPackaging = AddProduct.txtPackaging.getText();
+		float prodPrice = (Float)AddProduct.spinPrice.getValue();
+		
+		System.out.println("Product Name: " +productName);
+		System.out.println("Product Name: " +prodCategory);
+		System.out.println("Product Name: " +prodSubtype);
+		System.out.println("Product Name: " +prodBrand);
+		System.out.println("Product Name: " +prodPackaging);
+		System.out.println("Product Name: " +prodPrice);
+		
+	}
+}

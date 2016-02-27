@@ -1,0 +1,11 @@
+package classes;
+
+import gui.AddProduct;
+
+public class Products {
+	public static void addProduct(){
+//		System.out.println("Hello world!");
+		
+		String prodName = Products.AddProduct.txtProdName;
+	}
+}

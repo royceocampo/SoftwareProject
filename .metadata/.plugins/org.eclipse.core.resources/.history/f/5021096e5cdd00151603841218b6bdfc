@@ -1,0 +1,15 @@
+package classes;
+
+import gui.AddProduct;
+
+public class Products {
+	public static void addProduct(){
+//		System.out.println("Hello world!");
+		String productName, prodCategory, prodSubtype,
+		prodBrand,prodPackaging;
+		int prodPrice;
+		
+		productName = AddProduct.txtProdName.getText();
+		System.out.println(productname);
+	}
+}

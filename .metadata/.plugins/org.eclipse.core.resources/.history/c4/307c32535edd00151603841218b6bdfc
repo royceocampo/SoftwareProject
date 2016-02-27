@@ -1,0 +1,15 @@
+package classes;
+
+import gui.AddProduct;
+
+public class Products {
+	public static void addProduct(){	
+		String productName = AddProduct.txtProdName.getText();
+		String prodCategory = AddProduct.cmbCategory.getToolTipText();
+		String prodSubtype;
+		String prodBrand;
+		String prodPackaging;
+		int prodPrice;
+		
+	}
+}

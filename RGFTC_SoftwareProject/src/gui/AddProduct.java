@@ -1,127 +1,247 @@
 package gui;
 
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.SWT;
-import org.eclipse.wb.swt.SWTResourceManager;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.widgets.Spinner;
-import org.eclipse.swt.widgets.Combo;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JLabel;
+import java.awt.SystemColor;
+import java.awt.Font;
+import javax.swing.JTextField;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JComboBox;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JSpinner;
+
+import classes.Product;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 public class AddProduct {
 
-	protected Shell shlAddProduct;
-	private Text text;
-	private Text text_1;
-	private Text text_2;
+	private JFrame frame;
+	private JLabel lblProductName;
+	private JLabel lblCategory;
+	private JLabel lblSubtype;
+	private JLabel lblBrand;
+	private JLabel lblPackaging;
+	private JLabel lblPrice;
+	
+	public static JTextField txtProdName;
+	public static JComboBox cmbCategory;
+	public static JComboBox cmbSubtype;
+	public static JTextField txtBrand;
+	public static JTextField txtPackaging;
+	public static JSpinner spinPrice;
+	
+	
+	
+	public JTextField getTxtProdName() {
+		return txtProdName;
+	}
+
+	public void setTxtProdName(JTextField txtProdName) {
+		this.txtProdName = txtProdName;
+	}
+
+	public JComboBox getCmbCategory() {
+		return cmbCategory;
+	}
+
+	public void setCmbCategory(JComboBox cmbCategory) {
+		this.cmbCategory = cmbCategory;
+	}
+
+	public JComboBox getCmbSubtype() {
+		return cmbSubtype;
+	}
+
+	public void setCmbSubtype(JComboBox cmbSubtype) {
+		this.cmbSubtype = cmbSubtype;
+	}
+
+	public JTextField getTxtBrand() {
+		return txtBrand;
+	}
+
+	public void setTxtBrand(JTextField txtBrand) {
+		this.txtBrand = txtBrand;
+	}
+
+	public JTextField getTxtPackaging() {
+		return txtPackaging;
+	}
+
+	public void setTxtPackaging(JTextField txtPackaging) {
+		this.txtPackaging = txtPackaging;
+	}
+
+	public JSpinner getSpinPrice() {
+		return spinPrice;
+	}
+
+	public void setSpinPrice(JSpinner spinPrice) {
+		this.spinPrice = spinPrice;
+	}
 
 	/**
 	 * Launch the application.
-	 * @param args
 	 */
 	public static void main(String[] args) {
-		try {
-			AddProduct window = new AddProduct();
-			window.open();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Open the window.
-	 */
-	public void open() {
-		Display display = Display.getDefault();
-		createContents();
-		shlAddProduct.open();
-		shlAddProduct.layout();
-		while (!shlAddProduct.isDisposed()) {
-			if (!display.readAndDispatch()) {
-				display.sleep();
-			}
-		}
-	}
-
-	/**
-	 * Create contents of the window.
-	 */
-	protected void createContents() {
-		shlAddProduct = new Shell();
-		shlAddProduct.setMinimumSize(new Point(200, 50));
-		shlAddProduct.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
-		shlAddProduct.setSize(339, 300);
-		shlAddProduct.setText("Rare Global Food Trading Corp. Add Product");
-		
-		Button button = new Button(shlAddProduct, SWT.NONE);
-		button.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					AddProduct window = new AddProduct();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		});
-		button.setText("Submit");
-		button.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
-		button.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
-		button.setBounds(126, 214, 120, 37);
-		
-		Label lblProductName = new Label(shlAddProduct, SWT.NONE);
-		lblProductName.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.NORMAL));
-		lblProductName.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
-		lblProductName.setBounds(10, 24, 110, 26);
-		lblProductName.setText("Product Name:");
-		
-		Label lblCategory = new Label(shlAddProduct, SWT.NONE);
-		lblCategory.setText("Category:");
-		lblCategory.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.NORMAL));
-		lblCategory.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
-		lblCategory.setBounds(46, 56, 71, 26);
-		
-		Label lblSubtype = new Label(shlAddProduct, SWT.NONE);
-		lblSubtype.setText("Subtype:");
-		lblSubtype.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.NORMAL));
-		lblSubtype.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
-		lblSubtype.setBounds(46, 88, 60, 26);
-		
-		Label lblBrand = new Label(shlAddProduct, SWT.NONE);
-		lblBrand.setText("Brand:");
-		lblBrand.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.NORMAL));
-		lblBrand.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
-		lblBrand.setBounds(60, 120, 60, 26);
-		
-		Label lblPackaging = new Label(shlAddProduct, SWT.NONE);
-		lblPackaging.setText("Packaging:");
-		lblPackaging.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.NORMAL));
-		lblPackaging.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
-		lblPackaging.setBounds(31, 152, 79, 26);
-		
-		Label lblPrice = new Label(shlAddProduct, SWT.NONE);
-		lblPrice.setText("Price:");
-		lblPrice.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.NORMAL));
-		lblPrice.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
-		lblPrice.setBounds(60, 184, 42, 26);
-		
-		text = new Text(shlAddProduct, SWT.BORDER);
-		text.setBounds(126, 26, 120, 26);
-		
-		text_1 = new Text(shlAddProduct, SWT.BORDER);
-		text_1.setBounds(126, 120, 120, 26);
-		
-		text_2 = new Text(shlAddProduct, SWT.BORDER);
-		text_2.setBounds(126, 152, 120, 26);
-		
-		Spinner spinner = new Spinner(shlAddProduct, SWT.BORDER);
-		spinner.setBounds(126, 186, 120, 22);
-		
-		Combo combo = new Combo(shlAddProduct, SWT.NONE);
-		combo.setBounds(126, 58, 120, 26);
-		
-		Combo combo_1 = new Combo(shlAddProduct, SWT.NONE);
-		combo_1.setBounds(126, 91, 120, 23);
+	}
 
+	/**
+	 * Create the application.
+	 */
+	public AddProduct() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.getContentPane().setBackground(SystemColor.info);
+		frame.setBounds(100, 100, 337, 300);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		lblProductName = new JLabel("Product Name:");
+		lblProductName.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		
+		lblCategory = new JLabel("Category:");
+		lblCategory.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		
+		lblSubtype = new JLabel("Subtype:");
+		lblSubtype.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		
+		lblBrand = new JLabel("Brand:");
+		lblBrand.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		
+		lblPackaging = new JLabel("Packaging:");
+		lblPackaging.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		
+		lblPrice = new JLabel("Price:");
+		lblPrice.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		
+		JButton btnSubmit = new JButton("Submit");
+		btnSubmit.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		btnSubmit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Product.addProduct();
+			}
+		});
+		
+		txtProdName = new JTextField();
+		txtProdName.setColumns(10);
+		
+		cmbCategory = new JComboBox();
+//		cmbCategory.addItem("Meat");
+//		cmbCategory.addItem("Fish");
+		cmbCategory.addItem("Meat");
+		cmbCategory.addItem("Fish");
+		
+		cmbSubtype = new JComboBox();
+//		cmbCategory.addItemListener(new ItemListener() {
+//			public void itemStateChanged(ItemEvent evt) {
+//				if (ItemEvent.DESELECTED == evt.getStateChange()){
+//					String desValue = evt.getItem().toString();
+//				}
+//				else if (ItemEvent.SELECTED == evt.getItem().toString()){
+//					cmbSubtype.removeAllItems();
+//					
+//				}
+//			}
+//		});
+		cmbSubtype.addItem("Subtype ONE");
+		cmbSubtype.addItem("Subtype TWO");
+		cmbSubtype.addItem("Subtype TRI");
+		
+		txtBrand = new JTextField();
+		txtBrand.setColumns(10);
+		
+		txtPackaging = new JTextField();
+		txtPackaging.setColumns(10);
+		
+		spinPrice = new JSpinner();
+		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(32)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(lblSubtype, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(cmbSubtype, 0, 112, Short.MAX_VALUE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(lblCategory, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(cmbCategory, 0, 112, Short.MAX_VALUE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(lblProductName, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(txtProdName, GroupLayout.PREFERRED_SIZE, 112, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblBrand, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblPackaging, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(txtBrand, GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
+								.addComponent(txtPackaging, GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(lblPrice, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnSubmit, GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
+								.addComponent(spinPrice, GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE))))
+					.addContainerGap(70, GroupLayout.PREFERRED_SIZE))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(30)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblProductName, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+						.addComponent(txtProdName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblCategory, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+						.addComponent(cmbCategory, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblSubtype, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+						.addComponent(cmbSubtype, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblBrand, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+						.addComponent(txtBrand, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblPackaging, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+						.addComponent(txtPackaging, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblPrice, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+						.addComponent(spinPrice, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnSubmit)
+					.addContainerGap(22, Short.MAX_VALUE))
+		);
+		frame.getContentPane().setLayout(groupLayout);
 	}
 }

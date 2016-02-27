@@ -1,0 +1,13 @@
+package classes;
+
+import java.awt.event.ActionListener;
+
+import gui.AddProduct;
+
+public class Products implements ActionListener{
+	public static void addProduct(){
+//		System.out.println("Hello world!");
+		
+		String prodName = Products.AddProduct().;
+	}
+}
