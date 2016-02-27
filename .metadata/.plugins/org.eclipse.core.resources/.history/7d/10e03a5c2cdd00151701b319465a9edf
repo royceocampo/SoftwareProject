@@ -64,7 +64,7 @@ public class AddProduct {
 		buttonSubmit.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Product.Product();
+				Product.addProduct();
 			}
 		});
 		buttonSubmit.setText("Submit");

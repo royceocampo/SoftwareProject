@@ -1,0 +1,11 @@
+package classes;
+
+import java.sql.*;
+import gui.AddProduct;
+
+public class Product {
+	public static void addProduct(){
+//		System.out.println("Hello world!");
+		String productName = txtProdName.getText();
+	}
+}

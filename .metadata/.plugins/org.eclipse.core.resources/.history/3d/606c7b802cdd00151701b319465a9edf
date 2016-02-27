@@ -53,7 +53,7 @@ public class AddProduct {
 	/**
 	 * Create contents of the window.
 	 */
-	protected void createContents() {
+	public void createContents() {
 		shlAddProduct = new Shell();
 		shlAddProduct.setMinimumSize(new Point(200, 50));
 		shlAddProduct.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
@@ -64,7 +64,7 @@ public class AddProduct {
 		buttonSubmit.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Product.Product();
+				Product.addProduct();
 			}
 		});
 		buttonSubmit.setText("Submit");

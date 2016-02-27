@@ -1,7 +1,9 @@
 package classes;
 
+import java.sql.*;
+
 public class Product {
-	public static void Product(){
+	public static void addProduct(){
 //		System.out.println("Hello world!");
 	}
 }
