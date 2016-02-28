@@ -6,23 +6,21 @@ public class Order {
 
 	private int purchase_orderID;
 	private String clientName;
-	private Product[] product;
-	private float[] productPrice;
-	private String receiver;
-	private Date dueDate;
-	private String[] notes;
+	private float price;
+	private String orderReceiver;
+	private Date deliveryDueDate;
 	private Boolean deliveryStatus;
+	private String notes;
 	
 	public Order(){}
 	
-	public Order(String clientName, Product[] product, float[] productPrice, String receiver, Date dueDate, String[] notes, Boolean deliveryStatus){
+	public Order(String clientName, float price, String orderReceiver, Date deliveryDueDate, Boolean deliveryStatus, String notes){
 		this.clientName = clientName;
-		this.product = product;
-		this.productPrice = productPrice;
-		this.receiver = receiver;
-		this.dueDate = dueDate;
-		this.notes = notes;
+		this.price = price;
+		this.orderReceiver = orderReceiver;
+		this.deliveryDueDate = deliveryDueDate;
 		this.deliveryStatus = deliveryStatus;
+		this.notes = notes;
 	}
 
 	public int getPurchase_orderID() {
@@ -41,44 +39,28 @@ public class Order {
 		this.clientName = clientName;
 	}
 
-	public Product[] getProduct() {
-		return product;
+	public float getPrice() {
+		return price;
 	}
 
-	public void setProduct(Product[] product) {
-		this.product = product;
+	public void setPrice(float price) {
+		this.price = price;
 	}
 
-	public float[] getProductPrice() {
-		return productPrice;
+	public String getOrderReceiver() {
+		return orderReceiver;
 	}
 
-	public void setProductPrice(float[] productPrice) {
-		this.productPrice = productPrice;
+	public void setOrderReceiver(String orderReceiver) {
+		this.orderReceiver = orderReceiver;
 	}
 
-	public String getReceiver() {
-		return receiver;
+	public Date getDeliveryDueDate() {
+		return deliveryDueDate;
 	}
 
-	public void setReceiver(String receiver) {
-		this.receiver = receiver;
-	}
-
-	public Date getDueDate() {
-		return dueDate;
-	}
-
-	public void setDueDate(Date dueDate) {
-		this.dueDate = dueDate;
-	}
-
-	public String[] getNotes() {
-		return notes;
-	}
-
-	public void setNotes(String[] notes) {
-		this.notes = notes;
+	public void setDeliveryDueDate(Date deliveryDueDate) {
+		this.deliveryDueDate = deliveryDueDate;
 	}
 
 	public Boolean getDeliveryStatus() {
@@ -88,6 +70,14 @@ public class Order {
 	public void setDeliveryStatus(Boolean deliveryStatus) {
 		this.deliveryStatus = deliveryStatus;
 	}
+
+	public String getNotes() {
+		return notes;
+	}
+
+	public void setNotes(String notes) {
+		this.notes = notes;
+	}
 	
-	
+		
 }
