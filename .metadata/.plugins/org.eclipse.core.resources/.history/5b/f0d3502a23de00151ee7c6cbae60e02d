@@ -1,0 +1,148 @@
+package gui;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JLabel;
+import java.awt.SystemColor;
+import java.awt.Font;
+import javax.swing.JTextField;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JComboBox;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JSpinner;
+
+import classes.Product;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
+
+public class InHisDeleteByDate {
+
+	private JFrame frame;
+	private JLabel lblProdName;
+	private JLabel lblNumBoxes;
+	private JLabel lblWeight;
+	private JLabel lblDepWith;
+	
+	public static JComboBox cmbProdName;
+	public static JSpinner spinNumBoxes;
+	public static JTextField txtWeight;
+	public static JComboBox cmbDepWith;
+	
+	
+	
+	
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					InHisDeleteByDate window = new InHisDeleteByDate();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public InHisDeleteByDate() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.getContentPane().setBackground(SystemColor.info);
+		frame.setBounds(100, 100, 337, 300);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		JButton btnSubmit = new JButton("Submit");
+		btnSubmit.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		btnSubmit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Product.addProduct();
+			}
+		});
+		
+		lblProdName = new JLabel("Product Name: ");
+		lblProdName.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		
+		lblNumBoxes = new JLabel("Number of Boxes: ");
+		lblNumBoxes.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		
+		lblWeight = new JLabel("Weight (kg): ");
+		lblWeight.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		
+		lblDepWith = new JLabel("Deposit or Withdraw:");
+		lblDepWith.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		
+		cmbProdName = new JComboBox();
+		
+		spinNumBoxes = new JSpinner();
+		
+		txtWeight = new JTextField();
+		txtWeight.setColumns(10);
+		
+		cmbDepWith = new JComboBox();
+		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(107)
+							.addComponent(btnSubmit, GroupLayout.PREFERRED_SIZE, 112, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(27)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(lblProdName, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(lblNumBoxes, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(lblWeight, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(lblDepWith, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(cmbDepWith, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(txtWeight)
+								.addComponent(spinNumBoxes)
+								.addComponent(cmbProdName, 0, 112, Short.MAX_VALUE))))
+					.addContainerGap(42, Short.MAX_VALUE))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(50)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblProdName)
+						.addComponent(cmbProdName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblNumBoxes)
+						.addComponent(spinNumBoxes, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblWeight)
+						.addComponent(txtWeight, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblDepWith)
+						.addComponent(cmbDepWith, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+					.addComponent(btnSubmit)
+					.addGap(22))
+		);
+		frame.getContentPane().setLayout(groupLayout);
+	}
+}

@@ -1,7 +1,0 @@
-package classes;
-
-public class Products {
-	public void addProduct(){
-		System.out.println("Hello world!");
-	}
-}

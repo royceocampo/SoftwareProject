@@ -1,22 +1,22 @@
 package classes;
 
+import java.sql.DriverManager;
+
 import gui.AddProduct;
+import dbconnection.DBConnection;
 
 public class Product {
-	public static void addProduct(){	
-		String productName = AddProduct.txtProdName.getText();
-		String prodCategory = AddProduct.cmbCategory.getSelectedItem().toString();
-		String prodSubtype = AddProduct.cmbSubtype.getSelectedItem().toString();
-		String prodBrand = AddProduct.txtBrand.getText();
-		String prodPackaging = AddProduct.txtPackaging.getText();
-		float prodPrice = (Integer)AddProduct.spinPrice.getValue();
+	public static void addProduct(String strProdName, String strCategory,
+			String strSubtype, String strBrand, String strPackaging, int nPrice){	
+				
+		System.out.println("Product Name: " +strProdName);
+		System.out.println("Category: " +strCategory);
+		System.out.println("Subtype: " +strSubtype);
+		System.out.println("Brand: " +strBrand);
+		System.out.println("Packaging: " +strPackaging);
+		System.out.println("Price: " +nPrice);
 		
-		System.out.println("Product Name: " +productName);
-		System.out.println("Category: " +prodCategory);
-		System.out.println("Subtype: " +prodSubtype);
-		System.out.println("Brand: " +prodBrand);
-		System.out.println("Packaging: " +prodPackaging);
-		System.out.println("Price: " +prodPrice);
+//		PreparedStatement pstmt = DBConnection.
 		
 	}
 }

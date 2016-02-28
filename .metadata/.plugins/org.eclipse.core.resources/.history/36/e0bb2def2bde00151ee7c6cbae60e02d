@@ -1,0 +1,24 @@
+package classes;
+
+import gui.AddProduct;
+
+public class Product {
+	public static void addProduct(String valCategory, String valSubtype){	
+		String productName = AddProduct.txtProdName.getText();
+		String prodCategory = valCategory;
+		String prodSubtype = valSubtype;
+		String prodBrand = AddProduct.txtBrand.getText();
+		String prodPackaging = AddProduct.txtPackaging.getText();
+		float prodPrice = AddProduct.spinPrice.getSelection();
+		
+		System.out.println("Product Name: " +productName);
+		System.out.println("Category: " +prodCategory);
+		System.out.println("Subtype: " +prodSubtype);
+		System.out.println("Brand: " +prodBrand);
+		System.out.println("Packaging: " +prodPackaging);
+		System.out.println("Price: " +prodPrice);
+		
+		
+		
+	}
+}

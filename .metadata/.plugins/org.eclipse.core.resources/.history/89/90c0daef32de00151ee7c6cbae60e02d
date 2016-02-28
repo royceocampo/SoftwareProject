@@ -1,0 +1,19 @@
+package classes;
+
+import gui.AddProduct;
+
+public class Product {
+	public static void addProduct(String strProdName, String strCategory,
+			String strSubtype, String strBrand, String strPackaging, int nPrice){	
+				
+		System.out.println("Product Name: " +productName);
+		System.out.println("Category: " +prodCategory);
+		System.out.println("Subtype: " +prodSubtype);
+		System.out.println("Brand: " +prodBrand);
+		System.out.println("Packaging: " +prodPackaging);
+		System.out.println("Price: " +prodPrice);
+		
+		
+		
+	}
+}
