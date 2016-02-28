@@ -13,6 +13,7 @@
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
 			<item value="private"/>
+			<item value="model"/>
 			<item value="cmbCategory"/>
 			<item value="buttonSubmit"/>
 		</list>
