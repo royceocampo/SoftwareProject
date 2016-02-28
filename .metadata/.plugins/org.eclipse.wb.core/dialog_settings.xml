@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.wb.internal.core.editor.palette.dialogs.PalettePreferencesDialog">
+		<item value="420" key="x"/>
+		<item value="525" key="width"/>
+		<item value="194" key="y"/>
+		<item value="339" key="height"/>
+	</section>
+	<section name="org.eclipse.wb.internal.core.editor.palette.dialogs.ImportArchiveDialog">
+		<item value="420" key="x"/>
+		<item value="525" key="width"/>
+		<item value="143" key="y"/>
+		<item value="442" key="height"/>
+		<list key="HISTORY_JAR_LIST">
+		</list>
+	</section>
+	<section name="org.eclipse.wb.internal.core.editor.palette.dialogs.PaletteManagerDialog">
+		<item value="420" key="x"/>
+		<item value="525" key="width"/>
+		<item value="106" key="y"/>
+		<item value="516" key="height"/>
+	</section>
+	<section name="org.eclipse.wb.internal.core.editor.palette.dialogs.CategoryAddDialog">
+		<item value="420" key="x"/>
+		<item value="525" key="width"/>
+		<item value="169" key="y"/>
+		<item value="389" key="height"/>
+	</section>
+	<section name="org.eclipse.wb.internal.core.model.property.editor.string.StringPropertyDialog">
+		<item value="418" key="x"/>
+		<item value="530" key="width"/>
+		<item value="191" key="y"/>
+		<item value="346" key="height"/>
+	</section>
+</section>
