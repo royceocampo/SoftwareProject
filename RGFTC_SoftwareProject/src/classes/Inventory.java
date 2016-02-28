@@ -1,20 +1,24 @@
 package classes;
 
+import java.util.Date;
+
 public class Inventory {
 
 	private int inventoryID;
-	private Product product;
-	private int stockAmount;
-	private int boxAmount;
-	private float weight;
+	private String person;
+	private String product;
+	private int deposits;
+	private int withdrawals;
+	private Date date;
 	
 	public Inventory(){}
 	
-	public Inventory(Product product, int stockAmount, int boxAmount, float weight){
+	public Inventory(String person, String product, int deposits, int withdrawals, Date date){
+		this.person = person;
 		this.product = product;
-		this.stockAmount = stockAmount;
-		this.boxAmount = boxAmount;
-		this.weight = weight;
+		this.deposits = deposits;
+		this.withdrawals = withdrawals;
+		this.date = date;
 	}
 
 	public int getInventoryID() {
@@ -25,37 +29,46 @@ public class Inventory {
 		this.inventoryID = inventoryID;
 	}
 
-	public Product getProduct() {
+	public String getPerson() {
+		return person;
+	}
+
+	public void setPerson(String person) {
+		this.person = person;
+	}
+
+	public String getProduct() {
 		return product;
 	}
 
-	public void setProduct(Product product) {
+	public void setProduct(String product) {
 		this.product = product;
 	}
 
-	public int getStockAmount() {
-		return stockAmount;
+	public int getDeposits() {
+		return deposits;
 	}
 
-	public void setStockAmount(int stockAmount) {
-		this.stockAmount = stockAmount;
+	public void setDeposits(int deposits) {
+		this.deposits = deposits;
 	}
 
-	public int getBoxAmount() {
-		return boxAmount;
+	public int getWithdrawals() {
+		return withdrawals;
 	}
 
-	public void setBoxAmount(int boxAmount) {
-		this.boxAmount = boxAmount;
+	public void setWithdrawals(int withdrawals) {
+		this.withdrawals = withdrawals;
 	}
 
-	public float getWeight() {
-		return weight;
+	public Date getDate() {
+		return date;
 	}
 
-	public void setWeight(float weight) {
-		this.weight = weight;
+	public void setDate(Date date) {
+		this.date = date;
 	}
+
 	
 	
 }
