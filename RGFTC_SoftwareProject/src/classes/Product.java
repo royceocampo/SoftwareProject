@@ -4,22 +4,22 @@ public class Product {
 	private int productID;
 	private String productName;
 	private String category;
-	private String subType;
+	private String subtype;
 	private String brand;
 	private String packaging;
-	private String size;
 	private float pricePerKilo;
+	private int stocks;
 	
 	public Product(){}
 	
-	public Product(String productName, String category, String subType, String brand, String packaging, String size, float pricePerKilo){
+	public Product(String productName, String category, String subtype, String brand, String packaging, float pricePerKilo, int stocks){
 		this.productName = productName;
 		this.category = category;
-		this.subType = subType;
+		this.subtype = subtype;
 		this.brand = brand;
 		this.packaging = packaging;
-		this.size = size;
 		this.pricePerKilo = pricePerKilo;
+		this.stocks = stocks;
 	}
 
 	public int getProductID() {
@@ -46,12 +46,12 @@ public class Product {
 		this.category = category;
 	}
 
-	public String getSubType() {
-		return subType;
+	public String getSubtype() {
+		return subtype;
 	}
 
-	public void setSubType(String subType) {
-		this.subType = subType;
+	public void setSubtype(String subtype) {
+		this.subtype = subtype;
 	}
 
 	public String getBrand() {
@@ -70,14 +70,6 @@ public class Product {
 		this.packaging = packaging;
 	}
 
-	public String getSize() {
-		return size;
-	}
-
-	public void setSize(String size) {
-		this.size = size;
-	}
-
 	public float getPricePerKilo() {
 		return pricePerKilo;
 	}
@@ -85,6 +77,13 @@ public class Product {
 	public void setPricePerKilo(float pricePerKilo) {
 		this.pricePerKilo = pricePerKilo;
 	}
-	
+
+	public int getStocks() {
+		return stocks;
+	}
+
+	public void setStocks(int stocks) {
+		this.stocks = stocks;
+	}
 	
 }
