@@ -1,0 +1,25 @@
+package dbconnection;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+public Connection DBConnection {
+	private Connection conn;
+	private Statement stmt;
+	private ResultSet rs;
+	
+		public DBConnection(){
+			try{
+				Class.forName("com.mysql.jdbc.Driver");
+				System.out.println("Connection successful!");
+				
+				conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/rgftc_inventory", "root", "p@ssword");
+				stmt = conn.createStatement();
+			}
+			catch(Exception e){
+				System.out.println("Error: "+e);
+			}
+		}
+}

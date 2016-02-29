@@ -1,0 +1,18 @@
+package managers;
+
+import gui.AddProduct;
+
+public class ProductManager {
+	private String productName;
+	private String prodCategory;
+	private String prodSubtype;
+	private String prodBrand;
+	private String prodPackaging;
+	private int prodPrice;
+	
+	public ProductManager(String productName, String prodCategory, String prodSubtype,
+					String prodBrand, int prodPrice){
+		super();
+		productName;
+	}
+}

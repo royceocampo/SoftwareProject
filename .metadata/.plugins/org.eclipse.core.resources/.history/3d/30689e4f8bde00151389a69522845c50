@@ -1,0 +1,16 @@
+package managers;
+
+public class ProductManager {
+	private int productID;
+	private String productName;
+	private String prodCategory;
+	private String prodSubtype;
+	private String prodBrand;
+	private int prodPrice;
+	
+	
+	public ProductManager(String productName, String prodCategory, String prodSubtype,
+					String prodBrand, int prodPrice){
+		this(0, productName, prodCategory, prodSubtype, prodBrand, prodPrice);
+	}
+}

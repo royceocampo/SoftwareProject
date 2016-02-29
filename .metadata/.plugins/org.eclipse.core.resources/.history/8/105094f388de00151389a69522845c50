@@ -1,0 +1,23 @@
+package classes;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+
+import dbconnection.DBConnection;
+
+public class Product {
+	public static void addProduct(Product newProduct){	
+				
+//		System.out.println("Product Name: " +strProdName);
+//		System.out.println("Category: " +strCategory);
+//		System.out.println("Subtype: " +strSubtype);
+//		System.out.println("Brand: " +strBrand);
+//		System.out.println("Packaging: " +strPackaging);
+//		System.out.println("Price: " +nPrice);
+		PreparedStatement pstmt = null;
+		Connection conn = (Connection)DBConnection.getConnection();
+		pstmt = conn.prepareStatement("INSERT INTO products_table(productName, category, subtype, brand, priceperkilo)"
+			     + "values (?, ?, ?, ?, ?, ?)");
+	
+	}
+}
