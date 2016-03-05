@@ -401,12 +401,12 @@ public class AddOrder {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				int contentCount = 0;
-				String clientName;
-				String prodPrice;
-				String orderReceiver;
+				String clientName = null;
+				//String prodPrice;
+				String orderReceiver = null;
 				String monthDue;
 				String dayDue;
-				String yearDue;
+				String yearDue = null;
 				String otherNotes;
 				String dueDate;
 				DateFormat dateFormat = new SimpleDateFormat("MMMM d, yyyy",
@@ -423,31 +423,55 @@ public class AddOrder {
 					otherNotes = txtOtherNotes.getText();
 					if (cmbMonthDue.getSelectionIndex() != 0
 							&& cmbDayDue.getSelectionIndex() != 0
-							&& Integer.parseInt(txtYear.getText()) > 2010) {
+							&& txtYear.getText().length() > 0) {
 						monthDue = cmbMonthDue.getText();
 						dayDue = cmbDayDue.getText();
-						yearDue = txtYear.getText();
-						dueDate = monthDue + " " + dayDue + ", " + yearDue;
-						utilDueDate = dateFormat.parse(dueDate);
-						sqlDueDate = new java.sql.Date(utilDueDate.getTime());
+						if(Integer.parseInt(txtYear.getText())>0){
+							yearDue = txtYear.getText();
+							dueDate = monthDue + " " + dayDue + ", " + yearDue;
+							utilDueDate = dateFormat.parse(dueDate);
+							sqlDueDate = new java.sql.Date(utilDueDate.getTime());
+						}
 					}
 
 				} catch (Exception ex) {
 					ex.printStackTrace();
+					MessageBox errorBox = new MessageBox(shlRareGlobalFood,
+							SWT.Close);
+					errorBox.setText("Error");
+					errorBox.setMessage("Please give a valid year beyond 2010");
+					errorBox.open();
 					return;
 				}
-				/*
-				 * Order newOrder = new Order(clientName,
-				 * Float.parseFloat(prodPrice), orderReceiver, sqlDueDate,
-				 * otherNotes); OrderManager manageOrder = new OrderManager();
-				 * manageOrder.addOrder(newOrder);
-				 */
-
-				if (clientName.length() == 0 && orderReceiver.length() == 0) {
+				if (clientName.length() == 0 || orderReceiver.length() == 0) {
 					MessageBox errorBox = new MessageBox(shlRareGlobalFood,
 							SWT.Close);
 					errorBox.setText("Error");
 					errorBox.setMessage("Please fill out all required fields.");
+					errorBox.open();
+				} else if (cmbMonthDue.getSelectionIndex() == 0){
+					MessageBox errorBox = new MessageBox(shlRareGlobalFood,
+							SWT.Close);
+					errorBox.setText("Error");
+					errorBox.setMessage("Please select a month.");
+					errorBox.open();
+				} else if (cmbDayDue.getSelectionIndex() == 0){
+					MessageBox errorBox = new MessageBox(shlRareGlobalFood,
+							SWT.Close);
+					errorBox.setText("Error");
+					errorBox.setMessage("Please select a day.");
+					errorBox.open();
+				} else if (txtYear.getText().length() == 0){
+					MessageBox errorBox = new MessageBox(shlRareGlobalFood,
+							SWT.Close);
+					errorBox.setText("Error");
+					errorBox.setMessage("Please set the year.");
+					errorBox.open();
+				} else if (Integer.parseInt(yearDue)<=2010){
+					MessageBox errorBox = new MessageBox(shlRareGlobalFood,
+							SWT.Close);
+					errorBox.setText("Error");
+					errorBox.setMessage("Please set the year beyond 2010.");
 					errorBox.open();
 				} else if (contentCount == 0) {
 					MessageBox errorBox = new MessageBox(shlRareGlobalFood,
@@ -455,9 +479,7 @@ public class AddOrder {
 					errorBox.setText("Error");
 					errorBox.setMessage("There are no orders.");
 					errorBox.open();
-				}
-
-				else {
+				} else {
 					MessageBox confirmBox = new MessageBox(shlRareGlobalFood,
 							SWT.YES | SWT.NO);
 					confirmBox.setText("Confirmation");
@@ -480,7 +502,8 @@ public class AddOrder {
 							OrderManager manageOrder = new OrderManager();
 							manageOrder.addOrder(newOrder);
 						}
-						tableCart.clearAll();
+						tableCart.removeAll();
+						tableCart.redraw();
 						break;
 					case SWT.NO:
 						break;
