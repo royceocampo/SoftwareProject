@@ -2,6 +2,7 @@ package gui;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Date;
 
@@ -24,7 +25,11 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Table;
 
 import classes.Order;
+import classes.Product;
 import services.OrderManager;
+import services.ProductManager;
+import org.eclipse.swt.events.FocusAdapter;
+import org.eclipse.swt.events.FocusEvent;
 
 public class AddOrder {
 
@@ -80,6 +85,22 @@ public class AddOrder {
 				"10", "11", "12", "13", "14", "15", "16", "17", "18", "19",
 				"20", "21", "22", "23", "24", "25", "26", "27", "28", "29",
 				"30", "31" };
+		
+		ArrayList<Product> productsList = new ProductManager().getAllProducts();
+		int prodCount = new ProductManager().getProductsCount();
+		if(prodCount == 0){
+			MessageBox errorMessage = new MessageBox(shlRareGlobalFood,
+					SWT.Close);
+			errorMessage.setText("Error");
+			errorMessage
+					.setMessage("No products listed.");
+			errorMessage.open();
+		}
+		String[] products = new String[prodCount];
+		
+		for (int index = 0; index < prodCount; index++) {
+				products[index] = productsList.get(index).getProductName();
+			}
 
 		Menu menu = new Menu(shlRareGlobalFood, SWT.BAR);
 		shlRareGlobalFood.setMenuBar(menu);
@@ -143,6 +164,13 @@ public class AddOrder {
 		cmbDayDue.setBounds(182, 110, 50, 23);
 
 		txtYear = new Text(shlRareGlobalFood, SWT.BORDER);
+		txtYear.setText("Year");
+		txtYear.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				txtYear.setText("");
+			}
+		});
 		txtYear.setTextLimit(4);
 		txtYear.setBounds(240, 113, 40, 18);
 
@@ -162,8 +190,10 @@ public class AddOrder {
 		lblProductOrdered.setBounds(305, 39, 95, 14);
 		lblProductOrdered.setText("*Product Ordered:");
 
-		Combo cmbProductOrdered = new Combo(shlRareGlobalFood, SWT.NONE);
+		Combo cmbProductOrdered = new Combo(shlRareGlobalFood, SWT.READ_ONLY);
+		cmbProductOrdered.setItems(products);
 		cmbProductOrdered.setBounds(305, 59, 150, 23);
+		cmbProductOrdered.select(0);
 
 		Label lblQuantity = new Label(shlRareGlobalFood, SWT.NONE);
 		lblQuantity.setBackground(SWTResourceManager
@@ -174,6 +204,12 @@ public class AddOrder {
 		txtQuantity = new Text(shlRareGlobalFood, SWT.BORDER);
 		txtQuantity.setTextLimit(6);
 		txtQuantity.setText("0.0");
+		txtQuantity.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				txtQuantity.setText("");
+			}
+		});
 		txtQuantity.setBounds(460, 59, 65, 23);
 
 		Label lblPrice = new Label(shlRareGlobalFood, SWT.NONE);
@@ -185,6 +221,12 @@ public class AddOrder {
 		txtPrice = new Text(shlRareGlobalFood, SWT.BORDER);
 		txtPrice.setTextLimit(6);
 		txtPrice.setText("0.0");
+		txtPrice.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				txtPrice.setText("");
+			}
+		});
 		txtPrice.setBounds(530, 59, 65, 23);
 
 		Button btnAddToCart = new Button(shlRareGlobalFood, SWT.NONE);
@@ -243,6 +285,13 @@ public class AddOrder {
 					cmbProductOrdered.setText("");
 					txtQuantity.setText("0.0");
 					txtPrice.setText("0.0");
+				} else if (productOrder.length() == 0) {
+					MessageBox errorMessage = new MessageBox(shlRareGlobalFood,
+							SWT.Close);
+					errorMessage.setText("Error");
+					errorMessage
+							.setMessage("No products listed.");
+					errorMessage.open();
 				} else if (productQuantity <= 0 || orderPrice <= 0) {
 					MessageBox errorMessage = new MessageBox(shlRareGlobalFood,
 							SWT.Close);
@@ -439,7 +488,7 @@ public class AddOrder {
 					MessageBox errorBox = new MessageBox(shlRareGlobalFood,
 							SWT.Close);
 					errorBox.setText("Error");
-					errorBox.setMessage("Please give a valid year beyond 2010");
+					errorBox.setMessage("Please give a valid year beyond 2000");
 					errorBox.open();
 					return;
 				}
@@ -467,11 +516,11 @@ public class AddOrder {
 					errorBox.setText("Error");
 					errorBox.setMessage("Please set the year.");
 					errorBox.open();
-				} else if (Integer.parseInt(yearDue)<=2010){
+				} else if (Integer.parseInt(yearDue)<=2000){
 					MessageBox errorBox = new MessageBox(shlRareGlobalFood,
 							SWT.Close);
 					errorBox.setText("Error");
-					errorBox.setMessage("Please set the year beyond 2010.");
+					errorBox.setMessage("Please set the year beyond 2000.");
 					errorBox.open();
 				} else if (contentCount == 0) {
 					MessageBox errorBox = new MessageBox(shlRareGlobalFood,
@@ -516,7 +565,7 @@ public class AddOrder {
 		btnAddOrder.setForeground(SWTResourceManager
 				.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 		btnAddOrder.setBounds(563, 312, 95, 35);
-		btnAddOrder.setText("Add Order");
+		btnAddOrder.setText("Submit");
 		btnAddOrder.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 
 	}
