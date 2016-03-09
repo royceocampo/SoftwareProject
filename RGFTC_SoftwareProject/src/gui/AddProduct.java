@@ -8,19 +8,74 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 
-import classes.Product;
+import classes.ProductManager;
+import managers.Product;
 
 public class AddProduct {
 
 	protected Shell shlAddProduct;
-	private Text txtProdName;
-	private Text txtBrand;
-	private Text txtPackaging;
+	
+	public static Text txtProdName;
+	public static Text txtBrand;
+	public static Text txtPackaging;
+	public static Combo cmbCategory;
+	public static Combo cmbSubtype;
+	public static Spinner spinPrice;
+//	public static Label lblErrProdName;
+
+//	public static Text getTxtProdName() {
+//		return txtProdName;
+//	}
+//
+//	public static void setTxtProdName(Text txtProdName) {
+//		AddProduct.txtProdName = txtProdName;
+//	}
+//
+//	public static Text getTxtBrand() {
+//		return txtBrand;
+//	}
+//
+//	public static void setTxtBrand(Text txtBrand) {
+//		AddProduct.txtBrand = txtBrand;
+//	}
+//
+//	public static Text getTxtPackaging() {
+//		return txtPackaging;
+//	}
+//
+//	public static void setTxtPackaging(Text txtPackaging) {
+//		AddProduct.txtPackaging = txtPackaging;
+//	}
+//
+//	public static Combo getCmbCategory() {
+//		return cmbCategory;
+//	}
+//
+//	public static void setCmbCategory(Combo cmbCategory) {
+//		AddProduct.cmbCategory = cmbCategory;
+//	}
+//
+//	public static Combo getCmbSubtype() {
+//		return cmbSubtype;
+//	}
+//
+//	public static void setCmbSubtype(Combo cmbSubtype) {
+//		AddProduct.cmbSubtype = cmbSubtype;
+//	}
+//
+//	public static Spinner getSpinPrice() {
+//		return spinPrice;
+//	}
+//
+//	public static void setSpinPrice(Spinner spinPrice) {
+//		AddProduct.spinPrice = spinPrice;
+//	}
 
 	/**
 	 * Launch the application.
@@ -57,16 +112,11 @@ public class AddProduct {
 		shlAddProduct = new Shell();
 		shlAddProduct.setMinimumSize(new Point(200, 50));
 		shlAddProduct.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
-		shlAddProduct.setSize(339, 300);
+		shlAddProduct.setSize(405, 300);
 		shlAddProduct.setText("Rare Global Food Trading Corp. Add Product");
 		
 		Button buttonSubmit = new Button(shlAddProduct, SWT.NONE);
-		buttonSubmit.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				Product.Product();
-			}
-		});
+		
 		buttonSubmit.setText("Submit");
 		buttonSubmit.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 		buttonSubmit.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
@@ -118,13 +168,141 @@ public class AddProduct {
 		txtPackaging.setBounds(126, 152, 120, 26);
 		
 		Spinner spinPrice = new Spinner(shlAddProduct, SWT.BORDER);
+		spinPrice.setMaximum(10000);
 		spinPrice.setBounds(126, 186, 120, 22);
 		
-		Combo comboCategory = new Combo(shlAddProduct, SWT.NONE);
-		comboCategory.setBounds(126, 58, 120, 26);
+		Combo cmbCategory = new Combo(shlAddProduct, SWT.NONE);
+		cmbCategory.setItems(new String[] {"Meat", "Seafood"});
+		cmbCategory.setBounds(126, 56, 120, 23);
 		
-		Combo comboSubtype = new Combo(shlAddProduct, SWT.NONE);
-		comboSubtype.setBounds(126, 91, 120, 23);
+		
+		
+		Combo cmbSubtype = new Combo(shlAddProduct, SWT.NONE);
+		cmbSubtype.setItems(new String[] {"AA", "AB", "AC", "AD"});
+		cmbSubtype.setBounds(126, 91, 120, 23);
+		
+		Label lblErrProdName = new Label(shlAddProduct, SWT.NONE);
+		lblErrProdName.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
+		lblErrProdName.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.NORMAL));
+		lblErrProdName.setForeground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
+		lblErrProdName.setBounds(252, 29, 110, 15);
+		lblErrProdName.setText("This field is required.");
+//		lblErrProdName.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));     -> visible when error
 
+		
+		Label lblErrCat = new Label(shlAddProduct, SWT.NONE);
+		lblErrCat.setForeground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
+		lblErrCat.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
+		lblErrCat.setBounds(252, 61, 110, 15);
+		lblErrCat.setText("This field is required.");
+		
+		Label lblErrSub = new Label(shlAddProduct, SWT.NONE);
+		lblErrSub.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
+		lblErrSub.setForeground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
+		lblErrSub.setBounds(252, 93, 110, 15);
+		lblErrSub.setText("This field is required.");
+		
+		Label lblErrPri = new Label(shlAddProduct, SWT.NONE);
+		lblErrPri.setForeground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
+		lblErrPri.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
+		lblErrPri.setBounds(252, 189, 110, 15);
+		lblErrPri.setText("This field is required.");
+		
+		cmbCategory.addSelectionListener(new SelectionAdapter(){
+			public void widgetSelected(SelectionEvent e){
+				if (cmbCategory.getText().equals("Meat")){
+					String newItems[] = { "Pork", "Beef", "Poultry", "Japanese Wagyu",
+										"Cuts"};
+					cmbSubtype.setItems(newItems);
+					cmbSubtype.setEnabled(true);
+				}
+				else if (cmbCategory.getText().equals("Seafood")){
+					String newItems[] = { "Black Tiger", "Shrimps", "Nobashi", "Japanese Wagyu",
+					"Norwegian Salmon", "Squid/Octopus", "Tuna", "Cream Dory", "Fish (Whole, Fillet, Steak)",
+					"Scallops and Shellfish"};
+					cmbSubtype.setItems(newItems);
+					cmbSubtype.setEnabled(true);
+				}
+				else{
+					cmbSubtype.add(" ");
+					cmbSubtype.setText(" ");
+				}
+				
+			}
+		});
+		
+		buttonSubmit.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				String strProdName = txtProdName.getText();
+				String strCategory = cmbCategory.getText();
+				String strSubtype = cmbSubtype.getText();
+				String strBrand = txtBrand.getText();
+				String strPackaging = txtPackaging.getText();
+				float fPrice = (float)spinPrice.getSelection();
+				int nStocks = 0;
+				if ((strProdName.equals(""))||
+					(strCategory.equals(""))||
+					(strSubtype.equals(""))||
+					 fPrice == 0){
+					MessageBox msg = new MessageBox(shlAddProduct, SWT.ICON_ERROR | SWT.OK);
+					msg.setText("Error");
+					msg.setMessage("Required fields have no input.");
+					int buttonID = msg.open();
+//					String valString = "SWT.OK";
+					switch (buttonID){
+					case SWT.NO:
+						break;
+					}
+					if (strProdName.equals("")){
+						lblErrProdName.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
+					}
+					if(strCategory.equals("")){
+						lblErrCat.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
+					}
+					if (strSubtype.equals("")){
+						lblErrSub.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
+					}
+					
+					if(fPrice == 0){
+						lblErrPri.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
+					}
+				}
+				else{
+					saveProduct(strProdName, strCategory, strSubtype, strBrand, strPackaging, fPrice, nStocks);
+					MessageBox msg = new MessageBox(shlAddProduct, SWT.ICON_INFORMATION | SWT.OK);
+					lblErrProdName.setForeground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
+					lblErrCat.setForeground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
+					lblErrSub.setForeground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
+					lblErrPri.setForeground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
+					msg.setText("Success!");
+					msg.setMessage("New product was added successfully!");
+					int buttonID = msg.open();
+					switch (buttonID){
+					case SWT.NO:
+						break;
+					}
+					txtProdName.setText("");
+					cmbCategory.setText("");
+					cmbSubtype.setText("");
+					txtBrand.setText("");
+					txtPackaging.setText("");
+					spinPrice.setSelection(0);
+				}
+				
+			}
+		});
+	}
+	
+	protected void saveProduct(String prodName, String prodCategory, String prodSubtype,
+								String prodBrand, String prodPackaging, float prodPrice, int nStocks){			
+		Product newProduct = new Product(prodName, prodCategory, prodSubtype, prodBrand, prodPackaging, prodPrice, nStocks);
+		try{
+			ProductManager.addProduct(newProduct);
+//			System.out.println("Product added successfully! (show this on message as well)");
+		}
+		catch(Exception ex){
+			ex.printStackTrace();
+		}
 	}
 }

@@ -10,6 +10,7 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.DateTime;
 
 public class DepositOrWithdraw extends Dialog {
 
@@ -50,7 +51,7 @@ public class DepositOrWithdraw extends Dialog {
 	private void createContents() {
 		shlDepositOrWithdraw = new Shell(getParent(), getStyle());
 		shlDepositOrWithdraw.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
-		shlDepositOrWithdraw.setSize(325, 234);
+		shlDepositOrWithdraw.setSize(325, 264);
 		shlDepositOrWithdraw.setText("Deposit or Withdraw");
 		
 		Label lblProductName = new Label(shlDepositOrWithdraw, SWT.NONE);
@@ -90,8 +91,17 @@ public class DepositOrWithdraw extends Dialog {
 		combo_1.setBounds(169, 129, 112, 23);
 		
 		Button btnSubmit = new Button(shlDepositOrWithdraw, SWT.NONE);
-		btnSubmit.setBounds(122, 170, 75, 25);
+		btnSubmit.setBounds(124, 200, 75, 25);
 		btnSubmit.setText("Submit");
+		
+		DateTime transDate = new DateTime(shlDepositOrWithdraw, SWT.BORDER);
+		transDate.setBounds(169, 164, 80, 24);
+		
+		Label lblDate = new Label(shlDepositOrWithdraw, SWT.NONE);
+		lblDate.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
+		lblDate.setAlignment(SWT.RIGHT);
+		lblDate.setBounds(86, 173, 55, 15);
+		lblDate.setText("Date:");
 
 	}
 }
