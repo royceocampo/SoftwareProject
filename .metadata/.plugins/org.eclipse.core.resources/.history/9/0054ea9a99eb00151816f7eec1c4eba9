@@ -11,7 +11,7 @@ public class DBConnection {
 			Class.forName("com.mysql.jdbc.Driver");
 			System.out.println("Connection successful!");
 			
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/rgftc_inventory", "root", "p@ssword");
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/rgftc_db", "root", "");
 			System.out.println("Connected!");
 			return conn;
 		}

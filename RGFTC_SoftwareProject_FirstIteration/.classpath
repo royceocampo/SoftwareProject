@@ -4,7 +4,6 @@
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/org.eclipse.swt"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.datatools.connectivity.jdt.DRIVERLIBRARY/MySQL JDBC Driver"/>
-	<classpathentry exported="true" kind="lib" path="/Users/francodavid/Downloads/swing2swt.jar"/>
-	<classpathentry exported="true" kind="lib" path="/Users/francodavid/Downloads/mysql-connector-java-5.1.18-bin.jar"/>
+	<classpathentry exported="true" kind="lib" path="D:/GitHub (INTROSE)/SoftwareProject/RGFTC_SoftwareProject_FirstIteration/Libraries/swing2swt.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
