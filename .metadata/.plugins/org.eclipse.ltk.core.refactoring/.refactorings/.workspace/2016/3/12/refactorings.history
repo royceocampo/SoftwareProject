@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Delete resource &apos;RGFTC_SoftwareProject_Latest (from 1st Iteration)&apos;" deleteContents="true" description="Delete resource &apos;RGFTC_SoftwareProject_Latest (from 1st Iteration)&apos;" element1="/RGFTC_SoftwareProject_Latest (from 1st Iteration)" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1458127282213"/>
+</session>
