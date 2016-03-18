@@ -8,12 +8,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.TableTree;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.MessageBox;
-import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.swt.widgets.Text;
 
 import dbconnection.DBConnection;
 import managers.Product;
@@ -96,27 +95,34 @@ public class ProductManager {
 //		return product;
 //	}
 	
-	public static void getProductEdit(int id){
+	public static void editProduct(Product modProduct, int productID)throws Exception{
+		System.out.println("ProductID (editProduct): "+productID);
+		Connection conn = (Connection)DBConnection.getConnection();
+		PreparedStatement pstmt = null;
+		
+		String sql = "UPDATE products_table"
+				+" SET productName = ?,"
+				+" category = ?,"
+				+" subtype = ?,"
+				+" brand = ?,"
+				+" packaging = ?,"
+				+" pricePerKilo = ?"
+				+" WHERE productID = ?";
 		try{
-			Product product = new Product( null, null, null, null, null, 0, 0);
-			Connection conn = DBConnection.getConnection();
-			PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM products_table"
-					+"WHERE productID = ?");
-			pstmt.setInt(1, id);
-			ResultSet rs = pstmt.executeQuery();
-			if(rs.next()){
-				product.setProductName(rs.getString("productName"));
-				product.setProdCategory(rs.getString("category"));
-				product.setProdSubtype(rs.getString("subtype"));
-				product.setProdBrand(rs.getString("brand"));
-				product.setProdPackaging(rs.getString("packaging"));
-				product.setProdPrice(rs.getFloat("pricePerKilo"));
-				product.setProdStocks(rs.getInt("stocks"));
-			}
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(7, productID);
+			pstmt.setString(1, modProduct.getProductName());
+			pstmt.setString(2, modProduct.getProdCategory());
+			pstmt.setString(3, modProduct.getProdSubtype());
+			pstmt.setString(4, modProduct.getProdBrand());
+			pstmt.setString(5, modProduct.getProdPackaging());
+			pstmt.setFloat(6, modProduct.getProdPrice());
+			System.out.println(pstmt);
+			pstmt.executeUpdate();
 		}
 		catch(SQLException e){
 			e.printStackTrace();
-		}
+		}	
 	}
 	
 	public static void deleteProduct(int id){

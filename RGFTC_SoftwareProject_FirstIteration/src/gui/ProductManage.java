@@ -29,6 +29,9 @@ public class ProductManage {
 	protected Shell shell;
 	private Table prodTable;
 	public static int prodID;
+	public static int index;
+	public static TableItem item;
+	public static TableItem[] tblItems;
 
 	
 	public static int getProdID() {
@@ -37,6 +40,30 @@ public class ProductManage {
 
 	public static void setProdID(int prodID) {
 		ProductManage.prodID = prodID;
+	}
+	
+	public static int getIndex() {
+		return index;
+	}
+
+	public static void setIndex(int index) {
+		ProductManage.index = index;
+	}
+	
+	public static TableItem getItem() {
+		return item;
+	}
+
+	public static void setItem(TableItem item) {
+		ProductManage.item = item;
+	}
+	
+	public static TableItem[] getTblItems() {
+		return tblItems;
+	}
+
+	public static void setTblItems(TableItem[] tblItems) {
+		ProductManage.tblItems = tblItems;
 	}
 
 	public static void main(String[] args){
@@ -198,14 +225,21 @@ public class ProductManage {
 				btnEdit.setEnabled(true);
 				btnDelete.setEnabled(true);
 				Point pt = new Point(event.x, event.y);
-				TableItem item = prodTable.getItem(pt);
+				item = prodTable.getItem(pt);
 				if(item != null) {
-					int index = prodTable.indexOf(item);
-					TableItem[] tblItems = prodTable.getItems();
+					index = prodTable.indexOf(item);
+//					System.out.println("INDEX: "+index);
+					tblItems = prodTable.getItems();
 //					System.out.println(tblItems[index].getText(0));
 					String prodStr = tblItems[index].getText(0).toString();
-					prodID = Integer.parseInt(prodStr);
-//					System.out.println(prodID);
+					try{
+						prodID = Integer.parseInt(prodStr);
+					}
+					catch(Exception e){
+						System.out.println("No record selected");
+					}
+					
+//					System.out.println("Product ID (ProdManage):"+prodID);
 				}
 			}
 		});
@@ -216,6 +250,8 @@ public class ProductManage {
 //				System.out.println("Prod ID = " + prodID);
 				EditProduct ep = new EditProduct();
 				ep.open();
+				prodTable.removeAll();
+				ProductManager.displayProducts(prodTable);
 			}
 		});
 		
@@ -228,7 +264,7 @@ public class ProductManage {
 			        messageBox.setMessage("Delete this item?");
 			        messageBox.setText("Confirm Delete");
 			        int response = messageBox.open();
-			        if (response == SWT.YES)
+			        if (response == SWT.YES){
 			        	ProductManager.deleteProduct(prodID);
 			        	MessageBox msg = new MessageBox(shlProductManage, SWT.ICON_INFORMATION | SWT.OK);
 			        	msg.setText("Success!");
@@ -239,6 +275,7 @@ public class ProductManage {
 							prodTable.remove(prodTable.getSelectionIndices());
 //							ProductManager.displayProducts(prodTable);
 						}
+			        }
 			      }
 			});
 	}
