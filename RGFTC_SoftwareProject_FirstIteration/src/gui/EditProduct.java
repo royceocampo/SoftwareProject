@@ -13,9 +13,11 @@ import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import classes.ProductManager;
+
 public class EditProduct {
 
-	protected Shell shlAddProduct;
+	protected Shell shlEditProduct;
 	
 	public static Text txtProdName;
 	public static Text txtBrand;
@@ -43,9 +45,9 @@ public class EditProduct {
 	public void open() {
 		Display display = Display.getDefault();
 		createContents();
-		shlAddProduct.open();
-		shlAddProduct.layout();
-		while (!shlAddProduct.isDisposed()) {
+		shlEditProduct.open();
+		shlEditProduct.layout();
+		while (!shlEditProduct.isDisposed()) {
 			if (!display.readAndDispatch()) {
 				display.sleep();
 			}
@@ -56,86 +58,92 @@ public class EditProduct {
 	 * Create contents of the window.
 	 */
 	protected void createContents() {
-		shlAddProduct = new Shell();
-		shlAddProduct.setMinimumSize(new Point(200, 50));
-		shlAddProduct.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
-		shlAddProduct.setSize(339, 300);
-		shlAddProduct.setText("Rare Global Food Trading Corp. Add Product");
+		shlEditProduct = new Shell();
+		shlEditProduct.setMinimumSize(new Point(200, 50));
+		shlEditProduct.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
+		shlEditProduct.setSize(339, 300);
+		shlEditProduct.setText("Rare Global Food Trading Corp. Add Product");
 		
-		Button buttonSubmit = new Button(shlAddProduct, SWT.NONE);
+		Button buttonSubmit = new Button(shlEditProduct, SWT.NONE);
 		
 		buttonSubmit.setText("Confirm");
 		buttonSubmit.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 		buttonSubmit.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
 		buttonSubmit.setBounds(126, 214, 120, 37);
 		
-		Label lblProductName = new Label(shlAddProduct, SWT.NONE);
+		Label lblProductName = new Label(shlEditProduct, SWT.NONE);
 		lblProductName.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.NORMAL));
 		lblProductName.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
 		lblProductName.setBounds(10, 24, 110, 26);
 		lblProductName.setText("Product Name:");
 		
-		Label lblCategory = new Label(shlAddProduct, SWT.NONE);
+		Label lblCategory = new Label(shlEditProduct, SWT.NONE);
 		lblCategory.setText("Category:");
 		lblCategory.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.NORMAL));
 		lblCategory.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
 		lblCategory.setBounds(46, 56, 71, 26);
 		
-		Label lblSubtype = new Label(shlAddProduct, SWT.NONE);
+		Label lblSubtype = new Label(shlEditProduct, SWT.NONE);
 		lblSubtype.setText("Subtype:");
 		lblSubtype.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.NORMAL));
 		lblSubtype.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
 		lblSubtype.setBounds(46, 88, 60, 26);
 		
-		Label lblBrand = new Label(shlAddProduct, SWT.NONE);
+		Label lblBrand = new Label(shlEditProduct, SWT.NONE);
 		lblBrand.setText("Brand:");
 		lblBrand.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.NORMAL));
 		lblBrand.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
 		lblBrand.setBounds(60, 120, 60, 26);
 		
-		Label lblPackaging = new Label(shlAddProduct, SWT.NONE);
+		Label lblPackaging = new Label(shlEditProduct, SWT.NONE);
 		lblPackaging.setText("Packaging:");
 		lblPackaging.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.NORMAL));
 		lblPackaging.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
 		lblPackaging.setBounds(31, 152, 79, 26);
 		
-		Label lblPrice = new Label(shlAddProduct, SWT.NONE);
+		Label lblPrice = new Label(shlEditProduct, SWT.NONE);
 		lblPrice.setText("Price:");
 		lblPrice.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.NORMAL));
 		lblPrice.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
 		lblPrice.setBounds(60, 184, 42, 26);
 		
-		txtProdName = new Text(shlAddProduct, SWT.BORDER);
+		txtProdName = new Text(shlEditProduct, SWT.BORDER);
 		txtProdName.setBounds(126, 26, 120, 26);
 		
-		txtBrand = new Text(shlAddProduct, SWT.BORDER);
+		txtBrand = new Text(shlEditProduct, SWT.BORDER);
 		txtBrand.setBounds(126, 120, 120, 26);
 		
-		txtPackaging = new Text(shlAddProduct, SWT.BORDER);
+		txtPackaging = new Text(shlEditProduct, SWT.BORDER);
 		txtPackaging.setBounds(126, 152, 120, 26);
 		
-		Spinner spinPrice = new Spinner(shlAddProduct, SWT.BORDER);
+		Spinner spinPrice = new Spinner(shlEditProduct, SWT.BORDER);
 		spinPrice.setBounds(126, 186, 120, 22);
 		
-		Combo cmbCategory = new Combo(shlAddProduct, SWT.NONE);
+		Combo cmbCategory = new Combo(shlEditProduct, SWT.NONE);
 		cmbCategory.setItems(new String[] {"A", "B", "C", "D"});
 		cmbCategory.setBounds(126, 56, 120, 23);
 		
 		
-		Combo cmbSubtype = new Combo(shlAddProduct, SWT.NONE);
+		Combo cmbSubtype = new Combo(shlEditProduct, SWT.NONE);
 		cmbSubtype.setItems(new String[] {"AA", "AB", "AC", "AD"});
 		cmbSubtype.setBounds(126, 91, 120, 23);
+		
+//		System.out.println("ProductID: " +prodID);
+		int prodID = ProductManage.getProdID();
+		ProductManager.getProductEdit(prodID);
+//		, txtProdName, cmbCategory, cmbSubtype, txtBrand, txtPackaging, spinPrice 
 		
 		buttonSubmit.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				String strProdName = txtProdName.getText();
-				String strCategory = cmbCategory.getText();
-				String strSubtype = cmbSubtype.getText();
-				String strBrand = txtBrand.getText();
-				String strPackaging = txtPackaging.getText();
-				int nPrice = spinPrice.getSelection();
+//				String strProdName = txtProdName.getText();
+//				String strCategory = cmbCategory.getText();
+//				String strSubtype = cmbSubtype.getText();
+//				String strBrand = txtBrand.getText();
+//				String strPackaging = txtPackaging.getText();
+//				int nPrice = spinPrice.getSelection();
 //				Product.addProduct(strProdName, strCategory, strSubtype, strBrand, strPackaging, nPrice);
+				
 			}
 		});
 	}

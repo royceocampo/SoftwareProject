@@ -45,7 +45,7 @@ public class ProductManager {
 		PreparedStatement pst = null;
 		ResultSet rs = null;
 		
-		String query = "SELECT productName, category, subtype, brand, packaging, priceperkilo FROM products_table ORDER BY category ASC";
+		String query = "SELECT productID, productName, category, subtype, brand, packaging, priceperkilo FROM products_table ORDER BY category ASC";
 		try{
 			pst = conn.prepareStatement(query);
 			rs = pst.executeQuery();
@@ -69,17 +69,42 @@ public class ProductManager {
 		}
 	}
 
-	public Product getProduct(int id) {
-		Product product = new Product( null, null, null, null, null, id, id);
-
-		try {
+//	public Product getProduct(int id) {
+//		Product product = new Product( null, null, null, null, null, id, id);
+//
+//		try {
+//			Connection conn = DBConnection.getConnection();
+//			PreparedStatement pstmt = conn
+//					.prepareStatement("SELECT * FROM products_table WHERE productID = ?");
+//			pstmt.setInt(1, id);
+//			ResultSet rs = pstmt.executeQuery();
+//
+//			if (rs.next()) {
+//				product.setProductName(rs.getString("productName"));
+//				product.setProdCategory(rs.getString("category"));
+//				product.setProdSubtype(rs.getString("subtype"));
+//				product.setProdBrand(rs.getString("brand"));
+//				product.setProdPackaging(rs.getString("packaging"));
+//				product.setProdPrice(rs.getFloat("pricePerKilo"));
+//				product.setProdStocks(rs.getInt("stocks"));
+//			}
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//
+//		return product;
+//	}
+	
+	public static void getProductEdit(int id){
+		try{
+			Product product = new Product( null, null, null, null, null, 0, 0);
 			Connection conn = DBConnection.getConnection();
-			PreparedStatement pstmt = conn
-					.prepareStatement("SELECT * FROM products_table WHERE productID = ?");
+			PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM products_table"
+					+"WHERE productID = ?");
 			pstmt.setInt(1, id);
 			ResultSet rs = pstmt.executeQuery();
-
-			if (rs.next()) {
+			if(rs.next()){
 				product.setProductName(rs.getString("productName"));
 				product.setProdCategory(rs.getString("category"));
 				product.setProdSubtype(rs.getString("subtype"));
@@ -88,12 +113,23 @@ public class ProductManager {
 				product.setProdPrice(rs.getFloat("pricePerKilo"));
 				product.setProdStocks(rs.getInt("stocks"));
 			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+		}
+		catch(SQLException e){
 			e.printStackTrace();
 		}
-
-		return product;
+	}
+	
+	public static void deleteProduct(int id){
+		try{
+			Connection conn = DBConnection.getConnection();
+			String sql = "DELETE FROM products_table WHERE productID = " +id;
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.executeUpdate();
+					
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}
 	}
 
 	public ArrayList<Product> getAllProducts() {
