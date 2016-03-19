@@ -13,6 +13,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 
 public class InventoryHistory {
 
@@ -63,6 +65,12 @@ public class InventoryHistory {
 		shlInventoryHistory.setMenuBar(menu);
 		
 		MenuItem mntmHome = new MenuItem(menu, SWT.NONE);
+		mntmHome.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				shlInventoryHistory.close();
+			}
+		});
 		mntmHome.setText("Home");
 		
 		MenuItem mntmOrder = new MenuItem(menu, SWT.NONE);

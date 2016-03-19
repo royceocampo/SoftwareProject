@@ -103,8 +103,8 @@ public class viewOrder {
 		mntmHome.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Home ho = new Home();
-				ho.open();
+//				Home ho = new Home();
+//				ho.open();
 				shlOrderManage.close();
 			}
 		});

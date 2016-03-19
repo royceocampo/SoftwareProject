@@ -133,7 +133,7 @@ CREATE TABLE `products_table` (
 
 LOCK TABLES `products_table` WRITE;
 /*!40000 ALTER TABLE `products_table` DISABLE KEYS */;
-INSERT INTO `products_table` VALUES (1,'Baby back ribs','Prok',' ','Patel',' ',420,10),(2,'Brisket','Beef',' ','Excel / US',' ',650,5),(3,'Cream Dory Trimmed','Cream Dory',' ',' ','10/box',110,2);
+INSERT INTO `products_table` VALUES (1,'Baby Back Ribs','Meat','Pork','Patel',' ',420,10),(2,'Brisket','Meat','Beef','Excel/US','',650,5),(3,'Cream Dory Trimmed','Seafood','Cream Dory',' ','10kg/box',110,2);
 /*!40000 ALTER TABLE `products_table` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -146,4 +146,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-03-07 18:54:27
+-- Dump completed on 2016-03-19 21:53:34

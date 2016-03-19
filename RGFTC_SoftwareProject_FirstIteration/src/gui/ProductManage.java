@@ -1,27 +1,26 @@
 package gui;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CCombo;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
-import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import classes.ProductManager;
-
-import org.eclipse.swt.custom.CCombo;
-import org.eclipse.swt.custom.TableTree;
-import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.events.ShellAdapter;
-import org.eclipse.swt.events.ShellEvent;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.custom.ScrolledComposite;
 
 public class ProductManage {
 
@@ -29,6 +28,43 @@ public class ProductManage {
 	private Text txtSearch;
 	protected Shell shell;
 	private Table prodTable;
+	public static int prodID;
+	public static int index;
+	public static TableItem item;
+	public static TableItem[] tblItems;
+
+	
+	public static int getProdID() {
+		return prodID;
+	}
+
+	public static void setProdID(int prodID) {
+		ProductManage.prodID = prodID;
+	}
+	
+	public static int getIndex() {
+		return index;
+	}
+
+	public static void setIndex(int index) {
+		ProductManage.index = index;
+	}
+	
+	public static TableItem getItem() {
+		return item;
+	}
+
+	public static void setItem(TableItem item) {
+		ProductManage.item = item;
+	}
+	
+	public static TableItem[] getTblItems() {
+		return tblItems;
+	}
+
+	public static void setTblItems(TableItem[] tblItems) {
+		ProductManage.tblItems = tblItems;
+	}
 
 	public static void main(String[] args){
 		try{
@@ -76,8 +112,8 @@ public class ProductManage {
 		mntmOrder.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				viewOrder vo = new viewOrder();
-				vo.open();
+//				viewOrder vo = new viewOrder();
+//				vo.open();
 				shlProductManage.close();
 			}
 		});
@@ -121,30 +157,32 @@ public class ProductManage {
 		btnNewButton.setText("Add Product");
 		
 		Button btnEdit = new Button(shlProductManage, SWT.NONE);
-		btnEdit.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-			}
-		});
+		
 		btnEdit.setText("Edit");
 		btnEdit.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 		btnEdit.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
 		btnEdit.setBounds(143, 223, 95, 21);
+		btnEdit.setEnabled(false);
 		
 		Button btnDelete = new Button(shlProductManage, SWT.NONE);
+
 		btnDelete.setText("Delete");
 		btnDelete.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 		btnDelete.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
 		btnDelete.setBounds(255, 223, 95, 21);
+		btnDelete.setEnabled(false);
 		
 		txtSearch = new Text(shlProductManage, SWT.BORDER);
 		txtSearch.setText("Search");
 		txtSearch.setBounds(297, 54, 127, 21);
 		
-		prodTable = new Table(shlProductManage, SWT.BORDER | SWT.FULL_SELECTION);
+		prodTable = new Table(shlProductManage, SWT.BORDER | SWT.V_SCROLL | SWT.FULL_SELECTION);
 		prodTable.setBounds(10, 81, 464, 132);
 		prodTable.setHeaderVisible(true);
 		prodTable.setLinesVisible(true);
+		
+		TableColumn tblclmnProdID = new TableColumn(prodTable, SWT.NONE);
+		tblclmnProdID.setText("ID");
 		
 		TableColumn tblclmnProduct = new TableColumn(prodTable, SWT.NONE);
 		tblclmnProduct.setWidth(125);
@@ -181,7 +219,65 @@ public class ProductManage {
 		shell.setSize(450, 300);
 		shell.setText("SWT Application");
 		
+		ProductManager.displayProducts(prodTable);	
+		prodTable.addListener(SWT.MouseDown, new Listener(){
+			public void handleEvent(Event event){
+				btnEdit.setEnabled(true);
+				btnDelete.setEnabled(true);
+				Point pt = new Point(event.x, event.y);
+				item = prodTable.getItem(pt);
+				if(item != null) {
+					index = prodTable.indexOf(item);
+//					System.out.println("INDEX: "+index);
+					tblItems = prodTable.getItems();
+//					System.out.println(tblItems[index].getText(0));
+					String prodStr = tblItems[index].getText(0).toString();
+					try{
+						prodID = Integer.parseInt(prodStr);
+					}
+					catch(Exception e){
+						System.out.println("No record selected");
+					}
+					
+//					System.out.println("Product ID (ProdManage):"+prodID);
+				}
+			}
+		});
+		
+		btnEdit.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+//				System.out.println("Prod ID = " + prodID);
+				EditProduct ep = new EditProduct();
+				ep.open();
+				prodTable.removeAll();
 				ProductManager.displayProducts(prodTable);
+			}
+		});
+		
+		btnDelete.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				System.out.println(prodID);
+				MessageBox messageBox = new MessageBox(shlProductManage, SWT.ICON_QUESTION
+			            | SWT.YES | SWT.NO);
+			        messageBox.setMessage("Delete this item?");
+			        messageBox.setText("Confirm Delete");
+			        int response = messageBox.open();
+			        if (response == SWT.YES){
+			        	ProductManager.deleteProduct(prodID);
+			        	MessageBox msg = new MessageBox(shlProductManage, SWT.ICON_INFORMATION | SWT.OK);
+			        	msg.setText("Success!");
+						msg.setMessage("Product deleted successfully!");
+						int buttonID = msg.open();
+						switch (buttonID){
+						case SWT.OK:
+							prodTable.remove(prodTable.getSelectionIndices());
+//							ProductManager.displayProducts(prodTable);
+						}
+			        }
+			      }
+			});
 	}
 	
 	 //* Launch the application.
