@@ -101,8 +101,6 @@ public class ProductManage {
 		mntmHome.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Home h = new Home();
-				h.open();
 				shlProductManage.close();
 			}
 		});
@@ -112,8 +110,8 @@ public class ProductManage {
 		mntmOrder.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-//				viewOrder vo = new viewOrder();
-//				vo.open();
+				viewOrder vo = new viewOrder();
+				vo.open();
 				shlProductManage.close();
 			}
 		});
@@ -123,6 +121,14 @@ public class ProductManage {
 		mntmProduct.setText("Product");
 		
 		MenuItem mntmInventory = new MenuItem(menu, SWT.NONE);
+		mntmInventory.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+//				InventoryHistory ih = new InventoryHistory();
+//				ih.open();
+//				shlProductManage.close();
+			}
+		});
 		mntmInventory.setText("Inventory History");
 		
 		Label lblProductInventory = new Label(shlProductManage, SWT.NONE);
@@ -149,6 +155,8 @@ public class ProductManage {
 			public void widgetSelected(SelectionEvent e) {
 				AddProduct window = new AddProduct();
 				window.open();
+				prodTable.removeAll();
+				ProductManager.displayProducts(prodTable);
 			}
 		});
 		btnNewButton.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));

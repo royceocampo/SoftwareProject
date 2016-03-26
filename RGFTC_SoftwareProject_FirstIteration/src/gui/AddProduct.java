@@ -68,7 +68,7 @@ public class AddProduct {
 		
 		Button buttonSubmit = new Button(shlAddProduct, SWT.NONE);
 		
-		buttonSubmit.setText("Submit");
+		buttonSubmit.setText("Add Product");
 		buttonSubmit.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 		buttonSubmit.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
 		buttonSubmit.setBounds(126, 214, 120, 37);
@@ -234,16 +234,16 @@ public class AddProduct {
 					msg.setMessage("New product was added successfully!");
 					int buttonID = msg.open();
 					switch (buttonID){
-					case SWT.NO:
-						break;
+					case SWT.OK:
+						txtProdName.setText("");
+						cmbCategory.setText("");
+						cmbSubtype.setText("");
+						txtBrand.setText("");
+						txtPackaging.setText("");
+						spinPrice.setSelection(0);
+						shlAddProduct.close(); //please check if it's ok!
+						
 					}
-					txtProdName.setText("");
-					cmbCategory.setText("");
-					cmbSubtype.setText("");
-					txtBrand.setText("");
-					txtPackaging.setText("");
-					spinPrice.setSelection(0);
-					shlAddProduct.close(); //please check if it's ok!
 				}
 				
 			}
