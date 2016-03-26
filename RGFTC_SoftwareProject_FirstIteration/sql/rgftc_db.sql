@@ -122,9 +122,10 @@ CREATE TABLE `products_table` (
   `brand` varchar(45) NOT NULL,
   `packaging` varchar(45) NOT NULL,
   `pricePerKilo` float NOT NULL,
-  `stocks` int(11) NOT NULL,
+  `stocks` int(11) unsigned zerofill NOT NULL DEFAULT '00000000000',
+  `weight` float unsigned zerofill NOT NULL DEFAULT '000000000000',
   PRIMARY KEY (`productID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -133,7 +134,7 @@ CREATE TABLE `products_table` (
 
 LOCK TABLES `products_table` WRITE;
 /*!40000 ALTER TABLE `products_table` DISABLE KEYS */;
-INSERT INTO `products_table` VALUES (1,'Baby Back Ribs','Meat','Pork','Patel',' ',420,10),(2,'Brisket','Meat','Beef','Excel/US','',650,5),(3,'Cream Dory Trimmed','Seafood','Cream Dory',' ','10kg/box',110,2);
+INSERT INTO `products_table` VALUES (1,'Baby Back Ribs','Meat','Pork','Patel',' ',420,00000000010,000000000000),(2,'Brisket','Meat','Beef','Excel/US','',650,00000000005,000000000000),(3,'Cream Dory Trimmed','Seafood','Cream Dory',' ','10kg/box',110,00000000002,000000000000),(4,'Rib Eye Roll','Meat','Beef','Cargill/US','',860,00000000000,000000000000);
 /*!40000 ALTER TABLE `products_table` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -146,4 +147,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-03-19 21:53:34
+-- Dump completed on 2016-03-26 18:11:40

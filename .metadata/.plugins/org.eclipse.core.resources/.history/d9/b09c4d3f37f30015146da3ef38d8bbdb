@@ -124,9 +124,9 @@ public class ProductManage {
 		mntmInventory.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-//				InventoryHistory ih = new InventoryHistory();
-//				ih.open();
-//				shlProductManage.close();
+				InventoryHistory ih = new InventoryHistory();
+				ih.open();
+				shlProductManage.close();
 			}
 		});
 		mntmInventory.setText("Inventory History");
@@ -155,8 +155,6 @@ public class ProductManage {
 			public void widgetSelected(SelectionEvent e) {
 				AddProduct window = new AddProduct();
 				window.open();
-				prodTable.removeAll();
-				ProductManager.displayProducts(prodTable);
 			}
 		});
 		btnNewButton.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));

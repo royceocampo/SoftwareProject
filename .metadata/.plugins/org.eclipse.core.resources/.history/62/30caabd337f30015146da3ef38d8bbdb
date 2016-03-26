@@ -234,16 +234,16 @@ public class AddProduct {
 					msg.setMessage("New product was added successfully!");
 					int buttonID = msg.open();
 					switch (buttonID){
-					case SWT.OK:
-						txtProdName.setText("");
-						cmbCategory.setText("");
-						cmbSubtype.setText("");
-						txtBrand.setText("");
-						txtPackaging.setText("");
-						spinPrice.setSelection(0);
-						shlAddProduct.close(); //please check if it's ok!
-						
+					case SWT.NO:
+						break;
 					}
+					txtProdName.setText("");
+					cmbCategory.setText("");
+					cmbSubtype.setText("");
+					txtBrand.setText("");
+					txtPackaging.setText("");
+					spinPrice.setSelection(0);
+					shlAddProduct.close(); //please check if it's ok!
 				}
 				
 			}

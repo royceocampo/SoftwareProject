@@ -79,14 +79,6 @@ public class InventoryHistory {
 		mntmOrder.setText("Order");
 		
 		MenuItem mntmProduct = new MenuItem(menu, SWT.NONE);
-		mntmProduct.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				ProductManage pm = new ProductManage();
-				pm.open();
-				shlInventoryHistory.close();
-			}
-		});
 		mntmProduct.setText("Product");
 		
 		MenuItem mntmInventoryHistory = new MenuItem(menu, SWT.NONE);

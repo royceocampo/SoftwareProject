@@ -125,6 +125,12 @@ public class viewOrder {
 		mntmProduct.setText("Product");
 		
 		MenuItem mntmInventory = new MenuItem(menu, SWT.NONE);
+		mntmInventory.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+//				shlOrderManage.close();
+			}
+		});
 		mntmInventory.setText("Inventory");
 		
 		Label lblOrderManagement = new Label(shlOrderManage, SWT.NONE);
