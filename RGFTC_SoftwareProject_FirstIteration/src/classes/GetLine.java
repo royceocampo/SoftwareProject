@@ -196,6 +196,32 @@ public class GetLine {
 	return null;
 	}
 	
+	public void lineDeleteAll(){
+		try {
+			ps = conn.createStatement();
+		
+		ps.executeUpdate("DELETE l.*, o.* from lineitems_table l, orders_table o where l.purchase_orderID = o.purchase_orderID and  o.deliveryStatus = 1;");
+		
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+	
+	public void lineDelete(int orderId){
+		try {
+			ps = conn.createStatement();
+		
+		ps.executeUpdate("DELETE l.*, o.* from lineitems_table l, orders_table o where l.purchase_orderID = o.purchase_orderID and o.purchase_orderID =  '" + orderId + "';");
+		
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+	
+	
+	
 	
 	
 	public ArrayList<LineData> getLineSum(String date){
