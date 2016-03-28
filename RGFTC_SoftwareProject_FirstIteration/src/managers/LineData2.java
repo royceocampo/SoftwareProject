@@ -1,6 +1,6 @@
 package managers;
 
-public class LineData {
+public class LineData2 {
 	
 	private int purchase_orderID;
 	private String productName;
@@ -13,22 +13,16 @@ public class LineData {
 	private int weight;
 	private int status;
 	
-	private String clientName;
-	private String deliveryDueDate;
-	private String deliveryNotes;
-	
-	public LineData(int purchase_orderID, String clientName, String productName, String category, String subtype, String brand, String packaging, int pricePerKilo, int quantity, int weight, String deliveryDueDate, String deliveryNotes, int status){
+	public LineData2(int purchase_orderID, String productName, String category, String subtype, String brand, String packaging, int pricePerKilo, int quantity, int weight, int status){
 		this.purchase_orderID = purchase_orderID;
-		this.clientName = clientName;
 		this.productName = productName;
+		this.category = category;
 		this.subtype = subtype;
 		this.brand = brand;
 		this.packaging = packaging;
 		this.pricePerKilo = pricePerKilo;
 		this.quantity = quantity;
 		this.weight = weight;
-		this.deliveryDueDate = deliveryDueDate;
-		this.deliveryNotes = deliveryNotes;
 		this.status = status;
 	}
 	
@@ -111,33 +105,5 @@ public class LineData {
 	public void setStatus(int status) {
 		this.status = status;
 	}
-
-
-
-	public String getClientName() {
-		return clientName;
-	}
-
-	public void setClientName(String clientName) {
-		this.clientName = clientName;
-	}
-
-	public String getDeliveryDueDate() {
-		return deliveryDueDate;
-	}
-
-	public void setDeliveryDueDate(String deliverDueDate) {
-		this.deliveryDueDate = deliverDueDate;
-	}
-
-	public String getDeliveryNotes() {
-		return deliveryNotes;
-	}
-
-	public void setDeliveryNotes(String deliveryNotes) {
-		this.deliveryNotes = deliveryNotes;
-	}
-	
-	
 	
 }

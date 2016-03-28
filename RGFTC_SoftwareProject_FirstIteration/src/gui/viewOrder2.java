@@ -28,7 +28,7 @@ import classes.MarkManager;
 import managers.LineData;
 import managers.Order;
 
-public class viewOrder {
+public class viewOrder2 {
 
 	protected Shell shlOrderManage;
 	private Text txtSearch;
@@ -71,7 +71,7 @@ public class viewOrder {
 	 */
 	public static void main(String[] args) {
 		try {
-			viewOrder window = new viewOrder();
+			viewOrder2 window = new viewOrder2();
 			window.open();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -159,15 +159,23 @@ public class viewOrder {
 		
 		TableColumn tblclmnPurchase = new TableColumn(tableTree.getTable(), SWT.NONE);
 		tblclmnPurchase.setWidth(100);
-		tblclmnPurchase.setText("Client Name");
+		tblclmnPurchase.setText("Purchase ID");
 		
 		TableColumn tblclmnProduct = new TableColumn(tableTree.getTable(), SWT.NONE);
 		tblclmnProduct.setWidth(100);
 		tblclmnProduct.setText("Product");
 		
+		TableColumn tblclmnCategory = new TableColumn(tableTree.getTable(), SWT.NONE);
+		tblclmnCategory.setWidth(100);
+		tblclmnCategory.setText("Category");
+		
 		TableColumn tblclmnSubtype = new TableColumn(tableTree.getTable(), SWT.NONE);
 		tblclmnSubtype.setWidth(100);
 		tblclmnSubtype.setText("SubType");
+		
+		TableColumn tblclmnBrand = new TableColumn(tableTree.getTable(), SWT.NONE);
+		tblclmnBrand.setWidth(100);
+		tblclmnBrand.setText("Brand");
 		
 		TableColumn tblclmnPackaging = new TableColumn(tableTree.getTable(), SWT.NONE);
 		tblclmnPackaging.setWidth(100);
@@ -185,19 +193,9 @@ public class viewOrder {
 		tblclmnWeight.setWidth(100);
 		tblclmnWeight.setText("Weight");
 		
-		TableColumn tblclmnDueDate= new TableColumn(tableTree.getTable(), SWT.NONE);
-		tblclmnDueDate.setWidth(100);
-		tblclmnDueDate.setText("Due Date");
-		
-		TableColumn tblclmnNotes = new TableColumn(tableTree.getTable(), SWT.NONE);
-		tblclmnNotes.setWidth(100);
-		tblclmnNotes.setText("Notes");
-		
 		TableColumn tblclmnStatus = new TableColumn(tableTree.getTable(), SWT.NONE);
 		tblclmnStatus.setWidth(100);
 		tblclmnStatus.setText("Status");
-		
-		
 		
 		Button btnMarkOrder = new Button(shlOrderManage, SWT.NONE);
 		btnMarkOrder.setText("Mark as Delivered");
@@ -240,15 +238,15 @@ public class viewOrder {
 					for(int i = 0; i < l.size()  ;i++ ){
 						
 						TableTreeItem parent = new TableTreeItem(tableTree,SWT.NONE);
-						parent.setText(0, l.get(i).getClientName());
+						parent.setText(0, Integer.toString(l.get(i).getPurchaseID()));
 						parent.setText(1, l.get(i).getProductName());
-						parent.setText(2, l.get(i).getSubtype());
-						parent.setText(3, l.get(i).getPackaging());
-						parent.setText(4, Float.toString(l.get(i).getPricePerKilo()));
-						parent.setText(5, Integer.toString(l.get(i).getQuantity()));
-						parent.setText(6, Integer.toString(l.get(i).getWeight()));
-						parent.setText(7, l.get(i).getDeliveryDueDate());
-						parent.setText(8, l.get(i).getDeliveryNotes());
+						parent.setText(2, l.get(i).getCategory());
+						parent.setText(3, l.get(i).getSubtype());
+						parent.setText(4, l.get(i).getBrand());
+						parent.setText(5, l.get(i).getPackaging());
+						parent.setText(6, Float.toString(l.get(i).getPricePerKilo()));
+						parent.setText(7, Integer.toString(l.get(i).getQuantity()));
+						parent.setText(8, Integer.toString(l.get(i).getWeight()));
 						if(l.get(i).getStatus()==1){
 							parent.setText(9, "Delivered");
 						}
@@ -291,15 +289,15 @@ public class viewOrder {
 					
 					for(int i = 0; i < la.size(); i++){	 
 						TableTreeItem parent = new TableTreeItem(tableTree,SWT.NONE);
-						parent.setText(0, la.get(i).getClientName());
+						parent.setText(0, Integer.toString(la.get(i).getPurchaseID()));
 						parent.setText(1, la.get(i).getProductName());
-						parent.setText(2, la.get(i).getSubtype());
-						parent.setText(3, la.get(i).getPackaging());
-						parent.setText(4, Float.toString(la.get(i).getPricePerKilo()));
-						parent.setText(5, Integer.toString(la.get(i).getQuantity()));
-						parent.setText(6, Integer.toString(la.get(i).getWeight()));
-						parent.setText(7, la.get(i).getDeliveryDueDate());
-						parent.setText(8, la.get(i).getDeliveryNotes());
+						parent.setText(2, la.get(i).getCategory());
+						parent.setText(3, la.get(i).getSubtype());
+						parent.setText(4, la.get(i).getBrand());
+						parent.setText(5, la.get(i).getPackaging());
+						parent.setText(6, Float.toString(la.get(i).getPricePerKilo()));
+						parent.setText(7, Integer.toString(la.get(i).getQuantity()));
+						parent.setText(8, Integer.toString(la.get(i).getWeight()));
 						if(la.get(i).getStatus()==1){
 							parent.setText(9, "Delivered");
 						}
@@ -354,16 +352,15 @@ public class viewOrder {
 								}
 							}
 						});
-						parent.setText(0, lp.get(i).getClientName());
+						parent.setText(0, Integer.toString(lp.get(i).getPurchaseID()));
 						parent.setText(1, lp.get(i).getProductName());
-						parent.setText(2, lp.get(i).getSubtype());
-						parent.setText(3, lp.get(i).getPackaging());
-						parent.setText(4, Float.toString(lp.get(i).getPricePerKilo()));
-						parent.setText(5, Integer.toString(lp.get(i).getQuantity()));
-						parent.setText(6, Integer.toString(lp.get(i).getWeight()));
-						parent.setText(7, lp.get(i).getDeliveryDueDate());
-						parent.setText(8, lp.get(i).getDeliveryNotes());
-						
+						parent.setText(2, lp.get(i).getCategory());
+						parent.setText(3, lp.get(i).getSubtype());
+						parent.setText(4, lp.get(i).getBrand());
+						parent.setText(5, lp.get(i).getPackaging());
+						parent.setText(6, Float.toString(lp.get(i).getPricePerKilo()));
+						parent.setText(7, Integer.toString(lp.get(i).getQuantity()));
+						parent.setText(8, Integer.toString(lp.get(i).getWeight()));
 						if(lp.get(i).getStatus()==1){
 							parent.setText(9, "Delivered");
 						}
@@ -383,15 +380,15 @@ public class viewOrder {
 					la = gl.getLineAll();
 					for(int i = 0; i < la.size() ;i++ ){
 						TableTreeItem parent = new TableTreeItem(tableTree,SWT.NONE);
-						parent.setText(0, la.get(i).getClientName());
+						parent.setText(0, Integer.toString(la.get(i).getPurchaseID()));
 						parent.setText(1, la.get(i).getProductName());
-						parent.setText(2, la.get(i).getSubtype());
-						parent.setText(3, la.get(i).getPackaging());
-						parent.setText(4, Float.toString(la.get(i).getPricePerKilo()));
-						parent.setText(5, Integer.toString(la.get(i).getQuantity()));
-						parent.setText(6, Integer.toString(la.get(i).getWeight()));
-						parent.setText(7, la.get(i).getDeliveryDueDate());
-						parent.setText(8, la.get(i).getDeliveryNotes());
+						parent.setText(2, la.get(i).getCategory());
+						parent.setText(3, la.get(i).getSubtype());
+						parent.setText(4, la.get(i).getBrand());
+						parent.setText(5, la.get(i).getPackaging());
+						parent.setText(6, Float.toString(la.get(i).getPricePerKilo()));
+						parent.setText(7, Integer.toString(la.get(i).getQuantity()));
+						parent.setText(8, Integer.toString(la.get(i).getWeight()));
 						if(la.get(i).getStatus()==1){
 							parent.setText(9, "Delivered");
 						}
@@ -405,15 +402,15 @@ public class viewOrder {
 					ldc = gl.getLineDelivered();
 					for(int i = 0; i < ldc.size() ;i++ ){
 						TableTreeItem parent = new TableTreeItem(tableTree,SWT.NONE);
-						parent.setText(0, ldc.get(i).getClientName());
+						parent.setText(0, Integer.toString(ldc.get(i).getPurchaseID()));
 						parent.setText(1, ldc.get(i).getProductName());
-						parent.setText(2, ldc.get(i).getSubtype());
-						parent.setText(3, ldc.get(i).getPackaging());
-						parent.setText(4, Float.toString(ldc.get(i).getPricePerKilo()));
-						parent.setText(5, Integer.toString(ldc.get(i).getQuantity()));
-						parent.setText(6, Integer.toString(ldc.get(i).getWeight()));
-						parent.setText(7, ldc.get(i).getDeliveryDueDate());
-						parent.setText(8, ldc.get(i).getDeliveryNotes());
+						parent.setText(2, ldc.get(i).getCategory());
+						parent.setText(3, ldc.get(i).getSubtype());
+						parent.setText(4, ldc.get(i).getBrand());
+						parent.setText(5, ldc.get(i).getPackaging());
+						parent.setText(6, Float.toString(ldc.get(i).getPricePerKilo()));
+						parent.setText(7, Integer.toString(ldc.get(i).getQuantity()));
+						parent.setText(8, Integer.toString(ldc.get(i).getWeight()));
 						if(ldc.get(i).getStatus()==1){
 							parent.setText(9, "Delivered");
 						}
