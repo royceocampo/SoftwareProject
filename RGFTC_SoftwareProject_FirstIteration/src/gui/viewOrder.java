@@ -25,13 +25,13 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import classes.GetLine;
 import classes.GetOrders;
 import classes.MarkManager;
+import classes.ProductManager;
 import managers.LineData;
 import managers.Order;
 
 public class viewOrder {
 
 	protected Shell shlOrderManage;
-	private Text txtSearch;
 	protected Shell shell;
 	private Order o;
 
@@ -93,7 +93,7 @@ public class viewOrder {
 		shlOrderManage = new Shell();
 		shlOrderManage.setMinimumSize(new Point(500, 200));
 		shlOrderManage.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
-		shlOrderManage.setSize(738, 476);
+		shlOrderManage.setSize(735, 420);
 		shlOrderManage.setText("Rare Global Food Trading Corp.");
 		
 		Menu menu = new Menu(shlOrderManage, SWT.BAR);
@@ -142,7 +142,7 @@ public class viewOrder {
 		
 		CCombo combo_1 = new CCombo(shlOrderManage, SWT.BORDER);
 		
-		combo_1.setBounds(230, 50, 80, 21);
+		combo_1.setBounds(587, 24, 120, 21);
 		
 		combo_1.add(" ");
 		combo_1.add("Due Date");
@@ -153,7 +153,7 @@ public class viewOrder {
 		
 		TableTree tableTree = new TableTree(shlOrderManage, SWT.CHECK | SWT.BORDER | SWT.FULL_SELECTION);
 		//tableTree.getTable().setForeground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
-		tableTree.setBounds(27, 87, 680, 250);
+		tableTree.setBounds(10, 54, 697, 240);
 		tableTree.getTable().setHeaderVisible(true);
 		tableTree.getTable().setLinesVisible(true);;
 		
@@ -439,44 +439,33 @@ public class viewOrder {
 		});
 		btnAddOrder.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
 		btnAddOrder.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
-		btnAddOrder.setBounds(385, 360, 95, 35);
+		btnAddOrder.setBounds(612, 311, 95, 35);
 		btnAddOrder.setText("Add Order");
-		btnAddOrder.setBackground(SWTResourceManager.getColor(SWT.COLOR_DARK_RED));
 		
 		Button btnEditOrder = new Button(shlOrderManage, SWT.NONE);
 		btnEditOrder.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				EditOrder editOrder = new EditOrder();
+				editOrder.open();
+				tableTree.removeAll();
 			}
 		});
 		btnEditOrder.setText("Edit");
 		btnEditOrder.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 		btnEditOrder.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
-		btnEditOrder.setBounds(46, 360, 95, 35);
+		btnEditOrder.setBounds(10, 311, 95, 35);
 		
 		Button btnDeleteOrder = new Button(shlOrderManage, SWT.NONE);
 		btnDeleteOrder.setText("Delete");
 		btnDeleteOrder.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 		btnDeleteOrder.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
-		btnDeleteOrder.setBounds(147, 360, 95, 35);
-		
-		txtSearch = new Text(shlOrderManage, SWT.BORDER);
-		txtSearch.setText("Search");
-		txtSearch.setBounds(327, 50, 97, 21);
+		btnDeleteOrder.setBounds(111, 311, 95, 35);
 		
 		Label lblFilterBy = new Label(shlOrderManage, SWT.NONE);
 		lblFilterBy.setText("Filter By:");
 		lblFilterBy.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
-		lblFilterBy.setBounds(175, 54, 55, 15);
-		
-		Button btnSearchOrder = new Button(shlOrderManage, SWT.NONE);
-		btnSearchOrder.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-			}
-		});
-		btnSearchOrder.setBounds(424, 47, 66, 28);
-		btnSearchOrder.setText("Search");
+		lblFilterBy.setBounds(526, 24, 55, 15);
 		shell = new Shell();
 		shell.setSize(450, 300);
 		shell.setText("SWT Application");
