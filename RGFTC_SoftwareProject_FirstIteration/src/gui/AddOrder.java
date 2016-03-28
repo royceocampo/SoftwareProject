@@ -392,9 +392,9 @@ public class AddOrder {
 					contentCount = tableCart.getItemCount();
 					selectedIndex = tableCart.getSelectionIndex();
 					if (selectedIndex != -1) {
-						productOrdered = contents[selectedIndex].getText(0);
-						prodQty = contents[selectedIndex].getText(1);
-						prodPrice = contents[selectedIndex].getText(2);
+						productOrdered = contents[selectedIndex].getText(1);
+						prodQty = contents[selectedIndex].getText(2);
+						prodPrice = contents[selectedIndex].getText(3);
 					}
 				} catch (Exception ex) {
 					ex.printStackTrace();
