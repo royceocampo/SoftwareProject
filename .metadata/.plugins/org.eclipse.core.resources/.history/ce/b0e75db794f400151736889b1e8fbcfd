@@ -131,7 +131,7 @@ public class viewOrder {
 //				shlOrderManage.close();
 			}
 		});
-		mntmInventory.setText("Inventory History");
+		mntmInventory.setText("Inventory");
 		
 		Label lblOrderManagement = new Label(shlOrderManage, SWT.NONE);
 		lblOrderManagement.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
