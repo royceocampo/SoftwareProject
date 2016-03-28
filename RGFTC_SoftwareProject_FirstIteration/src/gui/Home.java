@@ -3,7 +3,20 @@ package gui;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.wb.swt.SWTResourceManager;
+
+import classes.GetLine;
+import managers.LineData;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.TableTree;
+import org.eclipse.swt.custom.TableTreeItem;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
@@ -17,8 +30,8 @@ import org.eclipse.swt.events.SelectionEvent;
 public class Home {
 
 	protected Shell shlRareGlobalFood;
-	private Table tableDelivery;
-	private Table table;
+	private TableTree tableDelivery;
+	private TableTree table;
 
 	/**
 	 * Launch the application.
@@ -65,7 +78,16 @@ public class Home {
 		lblTodayDate.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
 		lblTodayDate.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.NORMAL));
 		lblTodayDate.setBounds(116, 10, 263, 23);
-		lblTodayDate.setText("Satuday, February 20, 2016");
+		DateFormat df = new SimpleDateFormat("E, MM / d / Y");
+		DateFormat df2 = new SimpleDateFormat("Y-MM-dd");
+		DateFormat df3 = new SimpleDateFormat("MM / d / Y");
+		
+		Calendar dateobj = Calendar.getInstance();
+		Calendar dateobj2 = Calendar.getInstance();
+		
+		dateobj2.add(Calendar.DAY_OF_YEAR, 2);
+
+		lblTodayDate.setText(df.format(dateobj.getTime()));
 		
 		Label lblOrdersTo = new Label(shlRareGlobalFood, SWT.NONE);
 		lblOrdersTo.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.NORMAL));
@@ -73,28 +95,28 @@ public class Home {
 		lblOrdersTo.setBounds(10, 49, 190, 15);
 		lblOrdersTo.setText("Orders to be delievered today: ");
 		
-		tableDelivery = new Table(shlRareGlobalFood, SWT.BORDER | SWT.FULL_SELECTION);
+		tableDelivery = new TableTree(shlRareGlobalFood, SWT.CHECK | SWT.BORDER | SWT.FULL_SELECTION);
 		tableDelivery.setBounds(10, 68, 464, 109);
-		tableDelivery.setHeaderVisible(true);
-		tableDelivery.setLinesVisible(true);
+		tableDelivery.getTable().setHeaderVisible(true);
+		tableDelivery.getTable().setLinesVisible(true);
 		
-		TableColumn tblclmnDeliveryStatus = new TableColumn(tableDelivery, SWT.NONE);
+		TableColumn tblclmnDeliveryStatus = new TableColumn(tableDelivery.getTable(), SWT.NONE);
 		tblclmnDeliveryStatus.setWidth(91);
 		tblclmnDeliveryStatus.setText("Delivery Status");
 		
-		TableColumn tblclmnClient = new TableColumn(tableDelivery, SWT.NONE);
+		TableColumn tblclmnClient = new TableColumn(tableDelivery.getTable(), SWT.NONE);
 		tblclmnClient.setWidth(100);
 		tblclmnClient.setText("Client");
 		
-		TableColumn tblclmnOrderReceiver = new TableColumn(tableDelivery, SWT.NONE);
+		TableColumn tblclmnOrderReceiver = new TableColumn(tableDelivery.getTable(), SWT.NONE);
 		tblclmnOrderReceiver.setWidth(100);
 		tblclmnOrderReceiver.setText("Order Receiver");
 		
-		TableColumn tblclmnNote = new TableColumn(tableDelivery, SWT.NONE);
+		TableColumn tblclmnNote = new TableColumn(tableDelivery.getTable(), SWT.NONE);
 		tblclmnNote.setWidth(100);
 		tblclmnNote.setText("Note");
 		
-		TableColumn tblclmnDueDate = new TableColumn(tableDelivery, SWT.NONE);
+		TableColumn tblclmnDueDate = new TableColumn(tableDelivery.getTable(), SWT.NONE);
 		tblclmnDueDate.setWidth(100);
 		tblclmnDueDate.setText("Due Date");
 		
@@ -104,20 +126,20 @@ public class Home {
 		lblProductsToBe.setBounds(10, 183, 240, 15);
 		lblProductsToBe.setText("Products to be ordered from suppliers: ");
 		
-		table = new Table(shlRareGlobalFood, SWT.BORDER | SWT.FULL_SELECTION);
+		table = new TableTree(shlRareGlobalFood, SWT.CHECK | SWT.BORDER | SWT.FULL_SELECTION);
 		table.setBounds(10, 204, 464, 86);
-		table.setHeaderVisible(true);
-		table.setLinesVisible(true);
+		table.getTable().setHeaderVisible(true);
+		table.getTable().setLinesVisible(true);
 		
-		TableColumn tblclmnSupplyStatus = new TableColumn(table, SWT.NONE);
+		TableColumn tblclmnSupplyStatus = new TableColumn(table.getTable(), SWT.NONE);
 		tblclmnSupplyStatus.setWidth(114);
 		tblclmnSupplyStatus.setText("Supply Status");
 		
-		TableColumn tblclmnProduct = new TableColumn(table, SWT.NONE);
+		TableColumn tblclmnProduct = new TableColumn(table.getTable(), SWT.NONE);
 		tblclmnProduct.setWidth(196);
 		tblclmnProduct.setText("Product Name");
 		
-		TableColumn tblclmnAmount = new TableColumn(table, SWT.NONE);
+		TableColumn tblclmnAmount = new TableColumn(table.getTable(), SWT.NONE);
 		tblclmnAmount.setWidth(147);
 		tblclmnAmount.setText("Amount");
 		
@@ -134,7 +156,45 @@ public class Home {
 		//2 days after machine time.
 		lblDeliveryDate.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
 		lblDeliveryDate.setBounds(363, 183, 111, 15);
-		lblDeliveryDate.setText("February 22, 2016");
+		
+		lblDeliveryDate.setText(df3.format(dateobj2.getTime()));
+		
+		GetLine gl = new GetLine();
+		ArrayList<LineData> l = gl.getLineDelivery(df2.format(dateobj.getTime()));
+		
+		for(int i = 0; i < l.size()  ;i++ ){
+			
+			TableTreeItem parent = new TableTreeItem(tableDelivery,SWT.NONE);
+			parent.setText(1, l.get(i).getClientName());
+			parent.setText(2, "Hello");
+			parent.setText(3, l.get(i).getDeliveryNotes());
+			if(l.get(i).getStatus()==1){
+				parent.setText(0, "Delivered");
+			}
+			else{
+				parent.setText(0, " Not Delivered");
+			}
+			parent.setText(4, l.get(i).getDeliveryDueDate());
+			
+			
+		}
+		
+		ArrayList<LineData> l2 = gl.getLineDelivery(df2.format(dateobj2.getTime()));
+		for(int i = 0; i < l2.size()  ;i++ ){
+			
+			TableTreeItem parent = new TableTreeItem(table,SWT.NONE);
+			if(l2.get(i).getStatus()==1){
+				parent.setText(0, "Delivered");
+			}
+			else{
+				parent.setText(0, " Not Delivered");
+			}
+			
+			parent.setText(1, l2.get(i).getClientName());
+			parent.setText(2, Integer.toString(l2.get(i).getQuantity()));
+			
+			
+		}
 		
 		Button btnAddOrder = new Button(shlRareGlobalFood, SWT.NONE);
 		btnAddOrder.addSelectionListener(new SelectionAdapter() {
