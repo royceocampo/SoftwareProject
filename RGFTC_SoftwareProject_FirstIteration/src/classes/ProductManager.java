@@ -185,4 +185,39 @@ public class ProductManager {
 		
 		return productsCount;
 	}
+	
+	public ArrayList<Product> searchProduct(String searchList){
+		Connection conn = DBConnection.getConnection();
+		ArrayList<Product> resultsList = new ArrayList<Product>();
+		
+		try {
+			PreparedStatement pstmt = conn
+					.prepareStatement("SELECT * FROM products_table WHERE (productName LIKE ? OR category LIKE ? OR subtype LIKE ?)");
+			pstmt.setString(1, "%" + searchList + "%");
+			pstmt.setString(2, "%" + searchList + "%");
+			pstmt.setString(3, "%" + searchList + "%");
+			ResultSet rs = pstmt.executeQuery();
+			if (!rs.isBeforeFirst()) {
+				return null;
+			} else {
+				while (rs.next()) {
+					Product product = new Product();
+					product.setProductID(rs.getInt("productID"));
+					product.setProductName(rs.getString("productName"));
+					product.setProdCategory(rs.getString("category"));
+					product.setProdSubtype(rs.getString("subtype"));
+					product.setProdBrand(rs.getString("brand"));
+					product.setProdPackaging(rs.getString("packaging"));
+					product.setProdPrice(rs.getFloat("pricePerKilo"));
+					product.setProdStocks(rs.getInt("stocks"));
+					
+					resultsList.add(product);
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return resultsList;
+	}
 }
