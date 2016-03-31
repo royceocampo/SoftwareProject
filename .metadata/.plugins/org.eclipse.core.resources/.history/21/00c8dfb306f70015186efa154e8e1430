@@ -184,7 +184,7 @@ public class ProductManage {
 		txtSearch.setText("Search");
 		txtSearch.setBounds(297, 54, 127, 21);
 		
-		prodTable = new Table(shlProductManage, SWT.BORDER | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.MULTI);
+		prodTable = new Table(shlProductManage, SWT.BORDER | SWT.V_SCROLL | SWT.FULL_SELECTION);
 		prodTable.setBounds(10, 81, 464, 132);
 		prodTable.setHeaderVisible(true);
 		prodTable.setLinesVisible(true);
