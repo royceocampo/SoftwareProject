@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import dbconnection.DBConnection;
 import managers.LineData;
 
-public class GetLine2 {
+public class GetLine {
 	private Connection conn;
 	private Statement ps;
 	private ResultSet rs;
@@ -20,7 +20,7 @@ public class GetLine2 {
 	private ArrayList<LineData> l4 = new ArrayList<LineData>();
 	private ArrayList<LineData> l5 = new ArrayList<LineData>();
 	
-	public GetLine2(){
+	public GetLine(){
 		conn = new DBConnection().getConnection();
 		
 	}
@@ -28,11 +28,12 @@ public class GetLine2 {
 		try {
 			ps = conn.createStatement();
 		
-		rs = ps.executeQuery("select o.purchase_orderID, productName, category,subtype,brand,packaging, l.pricePerKilo,quantity, weight, o.deliveryStatus from products_table p, orders_table o, lineitems_table l where o.purchase_orderID = l.purchase_orderID AND p.productID = l.productID;");
+		rs = ps.executeQuery("select o.purchase_orderID, o.clientName,p.productName, p.category, p.subtype, p.brand, p.packaging, l.pricePerKilo, l.quantity, p.weight, o.deliveryDueDate, o.notes,o.deliveryStatus from products_table p, orders_table o, lineitems_table l where o.purchase_orderID = l.purchase_orderID AND p.productID = l.productID;");
 		
 		l.clear();
 		while(rs.next()){
 			int a = rs.getInt("purchase_orderID");
+			String clientName = rs.getString("clientName");
 			String b = rs.getString("productName");
 			String c = rs.getString("category");
 			String d = rs.getString("subtype");
@@ -41,9 +42,11 @@ public class GetLine2 {
 			int g = rs.getInt("pricePerKilo");
 			int h = rs.getInt("quantity");
 			int i = rs.getInt("weight");
+			String deliveryDueDate = rs.getString("deliveryDueDate");
+			String deliveryNotes = rs.getString("notes");
 			int j = rs.getInt("deliveryStatus");
 			
-			LineData ld = new LineData(a,b,c,d,e,f,g,h,i,j);
+			LineData ld = new LineData(a,clientName,b,c,d,e,f,g,h,i,deliveryDueDate, deliveryNotes, j);
 			l.add(ld);
 			
 		}
@@ -59,12 +62,13 @@ public class GetLine2 {
 		try {
 			ps = conn.createStatement();
 		
-		rs = ps.executeQuery("select o.purchase_orderID,productName, category,subtype,brand,packaging, l.pricePerKilo,quantity, weight,o.deliveryStatus from products_table p, orders_table o, lineitems_table l where o.purchase_orderID = l.purchase_orderID AND p.productID = l.productID AND o.deliveryDueDate = '" + date + "';");
+		rs = ps.executeQuery("select o.purchase_orderID, o.clientName,p.productName, p.category, p.subtype, p.brand, p.packaging, l.pricePerKilo, l.quantity, p.weight, o.deliveryDueDate, o.notes,o.deliveryStatus from products_table p, orders_table o, lineitems_table l where o.purchase_orderID = l.purchase_orderID AND p.productID = l.productID AND o.deliveryDueDate = '" + date + "';");
 		
 		l1.clear();
 		
 		while(rs.next()){
 			int a = rs.getInt("purchase_orderID");
+			String clientName = rs.getString("clientName");
 			String b = rs.getString("productName");
 			String c = rs.getString("category");
 			String d = rs.getString("subtype");
@@ -73,9 +77,11 @@ public class GetLine2 {
 			int g = rs.getInt("pricePerKilo");
 			int h = rs.getInt("quantity");
 			int i = rs.getInt("weight");
+			String deliveryDueDate = rs.getString("deliveryDueDate");
+			String deliveryNotes = rs.getString("notes");
 			int j = rs.getInt("deliveryStatus");
 			
-			LineData ld = new LineData(a,b,c,d,e,f,g,h,i,j);
+			LineData ld = new LineData(a,clientName,b,c,d,e,f,g,h,i,deliveryDueDate, deliveryNotes, j);
 			l1.add(ld);
 			
 		}
@@ -91,12 +97,13 @@ public class GetLine2 {
 		try {
 			ps = conn.createStatement();
 		
-		rs = ps.executeQuery("select o.purchase_orderID,productName, category,subtype,brand,packaging, l.pricePerKilo,quantity, weight,o.deliveryStatus from products_table p, orders_table o, lineitems_table l where o.purchase_orderID = l.purchase_orderID AND p.productID = l.productID AND o.clientName =  '" + name + "'");
+		rs = ps.executeQuery("select o.purchase_orderID, o.clientName,p.productName, p.category, p.subtype, p.brand, p.packaging, l.pricePerKilo, l.quantity, p.weight, o.deliveryDueDate, o.notes,o.deliveryStatus from products_table p, orders_table o, lineitems_table l where o.purchase_orderID = l.purchase_orderID AND p.productID = l.productID AND o.clientName =  '" + name + "'");
 		
 		l2.clear();
 		while(rs.next()){
 			
 			int a = rs.getInt("purchase_orderID");
+			String clientName = rs.getString("clientName");
 			String b = rs.getString("productName");
 			String c = rs.getString("category");
 			String d = rs.getString("subtype");
@@ -105,10 +112,11 @@ public class GetLine2 {
 			int g = rs.getInt("pricePerKilo");
 			int h = rs.getInt("quantity");
 			int i = rs.getInt("weight");
-
+			String deliveryDueDate = rs.getString("deliveryDueDate");
+			String deliveryNotes = rs.getString("notes");
 			int j = rs.getInt("deliveryStatus");
 			
-			LineData ld = new LineData(a,b,c,d,e,f,g,h,i,j);
+			LineData ld = new LineData(a,clientName,b,c,d,e,f,g,h,i,deliveryDueDate, deliveryNotes, j);
 			l2.add(ld);
 			
 		}
@@ -124,11 +132,12 @@ public class GetLine2 {
 		try {
 			ps = conn.createStatement();
 		
-		rs = ps.executeQuery("select o.purchase_orderID,p.productName, p.category, p.subtype, p.brand, p.packaging, l.pricePerKilo, l.quantity, p.weight,o.deliveryStatus from products_table p, orders_table o, lineitems_table l where o.purchase_orderID = l.purchase_orderID AND p.productID = l.productID AND o.deliveryStatus = 0;");
+		rs = ps.executeQuery("select o.purchase_orderID, o.clientName,p.productName, p.category, p.subtype, p.brand, p.packaging, l.pricePerKilo, l.quantity, p.weight, o.deliveryDueDate, o.notes,o.deliveryStatus from products_table p, orders_table o, lineitems_table l where o.purchase_orderID = l.purchase_orderID AND p.productID = l.productID AND o.deliveryStatus = 0;");
 		
 		l3.clear();
 		while(rs.next()){
 			int a = rs.getInt("purchase_orderID");
+			String clientName = rs.getString("clientName");
 			String b = rs.getString("productName");
 			String c = rs.getString("category");
 			String d = rs.getString("subtype");
@@ -137,9 +146,11 @@ public class GetLine2 {
 			int g = rs.getInt("pricePerKilo");
 			int h = rs.getInt("quantity");
 			int i = rs.getInt("weight");
+			String deliveryDueDate = rs.getString("deliveryDueDate");
+			String deliveryNotes = rs.getString("notes");
 			int j = rs.getInt("deliveryStatus");
 			
-			LineData ld = new LineData(a,b,c,d,e,f,g,h,i,j);
+			LineData ld = new LineData(a,clientName,b,c,d,e,f,g,h,i,deliveryDueDate, deliveryNotes, j);
 			l3.add(ld);
 			
 		}
@@ -155,11 +166,12 @@ public class GetLine2 {
 		try {
 			ps = conn.createStatement();
 		
-		rs = ps.executeQuery("select o.purchase_orderID,p.productName, p.category,p.subtype,p.brand,p.packaging, l.pricePerKilo,l.quantity, p.weight,o.deliveryStatus from products_table p, orders_table o, lineitems_table l where o.purchase_orderID = l.purchase_orderID AND p.productID = l.productID AND o.deliveryStatus = 1;");
+		rs = ps.executeQuery("select o.purchase_orderID, o.clientName,p.productName, p.category, p.subtype, p.brand, p.packaging, l.pricePerKilo, l.quantity, p.weight, o.deliveryDueDate, o.notes,o.deliveryStatus from products_table p, orders_table o, lineitems_table l where o.purchase_orderID = l.purchase_orderID AND p.productID = l.productID AND o.deliveryStatus = 1;");
 		
 		l4.clear();
 		while(rs.next()){
 			int a = rs.getInt("purchase_orderID");
+			String clientName = rs.getString("clientName");
 			String b = rs.getString("productName");
 			String c = rs.getString("category");
 			String d = rs.getString("subtype");
@@ -168,9 +180,11 @@ public class GetLine2 {
 			int g = rs.getInt("pricePerKilo");
 			int h = rs.getInt("quantity");
 			int i = rs.getInt("weight");
+			String deliveryDueDate = rs.getString("deliveryDueDate");
+			String deliveryNotes = rs.getString("notes");
 			int j = rs.getInt("deliveryStatus");
 			
-			LineData ld = new LineData(a,b,c,d,e,f,g,h,i,j);
+			LineData ld = new LineData(a,clientName,b,c,d,e,f,g,h,i,deliveryDueDate, deliveryNotes, j);
 			l4.add(ld);
 			
 		}
@@ -181,6 +195,32 @@ public class GetLine2 {
 		}
 	return null;
 	}
+	
+	public void lineDeleteAll(){
+		try {
+			ps = conn.createStatement();
+		
+		ps.executeUpdate("DELETE l.*, o.* from lineitems_table l, orders_table o where l.purchase_orderID = o.purchase_orderID and  o.deliveryStatus = 1;");
+		
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+	
+	public void lineDelete(int orderId){
+		try {
+			ps = conn.createStatement();
+		
+		ps.executeUpdate("DELETE l.*, o.* from lineitems_table l, orders_table o where l.purchase_orderID = o.purchase_orderID and o.purchase_orderID =  '" + orderId + "';");
+		
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+	
+	
 	
 	
 	
@@ -193,6 +233,7 @@ public class GetLine2 {
 		l5.clear();
 		while(rs.next()){
 			int a=0;
+			String clientName = null;
 			String b = rs.getString("productName");
 			String c = null;
 			String d = null;
@@ -201,9 +242,11 @@ public class GetLine2 {
 			int g = 0;
 			int h = rs.getInt("sum(quantity)");
 			int i=0;
+			String deliveryDueDate = null;
+			String deliveryNotes = null;
 			int j=0;
 			
-			LineData ld = new LineData(a,b,c,d,e,f,g,h,i,j);
+			LineData ld = new LineData(a,clientName,b,c,d,e,f,g,h,i,deliveryDueDate, deliveryNotes, j);
 			l5.add(ld);
 			
 		}
@@ -224,6 +267,7 @@ public class GetLine2 {
 		l5.clear();
 		while(rs.next()){
 			int a=0;
+			String clientName = null;
 			String b = rs.getString("productName");
 			String c = null;
 			String d = null;
@@ -232,9 +276,11 @@ public class GetLine2 {
 			int g = 0;
 			int h = rs.getInt("sum(quantity)");
 			int i=0;
+			String deliveryDueDate = null;
+			String deliveryNotes = null;
 			int j=0;
 			
-			LineData ld = new LineData(a,b,c,d,e,f,g,h,i,j);
+			LineData ld = new LineData(a,clientName,b,c,d,e,f,g,h,i,deliveryDueDate, deliveryNotes, j);
 			l5.add(ld);
 			
 		}

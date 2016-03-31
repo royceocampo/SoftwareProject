@@ -28,7 +28,7 @@ import classes.MarkManager;
 import managers.LineData;
 import managers.Order;
 
-public class viewOrder2 {
+public class viewOrder {
 
 	protected Shell shlOrderManage;
 	private Text txtSearch;
@@ -71,7 +71,7 @@ public class viewOrder2 {
 	 */
 	public static void main(String[] args) {
 		try {
-			viewOrder2 window = new viewOrder2();
+			viewOrder window = new viewOrder();
 			window.open();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -155,27 +155,23 @@ public class viewOrder2 {
 		//tableTree.getTable().setForeground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 		tableTree.setBounds(27, 87, 680, 250);
 		tableTree.getTable().setHeaderVisible(true);
-		tableTree.getTable().setLinesVisible(true);;
+		tableTree.getTable().setLinesVisible(true);
 		
 		TableColumn tblclmnPurchase = new TableColumn(tableTree.getTable(), SWT.NONE);
 		tblclmnPurchase.setWidth(100);
 		tblclmnPurchase.setText("Purchase ID");
 		
+		TableColumn tblclmnClient = new TableColumn(tableTree.getTable(), SWT.NONE);
+		tblclmnClient.setWidth(100);
+		tblclmnClient.setText("Client Name");
+		
 		TableColumn tblclmnProduct = new TableColumn(tableTree.getTable(), SWT.NONE);
 		tblclmnProduct.setWidth(100);
 		tblclmnProduct.setText("Product");
 		
-		TableColumn tblclmnCategory = new TableColumn(tableTree.getTable(), SWT.NONE);
-		tblclmnCategory.setWidth(100);
-		tblclmnCategory.setText("Category");
-		
 		TableColumn tblclmnSubtype = new TableColumn(tableTree.getTable(), SWT.NONE);
 		tblclmnSubtype.setWidth(100);
 		tblclmnSubtype.setText("SubType");
-		
-		TableColumn tblclmnBrand = new TableColumn(tableTree.getTable(), SWT.NONE);
-		tblclmnBrand.setWidth(100);
-		tblclmnBrand.setText("Brand");
 		
 		TableColumn tblclmnPackaging = new TableColumn(tableTree.getTable(), SWT.NONE);
 		tblclmnPackaging.setWidth(100);
@@ -192,6 +188,14 @@ public class viewOrder2 {
 		TableColumn tblclmnWeight = new TableColumn(tableTree.getTable(), SWT.NONE);
 		tblclmnWeight.setWidth(100);
 		tblclmnWeight.setText("Weight");
+		
+		TableColumn tblclmnDueDate= new TableColumn(tableTree.getTable(), SWT.NONE);
+		tblclmnDueDate.setWidth(100);
+		tblclmnDueDate.setText("Due Date");
+		
+		TableColumn tblclmnNotes = new TableColumn(tableTree.getTable(), SWT.NONE);
+		tblclmnNotes.setWidth(100);
+		tblclmnNotes.setText("Notes");
 		
 		TableColumn tblclmnStatus = new TableColumn(tableTree.getTable(), SWT.NONE);
 		tblclmnStatus.setWidth(100);
@@ -216,6 +220,7 @@ public class viewOrder2 {
 			}
 		});
 		
+		
 		combo_1.addSelectionListener(new SelectionAdapter() {
 			@SuppressWarnings({ "unused", "deprecation" })
 			@Override
@@ -238,20 +243,47 @@ public class viewOrder2 {
 					for(int i = 0; i < l.size()  ;i++ ){
 						
 						TableTreeItem parent = new TableTreeItem(tableTree,SWT.NONE);
+						tableTree.addListener(SWT.Selection, new Listener() {
+							
+							@Override
+							public void handleEvent(Event event) {
+								// TODO Auto-generated method stub
+								if(event.detail == SWT.CHECK){
+									item.add((TableTreeItem) event.item);
+									/*String string = event.detail == SWT.CHECK ? "Checked"
+								            : "Selected";
+								    System.out.println(event.item + " " + string);*/
+									//System.out.println(item.size());
+									boolean checkMark = false;
+									for(int i = 0; i < item.size() ;i++ ){
+										if(item.get(i).getChecked()){
+											btnMarkOrder.setVisible(true);
+											checkMark=true;
+											
+										}
+									}
+
+									if(!checkMark){
+										btnMarkOrder.setVisible(false);
+									}
+								}
+							}
+						});
 						parent.setText(0, Integer.toString(l.get(i).getPurchaseID()));
-						parent.setText(1, l.get(i).getProductName());
-						parent.setText(2, l.get(i).getCategory());
+						parent.setText(1, l.get(i).getClientName());
+						parent.setText(2, l.get(i).getProductName());
 						parent.setText(3, l.get(i).getSubtype());
-						parent.setText(4, l.get(i).getBrand());
-						parent.setText(5, l.get(i).getPackaging());
-						parent.setText(6, Float.toString(l.get(i).getPricePerKilo()));
-						parent.setText(7, Integer.toString(l.get(i).getQuantity()));
-						parent.setText(8, Integer.toString(l.get(i).getWeight()));
+						parent.setText(4, l.get(i).getPackaging());
+						parent.setText(5, Float.toString(l.get(i).getPricePerKilo()));
+						parent.setText(6, Integer.toString(l.get(i).getQuantity()));
+						parent.setText(7, Integer.toString(l.get(i).getWeight()));
+						parent.setText(8, l.get(i).getDeliveryDueDate());
+						parent.setText(9, l.get(i).getDeliveryNotes());
 						if(l.get(i).getStatus()==1){
-							parent.setText(9, "Delivered");
+							parent.setText(10, "Delivered");
 						}
 						else{
-							parent.setText(9, " Not Delivered");
+							parent.setText(10, " Not Delivered");
 						}
 						foundItems = true;
 						total += l.get(i).getQuantity();
@@ -284,25 +316,51 @@ public class viewOrder2 {
 					ArrayList<LineData> l2= gl.getLineSumName(name);
 					boolean foundClient = false;
 					
-					la = gl.getLineAll();
-					
+					//la = gl.getLineAll();
 					
 					for(int i = 0; i < la.size(); i++){	 
 						TableTreeItem parent = new TableTreeItem(tableTree,SWT.NONE);
+						tableTree.addListener(SWT.Selection, new Listener() {
+							
+							@Override
+							public void handleEvent(Event event) {
+								// TODO Auto-generated method stub
+								if(event.detail == SWT.CHECK){
+									item.add((TableTreeItem) event.item);
+									/*String string = event.detail == SWT.CHECK ? "Checked"
+								            : "Selected";
+								    System.out.println(event.item + " " + string);*/
+									//System.out.println(item.size());
+									boolean checkMark = false;
+									for(int i = 0; i < item.size() ;i++ ){
+										if(item.get(i).getChecked()){
+											btnMarkOrder.setVisible(true);
+											checkMark=true;
+											
+										}
+									}
+
+									if(!checkMark){
+										btnMarkOrder.setVisible(false);
+									}
+								}
+							}
+						});
 						parent.setText(0, Integer.toString(la.get(i).getPurchaseID()));
-						parent.setText(1, la.get(i).getProductName());
-						parent.setText(2, la.get(i).getCategory());
+						parent.setText(1, la.get(i).getClientName());
+						parent.setText(2, la.get(i).getProductName());
 						parent.setText(3, la.get(i).getSubtype());
-						parent.setText(4, la.get(i).getBrand());
-						parent.setText(5, la.get(i).getPackaging());
-						parent.setText(6, Float.toString(la.get(i).getPricePerKilo()));
-						parent.setText(7, Integer.toString(la.get(i).getQuantity()));
-						parent.setText(8, Integer.toString(la.get(i).getWeight()));
+						parent.setText(4, la.get(i).getPackaging());
+						parent.setText(5, Float.toString(la.get(i).getPricePerKilo()));
+						parent.setText(6, Integer.toString(la.get(i).getQuantity()));
+						parent.setText(7, Integer.toString(la.get(i).getWeight()));
+						parent.setText(8, la.get(i).getDeliveryDueDate());
+						parent.setText(9, la.get(i).getDeliveryNotes());
 						if(la.get(i).getStatus()==1){
-							parent.setText(9, "Delivered");
+							parent.setText(10, "Delivered");
 						}
 						else{
-							parent.setText(9, " Not Delivered");
+							parent.setText(10, " Not Delivered");
 						}
 						foundClient = true;
 						
@@ -343,6 +401,7 @@ public class viewOrder2 {
 										if(item.get(i).getChecked()){
 											btnMarkOrder.setVisible(true);
 											checkMark=true;
+											
 										}
 									}
 
@@ -353,19 +412,21 @@ public class viewOrder2 {
 							}
 						});
 						parent.setText(0, Integer.toString(lp.get(i).getPurchaseID()));
-						parent.setText(1, lp.get(i).getProductName());
-						parent.setText(2, lp.get(i).getCategory());
+						parent.setText(1, lp.get(i).getClientName());
+						parent.setText(2, lp.get(i).getProductName());
 						parent.setText(3, lp.get(i).getSubtype());
-						parent.setText(4, lp.get(i).getBrand());
-						parent.setText(5, lp.get(i).getPackaging());
-						parent.setText(6, Float.toString(lp.get(i).getPricePerKilo()));
-						parent.setText(7, Integer.toString(lp.get(i).getQuantity()));
-						parent.setText(8, Integer.toString(lp.get(i).getWeight()));
+						parent.setText(4, lp.get(i).getPackaging());
+						parent.setText(5, Float.toString(lp.get(i).getPricePerKilo()));
+						parent.setText(6, Integer.toString(lp.get(i).getQuantity()));
+						parent.setText(7, Integer.toString(lp.get(i).getWeight()));
+						parent.setText(8, lp.get(i).getDeliveryDueDate());
+						parent.setText(9, lp.get(i).getDeliveryNotes());
+						
 						if(lp.get(i).getStatus()==1){
-							parent.setText(9, "Delivered");
+							parent.setText(10, "Delivered");
 						}
 						else{
-							parent.setText(9, " Not Delivered");
+							parent.setText(10, " Not Delivered");
 						}
 					}
 					if(lp.size() == 0){
@@ -380,20 +441,47 @@ public class viewOrder2 {
 					la = gl.getLineAll();
 					for(int i = 0; i < la.size() ;i++ ){
 						TableTreeItem parent = new TableTreeItem(tableTree,SWT.NONE);
+						tableTree.addListener(SWT.Selection, new Listener() {
+							
+							@Override
+							public void handleEvent(Event event) {
+								// TODO Auto-generated method stub
+								if(event.detail == SWT.CHECK){
+									item.add((TableTreeItem) event.item);
+									/*String string = event.detail == SWT.CHECK ? "Checked"
+								            : "Selected";
+								    System.out.println(event.item + " " + string);*/
+									//System.out.println(item.size());
+									boolean checkMark = false;
+									for(int i = 0; i < item.size() ;i++ ){
+										if(item.get(i).getChecked()){
+											btnMarkOrder.setVisible(true);
+											checkMark=true;
+											
+										}
+									}
+
+									if(!checkMark){
+										btnMarkOrder.setVisible(false);
+									}
+								}
+							}
+						});
 						parent.setText(0, Integer.toString(la.get(i).getPurchaseID()));
-						parent.setText(1, la.get(i).getProductName());
-						parent.setText(2, la.get(i).getCategory());
+						parent.setText(1, la.get(i).getClientName());
+						parent.setText(2, la.get(i).getProductName());
 						parent.setText(3, la.get(i).getSubtype());
-						parent.setText(4, la.get(i).getBrand());
-						parent.setText(5, la.get(i).getPackaging());
-						parent.setText(6, Float.toString(la.get(i).getPricePerKilo()));
-						parent.setText(7, Integer.toString(la.get(i).getQuantity()));
-						parent.setText(8, Integer.toString(la.get(i).getWeight()));
+						parent.setText(4, la.get(i).getPackaging());
+						parent.setText(5, Float.toString(la.get(i).getPricePerKilo()));
+						parent.setText(6, Integer.toString(la.get(i).getQuantity()));
+						parent.setText(7, Integer.toString(la.get(i).getWeight()));
+						parent.setText(8, la.get(i).getDeliveryDueDate());
+						parent.setText(9, la.get(i).getDeliveryNotes());
 						if(la.get(i).getStatus()==1){
-							parent.setText(9, "Delivered");
+							parent.setText(10, "Delivered");
 						}
 						else{
-							parent.setText(9, " Not Delivered");
+							parent.setText(10, " Not Delivered");
 						}
 					}
 				}	
@@ -402,20 +490,47 @@ public class viewOrder2 {
 					ldc = gl.getLineDelivered();
 					for(int i = 0; i < ldc.size() ;i++ ){
 						TableTreeItem parent = new TableTreeItem(tableTree,SWT.NONE);
+						tableTree.addListener(SWT.Selection, new Listener() {
+							
+							@Override
+							public void handleEvent(Event event) {
+								// TODO Auto-generated method stub
+								if(event.detail == SWT.CHECK){
+									item.add((TableTreeItem) event.item);
+									/*String string = event.detail == SWT.CHECK ? "Checked"
+								            : "Selected";
+								    System.out.println(event.item + " " + string);*/
+									//System.out.println(item.size());
+									boolean checkMark = false;
+									for(int i = 0; i < item.size() ;i++ ){
+										if(item.get(i).getChecked()){
+											btnMarkOrder.setVisible(true);
+											checkMark=true;
+											
+										}
+									}
+
+									if(!checkMark){
+										btnMarkOrder.setVisible(false);
+									}
+								}
+							}
+						});
 						parent.setText(0, Integer.toString(ldc.get(i).getPurchaseID()));
-						parent.setText(1, ldc.get(i).getProductName());
-						parent.setText(2, ldc.get(i).getCategory());
+						parent.setText(1, ldc.get(i).getClientName());
+						parent.setText(2, ldc.get(i).getProductName());
 						parent.setText(3, ldc.get(i).getSubtype());
-						parent.setText(4, ldc.get(i).getBrand());
-						parent.setText(5, ldc.get(i).getPackaging());
-						parent.setText(6, Float.toString(ldc.get(i).getPricePerKilo()));
-						parent.setText(7, Integer.toString(ldc.get(i).getQuantity()));
-						parent.setText(8, Integer.toString(ldc.get(i).getWeight()));
+						parent.setText(4, ldc.get(i).getPackaging());
+						parent.setText(5, Float.toString(ldc.get(i).getPricePerKilo()));
+						parent.setText(6, Integer.toString(ldc.get(i).getQuantity()));
+						parent.setText(7, Integer.toString(ldc.get(i).getWeight()));
+						parent.setText(8, ldc.get(i).getDeliveryDueDate());
+						parent.setText(9, ldc.get(i).getDeliveryNotes());
 						if(ldc.get(i).getStatus()==1){
-							parent.setText(9, "Delivered");
+							parent.setText(10, "Delivered");
 						}
 						else{
-							parent.setText(9, " Not Delivered");
+							parent.setText(10, " Not Delivered");
 						}
 					}
 				}
@@ -440,10 +555,25 @@ public class viewOrder2 {
 		btnAddOrder.setText("Add Order");
 		btnAddOrder.setBackground(SWTResourceManager.getColor(SWT.COLOR_DARK_RED));
 		
+		Button btnDeleteAllOrder = new Button(shlOrderManage, SWT.NONE);
+		btnDeleteAllOrder.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				//Delete order here
+				gl.lineDeleteAll();
+			}
+		});
+		btnDeleteAllOrder.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
+		btnDeleteAllOrder.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
+		btnDeleteAllOrder.setBounds(500, 360, 95, 35);
+		btnDeleteAllOrder.setText("Delete All");
+		btnDeleteAllOrder.setBackground(SWTResourceManager.getColor(SWT.COLOR_DARK_RED));
+		
 		Button btnEditOrder = new Button(shlOrderManage, SWT.NONE);
 		btnEditOrder.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				
 			}
 		});
 		btnEditOrder.setText("Edit");
@@ -452,6 +582,23 @@ public class viewOrder2 {
 		btnEditOrder.setBounds(46, 360, 95, 35);
 		
 		Button btnDeleteOrder = new Button(shlOrderManage, SWT.NONE);
+		btnDeleteOrder.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				//gl.lineDelete(orderId); //Get Order ID from the selected box
+				MessageBox msg = new MessageBox(shlOrderManage, SWT.APPLICATION_MODAL | SWT.ICON_QUESTION | SWT.YES | SWT.NO);
+				msg.setText("Confirm Delete!");
+				msg.setMessage("Continue Delete Order?");
+
+				e.doit = msg.open() == SWT.YES;
+				System.out.println(item.size());
+				for(int i = 0; i < item.size(); i++ ){
+					deleteMarkOrder(Integer.parseInt(item.get(i).getText()));
+					
+				}
+				item.clear();
+			}
+		});
 		btnDeleteOrder.setText("Delete");
 		btnDeleteOrder.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 		btnDeleteOrder.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
@@ -480,6 +627,15 @@ public class viewOrder2 {
 		
 		shlOrderManage.setVisible(true);
 		
+	}
+	
+	protected void deleteMarkOrder(int purchaseID){
+		try {
+			gl.lineDelete(purchaseID);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
 	}
 	
 	protected void markProduct(int purchaseID) {

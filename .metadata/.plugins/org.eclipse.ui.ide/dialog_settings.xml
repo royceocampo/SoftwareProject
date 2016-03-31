@@ -5,6 +5,7 @@
 		<item value="true" key="WizardProjectsImportPage.STORE_COPY_PROJECT_ID"/>
 		<item value="false" key="WizardProjectsImportPage.STORE_ARCHIVE_SELECTED"/>
 		<list key="WizardProjectsImportPage.STORE_DIRECTORIES">
+			<item value="D:\ViewAgain_2"/>
 			<item value="D:\GitHub (INTROSE) - Backup\SoftwareProject\jdbc-swing-gui-update-employee"/>
 			<item value="D:\GitHub (INTROSE)\SoftwareProject\RGFTC_SoftwareProject_FirstIteration"/>
 			<item value="D:\GitHub (INTROSE) - Backup\RGFTC_SoftwareProject_Latest (from 1st Iteration)"/>

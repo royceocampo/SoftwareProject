@@ -227,14 +227,15 @@ public class ProductManage {
 		shell.setSize(450, 300);
 		shell.setText("SWT Application");
 		
-		ProductManager.displayProducts(prodTable);	
+		ProductManager.displayProducts(prodTable);
+		
 		prodTable.addListener(SWT.MouseDown, new Listener(){
 			public void handleEvent(Event event){
-				btnEdit.setEnabled(true);
-				btnDelete.setEnabled(true);
 				Point pt = new Point(event.x, event.y);
 				item = prodTable.getItem(pt);
 				if(item != null) {
+					btnEdit.setEnabled(true);
+					btnDelete.setEnabled(true);
 					index = prodTable.indexOf(item);
 //					System.out.println("INDEX: "+index);
 					tblItems = prodTable.getItems();
@@ -260,6 +261,8 @@ public class ProductManage {
 				ep.open();
 				prodTable.removeAll();
 				ProductManager.displayProducts(prodTable);
+				btnEdit.setEnabled(false);
+				btnDelete.setEnabled(false);
 			}
 		});
 		
@@ -282,6 +285,8 @@ public class ProductManage {
 						case SWT.OK:
 							prodTable.remove(prodTable.getSelectionIndices());
 //							ProductManager.displayProducts(prodTable);
+							btnEdit.setEnabled(false);
+							btnDelete.setEnabled(false);
 						}
 			        }
 			      }
