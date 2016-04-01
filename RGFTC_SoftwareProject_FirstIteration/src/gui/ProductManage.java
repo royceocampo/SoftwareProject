@@ -32,6 +32,7 @@ public class ProductManage {
 	public static int index;
 	public static TableItem item;
 	public static TableItem[] tblItems;
+	public static int i = 0;
 
 	
 	public static int getProdID() {
@@ -231,6 +232,7 @@ public class ProductManage {
 		
 		prodTable.addListener(SWT.MouseDown, new Listener(){
 			public void handleEvent(Event event){
+				i++;
 				Point pt = new Point(event.x, event.y);
 				item = prodTable.getItem(pt);
 				if(item != null) {
@@ -240,12 +242,24 @@ public class ProductManage {
 //					System.out.println("INDEX: "+index);
 					tblItems = prodTable.getItems();
 //					System.out.println(tblItems[index].getText(0));
+//					System.out.println(i);
 					String prodStr = tblItems[index].getText(0).toString();
 					try{
 						prodID = Integer.parseInt(prodStr);
 					}
 					catch(Exception e){
 						System.out.println("No record selected");
+					}
+					
+					
+					try{
+						if (i > 1){
+//							System.out.println("Edit must be disabled");
+							btnEdit.setEnabled(false);
+						}
+					}
+					catch(Exception e){
+						e.printStackTrace();
 					}
 					
 //					System.out.println("Product ID (ProdManage):"+prodID);
