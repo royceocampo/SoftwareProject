@@ -45,7 +45,7 @@ public class viewOrder {
 	private ArrayList<LineData> lp = gl.getLinePending();
 	private ArrayList<LineData> la = gl.getLineAll();
 	private ArrayList<LineData> ldc = gl.getLineDelivered();
-	
+	private boolean checkMark2 = false;
 	private ArrayList<TableTreeItem> item = new ArrayList<TableTreeItem>();
 	
 	
@@ -131,7 +131,7 @@ public class viewOrder {
 //				shlOrderManage.close();
 			}
 		});
-		mntmInventory.setText("Inventory History");
+		mntmInventory.setText("Inventory");
 		
 		Label lblOrderManagement = new Label(shlOrderManage, SWT.NONE);
 		lblOrderManagement.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
@@ -155,11 +155,19 @@ public class viewOrder {
 		//tableTree.getTable().setForeground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 		tableTree.setBounds(27, 87, 680, 250);
 		tableTree.getTable().setHeaderVisible(true);
-		tableTree.getTable().setLinesVisible(true);;
+		tableTree.getTable().setLinesVisible(true);
 		
 		TableColumn tblclmnPurchase = new TableColumn(tableTree.getTable(), SWT.NONE);
 		tblclmnPurchase.setWidth(100);
-		tblclmnPurchase.setText("Client Name");
+		tblclmnPurchase.setText("Purchase ID");
+		
+		TableColumn tblclmnClient = new TableColumn(tableTree.getTable(), SWT.NONE);
+		tblclmnClient.setWidth(100);
+		tblclmnClient.setText("Client Name");
+		
+		TableColumn tblclmnOrderReciever = new TableColumn(tableTree.getTable(), SWT.NONE);
+		tblclmnOrderReciever.setWidth(100);
+		tblclmnOrderReciever.setText("Order Reciever");
 		
 		TableColumn tblclmnProduct = new TableColumn(tableTree.getTable(), SWT.NONE);
 		tblclmnProduct.setWidth(100);
@@ -179,7 +187,7 @@ public class viewOrder {
 		
 		TableColumn tblclmnBox = new TableColumn(tableTree.getTable(), SWT.NONE);
 		tblclmnBox.setWidth(100);
-		tblclmnBox.setText("Box or Kilo");
+		tblclmnBox.setText("Quantity");
 		
 		TableColumn tblclmnWeight = new TableColumn(tableTree.getTable(), SWT.NONE);
 		tblclmnWeight.setWidth(100);
@@ -197,13 +205,11 @@ public class viewOrder {
 		tblclmnStatus.setWidth(100);
 		tblclmnStatus.setText("Status");
 		
-		
-		
 		Button btnMarkOrder = new Button(shlOrderManage, SWT.NONE);
 		btnMarkOrder.setText("Mark as Delivered");
 		btnMarkOrder.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 		btnMarkOrder.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
-		btnMarkOrder.setBounds(248, 362, 131, 30);
+		btnMarkOrder.setBounds(248, 360, 131, 35);
 		btnMarkOrder.setVisible(false);
 		btnMarkOrder.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
@@ -218,6 +224,8 @@ public class viewOrder {
 			}
 		});
 		
+		Button btnDeleteOrder = new Button(shlOrderManage, SWT.NONE);
+		btnDeleteOrder.setVisible(false);
 		combo_1.addSelectionListener(new SelectionAdapter() {
 			@SuppressWarnings({ "unused", "deprecation" })
 			@Override
@@ -240,20 +248,50 @@ public class viewOrder {
 					for(int i = 0; i < l.size()  ;i++ ){
 						
 						TableTreeItem parent = new TableTreeItem(tableTree,SWT.NONE);
-						parent.setText(0, l.get(i).getClientName());
-						parent.setText(1, l.get(i).getProductName());
-						parent.setText(2, l.get(i).getSubtype());
-						parent.setText(3, l.get(i).getPackaging());
-						parent.setText(4, Float.toString(l.get(i).getPricePerKilo()));
-						parent.setText(5, Integer.toString(l.get(i).getQuantity()));
-						parent.setText(6, Integer.toString(l.get(i).getWeight()));
-						parent.setText(7, l.get(i).getDeliveryDueDate());
-						parent.setText(8, l.get(i).getDeliveryNotes());
+						tableTree.addListener(SWT.Selection, new Listener() {
+							
+							@Override
+							public void handleEvent(Event event) {
+								// TODO Auto-generated method stub
+								if(event.detail == SWT.CHECK){
+									item.add((TableTreeItem) event.item);
+									/*String string = event.detail == SWT.CHECK ? "Checked"
+								            : "Selected";
+								    System.out.println(event.item + " " + string);*/
+									//System.out.println(item.size());
+									boolean checkMark = false;
+									for(int i = 0; i < item.size() ;i++ ){
+										if(item.get(i).getChecked()){
+											btnMarkOrder.setVisible(true);
+											btnDeleteOrder.setVisible(true);
+											checkMark=true;
+											
+										}
+									}
+
+									if(!checkMark){
+										btnMarkOrder.setVisible(false);
+										btnDeleteOrder.setVisible(false);
+									}
+								}
+							}
+						});
+						parent.setText(0, Integer.toString(l.get(i).getPurchaseID()));
+						parent.setText(1, l.get(i).getClientName());
+						parent.setText(2, l.get(i).getOrderReceiver());
+						parent.setText(3, l.get(i).getProductName());
+						parent.setText(4, l.get(i).getSubtype());
+						parent.setText(5, l.get(i).getPackaging());
+						parent.setText(6, Float.toString(l.get(i).getPricePerKilo()));
+						parent.setText(7, Integer.toString(l.get(i).getQuantity()));
+						parent.setText(8, Integer.toString(l.get(i).getWeight()));
+						parent.setText(9, l.get(i).getDeliveryDueDate());
+						parent.setText(10, l.get(i).getDeliveryNotes());
 						if(l.get(i).getStatus()==1){
-							parent.setText(9, "Delivered");
+							parent.setText(11, "Delivered");
 						}
 						else{
-							parent.setText(9, " Not Delivered");
+							parent.setText(11, " Not Delivered");
 						}
 						foundItems = true;
 						total += l.get(i).getQuantity();
@@ -286,25 +324,54 @@ public class viewOrder {
 					ArrayList<LineData> l2= gl.getLineSumName(name);
 					boolean foundClient = false;
 					
-					la = gl.getLineAll();
-					
+					//la = gl.getLineAll();
 					
 					for(int i = 0; i < la.size(); i++){	 
 						TableTreeItem parent = new TableTreeItem(tableTree,SWT.NONE);
-						parent.setText(0, la.get(i).getClientName());
-						parent.setText(1, la.get(i).getProductName());
-						parent.setText(2, la.get(i).getSubtype());
-						parent.setText(3, la.get(i).getPackaging());
-						parent.setText(4, Float.toString(la.get(i).getPricePerKilo()));
-						parent.setText(5, Integer.toString(la.get(i).getQuantity()));
-						parent.setText(6, Integer.toString(la.get(i).getWeight()));
-						parent.setText(7, la.get(i).getDeliveryDueDate());
-						parent.setText(8, la.get(i).getDeliveryNotes());
+						tableTree.addListener(SWT.Selection, new Listener() {
+							
+							@Override
+							public void handleEvent(Event event) {
+								// TODO Auto-generated method stub
+								if(event.detail == SWT.CHECK){
+									item.add((TableTreeItem) event.item);
+									/*String string = event.detail == SWT.CHECK ? "Checked"
+								            : "Selected";
+								    System.out.println(event.item + " " + string);*/
+									//System.out.println(item.size());
+									boolean checkMark = false;
+									for(int i = 0; i < item.size() ;i++ ){
+										if(item.get(i).getChecked()){
+											btnMarkOrder.setVisible(true);
+											btnDeleteOrder.setVisible(true);
+											checkMark=true;
+											
+										}
+									}
+
+									if(!checkMark){
+										btnMarkOrder.setVisible(false);
+										btnDeleteOrder.setVisible(false);
+									}
+								}
+							}
+						});
+						parent.setText(0, Integer.toString(la.get(i).getPurchaseID()));
+						parent.setText(1, la.get(i).getClientName());
+						parent.setText(2, la.get(i).getOrderReceiver());
+						parent.setText(3, la.get(i).getProductName());
+						parent.setText(4, la.get(i).getSubtype());
+						parent.setText(5, la.get(i).getPackaging());
+						parent.setText(6, Float.toString(la.get(i).getPricePerKilo()));
+						parent.setText(7, Integer.toString(la.get(i).getQuantity()));
+						parent.setText(8, Integer.toString(la.get(i).getWeight()));
+						parent.setText(9, la.get(i).getDeliveryDueDate());
+						parent.setText(10, la.get(i).getDeliveryNotes());
 						if(la.get(i).getStatus()==1){
-							parent.setText(9, "Delivered");
+							parent.setText(11, "Delivered");
 						}
 						else{
-							parent.setText(9, " Not Delivered");
+							parent.setText(11, " Not Delivered");
 						}
 						foundClient = true;
 						
@@ -344,31 +411,36 @@ public class viewOrder {
 									for(int i = 0; i < item.size() ;i++ ){
 										if(item.get(i).getChecked()){
 											btnMarkOrder.setVisible(true);
+											btnDeleteOrder.setVisible(true);
 											checkMark=true;
+											
 										}
 									}
 
 									if(!checkMark){
 										btnMarkOrder.setVisible(false);
+										btnDeleteOrder.setVisible(false);
 									}
 								}
 							}
 						});
-						parent.setText(0, lp.get(i).getClientName());
-						parent.setText(1, lp.get(i).getProductName());
-						parent.setText(2, lp.get(i).getSubtype());
-						parent.setText(3, lp.get(i).getPackaging());
-						parent.setText(4, Float.toString(lp.get(i).getPricePerKilo()));
-						parent.setText(5, Integer.toString(lp.get(i).getQuantity()));
-						parent.setText(6, Integer.toString(lp.get(i).getWeight()));
-						parent.setText(7, lp.get(i).getDeliveryDueDate());
-						parent.setText(8, lp.get(i).getDeliveryNotes());
+						parent.setText(0, Integer.toString(lp.get(i).getPurchaseID()));
+						parent.setText(1, lp.get(i).getClientName());
+						parent.setText(2, lp.get(i).getOrderReceiver());
+						parent.setText(3, lp.get(i).getProductName());
+						parent.setText(4, lp.get(i).getSubtype());
+						parent.setText(5, lp.get(i).getPackaging());
+						parent.setText(6, Float.toString(lp.get(i).getPricePerKilo()));
+						parent.setText(7, Integer.toString(lp.get(i).getQuantity()));
+						parent.setText(8, Integer.toString(lp.get(i).getWeight()));
+						parent.setText(9, lp.get(i).getDeliveryDueDate());
+						parent.setText(10, lp.get(i).getDeliveryNotes());
 						
 						if(lp.get(i).getStatus()==1){
-							parent.setText(9, "Delivered");
+							parent.setText(11, "Delivered");
 						}
 						else{
-							parent.setText(9, " Not Delivered");
+							parent.setText(11, " Not Delivered");
 						}
 					}
 					if(lp.size() == 0){
@@ -383,20 +455,52 @@ public class viewOrder {
 					la = gl.getLineAll();
 					for(int i = 0; i < la.size() ;i++ ){
 						TableTreeItem parent = new TableTreeItem(tableTree,SWT.NONE);
-						parent.setText(0, la.get(i).getClientName());
-						parent.setText(1, la.get(i).getProductName());
-						parent.setText(2, la.get(i).getSubtype());
-						parent.setText(3, la.get(i).getPackaging());
-						parent.setText(4, Float.toString(la.get(i).getPricePerKilo()));
-						parent.setText(5, Integer.toString(la.get(i).getQuantity()));
-						parent.setText(6, Integer.toString(la.get(i).getWeight()));
-						parent.setText(7, la.get(i).getDeliveryDueDate());
-						parent.setText(8, la.get(i).getDeliveryNotes());
+						tableTree.addListener(SWT.Selection, new Listener() {
+							
+							@Override
+							public void handleEvent(Event event) {
+								// TODO Auto-generated method stub
+								if(event.detail == SWT.CHECK){
+									item.add((TableTreeItem) event.item);
+									/*String string = event.detail == SWT.CHECK ? "Checked"
+								            : "Selected";
+								    System.out.println(event.item + " " + string);*/
+									//System.out.println(item.size());
+									boolean checkMark = false;
+									for(int i = 0; i < item.size() ;i++ ){
+										if(item.get(i).getChecked()){
+											btnMarkOrder.setVisible(true);
+											btnDeleteOrder.setVisible(true);
+											checkMark=true;
+											
+											
+										}
+										
+									}
+
+									if(!checkMark){
+										btnMarkOrder.setVisible(false);
+										btnDeleteOrder.setVisible(false);
+									}
+								}
+							}
+						});
+						parent.setText(0, Integer.toString(la.get(i).getPurchaseID()));
+						parent.setText(1, la.get(i).getClientName());
+						parent.setText(2, la.get(i).getOrderReceiver());
+						parent.setText(3, la.get(i).getProductName());
+						parent.setText(4, la.get(i).getSubtype());
+						parent.setText(5, la.get(i).getPackaging());
+						parent.setText(6, Float.toString(la.get(i).getPricePerKilo()));
+						parent.setText(7, Integer.toString(la.get(i).getQuantity()));
+						parent.setText(8, Integer.toString(la.get(i).getWeight()));
+						parent.setText(9, la.get(i).getDeliveryDueDate());
+						parent.setText(10, la.get(i).getDeliveryNotes());
 						if(la.get(i).getStatus()==1){
-							parent.setText(9, "Delivered");
+							parent.setText(11, "Delivered");
 						}
 						else{
-							parent.setText(9, " Not Delivered");
+							parent.setText(11, " Not Delivered");
 						}
 					}
 				}	
@@ -405,20 +509,50 @@ public class viewOrder {
 					ldc = gl.getLineDelivered();
 					for(int i = 0; i < ldc.size() ;i++ ){
 						TableTreeItem parent = new TableTreeItem(tableTree,SWT.NONE);
-						parent.setText(0, ldc.get(i).getClientName());
-						parent.setText(1, ldc.get(i).getProductName());
-						parent.setText(2, ldc.get(i).getSubtype());
-						parent.setText(3, ldc.get(i).getPackaging());
-						parent.setText(4, Float.toString(ldc.get(i).getPricePerKilo()));
-						parent.setText(5, Integer.toString(ldc.get(i).getQuantity()));
-						parent.setText(6, Integer.toString(ldc.get(i).getWeight()));
-						parent.setText(7, ldc.get(i).getDeliveryDueDate());
-						parent.setText(8, ldc.get(i).getDeliveryNotes());
+						tableTree.addListener(SWT.Selection, new Listener() {
+							
+							@Override
+							public void handleEvent(Event event) {
+								// TODO Auto-generated method stub
+								if(event.detail == SWT.CHECK){
+									item.add((TableTreeItem) event.item);
+									/*String string = event.detail == SWT.CHECK ? "Checked"
+								            : "Selected";
+								    System.out.println(event.item + " " + string);*/
+									//System.out.println(item.size());
+									boolean checkMark = false;
+									for(int i = 0; i < item.size() ;i++ ){
+										if(item.get(i).getChecked()){
+											btnMarkOrder.setVisible(true);
+											btnDeleteOrder.setVisible(true);
+											checkMark=true;
+											
+										}
+									}
+
+									if(!checkMark){
+										btnMarkOrder.setVisible(false);
+										btnDeleteOrder.setVisible(false);
+									}
+								}
+							}
+						});
+						parent.setText(0, Integer.toString(ldc.get(i).getPurchaseID()));
+						parent.setText(1, ldc.get(i).getClientName());
+						parent.setText(2, ldc.get(i).getOrderReceiver());
+						parent.setText(3, ldc.get(i).getProductName());
+						parent.setText(4, ldc.get(i).getSubtype());
+						parent.setText(5, ldc.get(i).getPackaging());
+						parent.setText(6, Float.toString(ldc.get(i).getPricePerKilo()));
+						parent.setText(7, Integer.toString(ldc.get(i).getQuantity()));
+						parent.setText(8, Integer.toString(ldc.get(i).getWeight()));
+						parent.setText(9, ldc.get(i).getDeliveryDueDate());
+						parent.setText(10, ldc.get(i).getDeliveryNotes());
 						if(ldc.get(i).getStatus()==1){
-							parent.setText(9, "Delivered");
+							parent.setText(11, "Delivered");
 						}
 						else{
-							parent.setText(9, " Not Delivered");
+							parent.setText(11, " Not Delivered");
 						}
 					}
 				}
@@ -443,10 +577,47 @@ public class viewOrder {
 		btnAddOrder.setText("Add Order");
 		btnAddOrder.setBackground(SWTResourceManager.getColor(SWT.COLOR_DARK_RED));
 		
+		Button btnDeleteAllOrder = new Button(shlOrderManage, SWT.NONE);
+		btnDeleteAllOrder.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				//Delete order here
+				if(gl.getLineDelivered().size() != 0){
+					System.out.println(gl.getLineDelivered().size());
+					MessageBox msg = new MessageBox(shlOrderManage, SWT.APPLICATION_MODAL | SWT.ICON_QUESTION | SWT.YES | SWT.NO);
+					msg.setText("Confirm Delete!");
+					msg.setMessage("Continue Delete Order?");
+					if(e.doit = msg.open() == SWT.YES){
+						gl.lineDeleteAll();
+						MessageBox msg2 = new MessageBox(shlOrderManage, SWT.ICON_INFORMATION | SWT.OK);
+						msg2.setText("Success!");
+						msg2.setMessage("Order has been deleted");
+						msg2.open();
+					}
+				}
+				else{
+					
+					MessageBox msg2 = new MessageBox(shlOrderManage, SWT.ICON_INFORMATION | SWT.OK);
+					msg2.setText("Nothing Deleted!");
+					msg2.setMessage("No Delivered Client Order Found");
+					msg2.open();
+				}
+					
+			}
+		});
+		btnDeleteAllOrder.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
+		btnDeleteAllOrder.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
+		btnDeleteAllOrder.setBounds(500, 360, 150, 35);
+		btnDeleteAllOrder.setText("Delete All Delivered");
+		btnDeleteAllOrder.setBackground(SWTResourceManager.getColor(SWT.COLOR_DARK_RED));
+	
+		
 		Button btnEditOrder = new Button(shlOrderManage, SWT.NONE);
 		btnEditOrder.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				
+				
 			}
 		});
 		btnEditOrder.setText("Edit");
@@ -454,7 +625,37 @@ public class viewOrder {
 		btnEditOrder.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
 		btnEditOrder.setBounds(46, 360, 95, 35);
 		
-		Button btnDeleteOrder = new Button(shlOrderManage, SWT.NONE);
+		btnDeleteOrder.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				//gl.lineDelete(orderId); //Get Order ID from the selected box
+				
+				MessageBox msg = new MessageBox(shlOrderManage, SWT.APPLICATION_MODAL | SWT.ICON_QUESTION | SWT.YES | SWT.NO);
+				msg.setText("Confirm Delete!");
+				msg.setMessage("Continue Delete Order?");
+
+				if(e.doit = msg.open() == SWT.YES){
+				System.out.println(item.size());
+				for(int i = 0; i < item.size(); i++ ){
+					deleteMarkOrder(Integer.parseInt(item.get(i).getText()));
+					
+				}
+				item.clear();
+				MessageBox msg2 = new MessageBox(shlOrderManage, SWT.ICON_INFORMATION | SWT.OK);
+				msg2.setText("Success!");
+				msg2.setMessage("Order has benn deleted");
+				msg2.open();
+				}
+			}
+				/*else{
+					MessageBox msg3 = new MessageBox(shlOrderManage, SWT.ICON_INFORMATION | SWT.OK);
+					msg3.setText("Failed!");
+					msg3.setMessage("Nothing Selected");
+					msg3.open();
+				}*/
+			
+			
+		});
 		btnDeleteOrder.setText("Delete");
 		btnDeleteOrder.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 		btnDeleteOrder.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
@@ -483,6 +684,15 @@ public class viewOrder {
 		
 		shlOrderManage.setVisible(true);
 		
+	}
+	
+	protected void deleteMarkOrder(int purchaseID){
+		try {
+			gl.lineDelete(purchaseID);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
 	}
 	
 	protected void markProduct(int purchaseID) {
