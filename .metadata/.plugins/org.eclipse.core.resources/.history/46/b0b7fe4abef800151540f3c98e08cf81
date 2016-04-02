@@ -150,8 +150,8 @@ public class ProductManage {
 		CCombo combo_1 = new CCombo(shlProductManage, SWT.BORDER);
 		combo_1.setBounds(339, 54, 106, 21);
 		
-		Button btnAddProduct = new Button(shlProductManage, SWT.NONE);
-		btnAddProduct.addSelectionListener(new SelectionAdapter() {
+		Button btnNewButton = new Button(shlProductManage, SWT.NONE);
+		btnNewButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				AddProduct window = new AddProduct();
@@ -160,10 +160,10 @@ public class ProductManage {
 				ProductManager.displayProducts(prodTable);
 			}
 		});
-		btnAddProduct.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
-		btnAddProduct.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
-		btnAddProduct.setBounds(385, 360, 95, 35);
-		btnAddProduct.setText("Add Product");
+		btnNewButton.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
+		btnNewButton.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
+		btnNewButton.setBounds(477, 360, 95, 35);
+		btnNewButton.setText("Add Product");
 		
 		Button btnEdit = new Button(shlProductManage, SWT.NONE);
 		
