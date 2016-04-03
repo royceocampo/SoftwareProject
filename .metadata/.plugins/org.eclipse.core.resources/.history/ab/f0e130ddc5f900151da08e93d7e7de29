@@ -348,7 +348,7 @@ public class ProductManage {
 			        messageBox.setText("Confirm Delete");
 			        int response = messageBox.open();
 			        if (response == SWT.YES){
-//			        	System.out.println("number of items to delete: " +selected.size());
+			        	System.out.println("number of items to delete: " +selected.size());
 			        	for (int l = 0; l < selected.size(); l++ ){
 			        		tblItems = prodTable.getItems();
 			        		String prodStr = tblItems[selected.get(l)].getText(0).toString();
@@ -359,8 +359,8 @@ public class ProductManage {
 							catch(Exception ex){
 								System.out.println("No record selected");
 							}
-//			        		System.out.println(prodID);
-			        		ProductManager.deleteProduct(prodID);
+			        		System.out.println(prodID);
+//			        		ProductManager.deleteProduct(prodID);
 			        	}
 			        	
 			        	

@@ -244,7 +244,7 @@ public class ProductManage {
 					if(item != null) {
 						btnDelete.setEnabled(true);
 						index = prodTable.indexOf(item);
-//						System.out.println("INDEX: "+index);
+						System.out.println("INDEX: "+index);
 						indexes.add(index);
 //						System.out.println(indexes.size());
 //						System.out.println("Valie: " +Integer.valueOf(0));
@@ -265,7 +265,7 @@ public class ProductManage {
 									selected.add(Integer.valueOf(j));
 							}
 							else{
-//								System.out.println("not clicked");
+								System.out.println("not clicked");
 							}
 						}
 						if (selected.size() == 1){
@@ -341,26 +341,23 @@ public class ProductManage {
 		btnDelete.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-//				System.out.println(prodID);
+				System.out.println(prodID);
 				MessageBox messageBox = new MessageBox(shlProductManage, SWT.ICON_QUESTION
 			            | SWT.YES | SWT.NO);
 			        messageBox.setMessage("Delete this item?");
 			        messageBox.setText("Confirm Delete");
 			        int response = messageBox.open();
 			        if (response == SWT.YES){
-//			        	System.out.println("number of items to delete: " +selected.size());
 			        	for (int l = 0; l < selected.size(); l++ ){
-			        		tblItems = prodTable.getItems();
 			        		String prodStr = tblItems[selected.get(l)].getText(0).toString();
-			        		
+			        		System.out.println(prodStr);
 			        		try{
 								prodID = Integer.parseInt(prodStr);
 							}
 							catch(Exception ex){
 								System.out.println("No record selected");
 							}
-//			        		System.out.println(prodID);
-			        		ProductManager.deleteProduct(prodID);
+//			        		ProductManager.deleteProduct(prodID);
 			        	}
 			        	
 			        	

@@ -359,7 +359,7 @@ public class ProductManage {
 							catch(Exception ex){
 								System.out.println("No record selected");
 							}
-//			        		System.out.println(prodID);
+			        		System.out.println(prodID);
 			        		ProductManager.deleteProduct(prodID);
 			        	}
 			        	
