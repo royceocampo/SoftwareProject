@@ -1,5 +1,8 @@
 package gui;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -33,6 +36,8 @@ public class ProductManage {
 	public static TableItem item;
 	public static TableItem[] tblItems;
 	public static int i = 0;
+	ArrayList <Integer> indexes = new ArrayList<Integer>();
+	ArrayList <Integer> selected = new ArrayList<Integer>();
 
 	
 	public static int getProdID() {
@@ -232,38 +237,91 @@ public class ProductManage {
 		
 		prodTable.addListener(SWT.MouseDown, new Listener(){
 			public void handleEvent(Event event){
-				i++;
-				Point pt = new Point(event.x, event.y);
-				item = prodTable.getItem(pt);
-				if(item != null) {
-					btnEdit.setEnabled(true);
-					btnDelete.setEnabled(true);
-					index = prodTable.indexOf(item);
-//					System.out.println("INDEX: "+index);
-					tblItems = prodTable.getItems();
-//					System.out.println(tblItems[index].getText(0));
-//					System.out.println(i);
-					String prodStr = tblItems[index].getText(0).toString();
-					try{
-						prodID = Integer.parseInt(prodStr);
-					}
-					catch(Exception e){
-						System.out.println("No record selected");
-					}
-					
-					
-					try{
-						if (i > 1){
-//							System.out.println("Edit must be disabled");
+//				i++;
+				if((event.stateMask & SWT.CTRL) != 0){
+					Point pt = new Point(event.x, event.y);
+					item = prodTable.getItem(pt);
+					if(item != null) {
+						btnDelete.setEnabled(true);
+						index = prodTable.indexOf(item);
+						System.out.println("INDEX: "+index);
+						indexes.add(index);
+//						System.out.println(indexes.size());
+						System.out.println("Valie: " +Integer.valueOf(0));
+						for (int j = 0; j < ProductManager.getProductCount(); j++){
+//							System.out.println("Frequency of " +j+ " is " +Collections.frequency(indexes, j));
+							if (Collections.frequency(indexes, j) % 2 == 0 && Collections.frequency(indexes, j) != 0){
+								System.out.println("clicked twice");
+								if (selected.contains(Integer.valueOf(j))){
+									selected.remove(Integer.valueOf(j));
+								}
+//								else if (selected.size()== 1){
+//									selected.clear();
+//								}
+							}
+							else if (Collections.frequency(indexes, j)% 2 != 0 && Collections.frequency(indexes, j) != 0){
+								System.out.println("clicked");
+								if (!selected.contains(j))
+									selected.add(Integer.valueOf(j));
+							}
+							else{
+								System.out.println("not clicked");
+							}
+						}
+						if (selected.size() == 1){
+							System.out.println("NUMBER OF SELECTED ITEMS: "+selected.size());
+							btnEdit.setEnabled(true);
+							for (int k = 0; k < selected.size(); k++){
+								System.out.print(selected.get(k)+", ");
+							}
+							index = selected.get(0);
+						}
+						else if (selected.size()== 0 || selected.size() > 1){
+							System.out.println("NUMBER OF SELECTED ITEMS: "+selected.size());
 							btnEdit.setEnabled(false);
+							for (int k = 0; k < selected.size(); k++){
+								System.out.print(selected.get(k)+", ");
+							}
+						}
+						tblItems = prodTable.getItems();
+//						System.out.println(tblItems[index].getText(0));
+//						System.out.println(i);
+						String prodStr = tblItems[index].getText(0).toString();
+						try{
+							prodID = Integer.parseInt(prodStr);
+						}
+						catch(Exception e){
+							System.out.println("No record selected");
 						}
 					}
-					catch(Exception e){
-						e.printStackTrace();
+				}				
+				else{ //meaning that it is not a CTRL+CLICK
+					Point pt = new Point(event.x, event.y);
+					item = prodTable.getItem(pt);
+					if(item != null) {
+						btnEdit.setEnabled(true);
+						btnDelete.setEnabled(true);
+						index = prodTable.indexOf(item);
+//						System.out.println("INDEX: "+index);
+						indexes.add(Integer.valueOf(index));
+						
+						if (selected.size()>0){
+							selected.clear();
+						}
+						selected.add(Integer.valueOf(index));
+						tblItems = prodTable.getItems();
+//						System.out.println(tblItems[index].getText(0));
+//						System.out.println(i);
+						String prodStr = tblItems[index].getText(0).toString();
+						try{
+							prodID = Integer.parseInt(prodStr);
+						}
+						catch(Exception e){
+							System.out.println("No record selected");
+						}
 					}
-					
-//					System.out.println("Product ID (ProdManage):"+prodID);
 				}
+			
 			}
 		});
 		
