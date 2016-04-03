@@ -8,6 +8,7 @@ import org.eclipse.swt.custom.TableTree;
 import org.eclipse.swt.custom.TableTreeItem;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
@@ -221,7 +222,9 @@ public class viewOrder {
 					markProduct(Integer.parseInt(item.get(i).getText()));
 				}
 				item.clear();
+				
 			}
+			
 		});
 		
 		Button btnDeleteOrder = new Button(shlOrderManage, SWT.NONE);
@@ -536,6 +539,7 @@ public class viewOrder {
 									}
 								}
 							}
+							
 						});
 						parent.setText(0, Integer.toString(ldc.get(i).getPurchaseID()));
 						parent.setText(1, ldc.get(i).getClientName());
@@ -559,6 +563,9 @@ public class viewOrder {
 				else{
 					System.out.println("ERROR");
 				}
+				
+				
+				
 				
 			}
 		});
@@ -591,7 +598,7 @@ public class viewOrder {
 						gl.lineDeleteAll();
 						MessageBox msg2 = new MessageBox(shlOrderManage, SWT.ICON_INFORMATION | SWT.OK);
 						msg2.setText("Success!");
-						msg2.setMessage("Order has been deleted");
+						msg2.setMessage("All Orders has been deleted");
 						msg2.open();
 					}
 				}
@@ -640,12 +647,16 @@ public class viewOrder {
 					deleteMarkOrder(Integer.parseInt(item.get(i).getText()));
 					
 				}
+				
 				item.clear();
 				MessageBox msg2 = new MessageBox(shlOrderManage, SWT.ICON_INFORMATION | SWT.OK);
 				msg2.setText("Success!");
-				msg2.setMessage("Order has benn deleted");
+				msg2.setMessage("Order/s has/have been deleted");
 				msg2.open();
+				
+					
 				}
+				btnDeleteOrder.setVisible(false);
 			}
 				/*else{
 					MessageBox msg3 = new MessageBox(shlOrderManage, SWT.ICON_INFORMATION | SWT.OK);
