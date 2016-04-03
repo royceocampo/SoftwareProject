@@ -67,6 +67,30 @@ public class ProductManager {
 			e.printStackTrace();
 		}
 	}
+	
+	public static int getProductCount(){
+		int productCount = 0;
+		
+		Connection conn = DBConnection.getConnection();
+		String query = "SELECT COUNT(*) FROM products_table";
+		
+		try{
+			PreparedStatement pstmt = conn.prepareStatement(query);
+			ResultSet rs = pstmt.executeQuery();
+			
+			if(rs.next()){
+				productCount = rs.getInt(1);
+			}
+			
+			 rs.close();
+		     pstmt.close();
+		     conn.close();
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}
+		return productCount;
+	}
 
 //	public Product getProduct(int id) {
 //		Product product = new Product( null, null, null, null, null, id, id);
