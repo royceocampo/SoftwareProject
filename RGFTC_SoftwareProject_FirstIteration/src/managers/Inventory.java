@@ -1,24 +1,28 @@
 package managers;
 
-import java.util.Date;
-
 public class Inventory {
 
 	private int inventoryID;
 	private String person;
 	private String product;
-	private int deposits;
-	private int withdrawals;
-	private Date date;
+	private int quantity;
+	private String date;
+	private int productID;
 	
-	public Inventory(){}
-	
-	public Inventory(String person, String product, int deposits, int withdrawals, Date date){
+	public Inventory() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Inventory(int inventoryID, String person, String product,
+			int quantity, String date, int productID) {
+		super();
+		this.inventoryID = inventoryID;
 		this.person = person;
 		this.product = product;
-		this.deposits = deposits;
-		this.withdrawals = withdrawals;
+		this.quantity = quantity;
 		this.date = date;
+		this.productID = productID;
 	}
 
 	public int getInventoryID() {
@@ -45,30 +49,27 @@ public class Inventory {
 		this.product = product;
 	}
 
-	public int getDeposits() {
-		return deposits;
+	public int getQuantity() {
+		return quantity;
 	}
 
-	public void setDeposits(int deposits) {
-		this.deposits = deposits;
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 
-	public int getWithdrawals() {
-		return withdrawals;
-	}
-
-	public void setWithdrawals(int withdrawals) {
-		this.withdrawals = withdrawals;
-	}
-
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 
-	
-	
+	public int getProductID() {
+		return productID;
+	}
+
+	public void setProductID(int productID) {
+		this.productID = productID;
+	}
 }

@@ -35,10 +35,12 @@ public class ProductManage {
 	public static int index;
 	public static TableItem item;
 	public static TableItem[] tblItems;
-	public static int i = 0;
+//	public static int i = 0;
 	ArrayList <Integer> indexes = new ArrayList<Integer>();
 	ArrayList <Integer> selected = new ArrayList<Integer>();
-
+	ArrayList <Integer> range = new ArrayList<Integer>();
+	public static int lowerBound = 0;
+	public static int upperBound = 0;
 	
 	public static int getProdID() {
 		return prodID;
@@ -148,12 +150,15 @@ public class ProductManage {
 		lblViewBy.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
 		lblViewBy.setBounds(151, 54, 55, 15);
 		lblViewBy.setText("View By:");
+		lblViewBy.setVisible(false);
 		
-		CCombo combo = new CCombo(shlProductManage, SWT.BORDER);
-		combo.setBounds(212, 54, 106, 21);
+		CCombo cmbCat = new CCombo(shlProductManage, SWT.BORDER);
+		cmbCat.setBounds(212, 54, 106, 21);
+		cmbCat.setVisible(false);
 		
-		CCombo combo_1 = new CCombo(shlProductManage, SWT.BORDER);
-		combo_1.setBounds(339, 54, 106, 21);
+		CCombo cmbSubtype = new CCombo(shlProductManage, SWT.BORDER);
+		cmbSubtype.setBounds(339, 54, 106, 21);
+		cmbSubtype.setVisible(false);
 		
 		Button btnAddProduct = new Button(shlProductManage, SWT.NONE);
 		btnAddProduct.addSelectionListener(new SelectionAdapter() {
@@ -198,35 +203,35 @@ public class ProductManage {
 		TableColumn tblclmnProdID = new TableColumn(prodTable, SWT.NONE);
 		tblclmnProdID.setText("ID");
 		
-		TableColumn tblclmnProduct = new TableColumn(prodTable, SWT.CENTER);
+		TableColumn tblclmnProduct = new TableColumn(prodTable, SWT.LEFT);
 		tblclmnProduct.setWidth(125);
 		tblclmnProduct.setText("Product");
 		
-		TableColumn tblclmnCategory = new TableColumn(prodTable, SWT.CENTER);
+		TableColumn tblclmnCategory = new TableColumn(prodTable, SWT.LEFT);
 		tblclmnCategory.setWidth(94);
 		tblclmnCategory.setText("Category");
 		
-		TableColumn tblclmnSubtype = new TableColumn(prodTable, SWT.CENTER);
+		TableColumn tblclmnSubtype = new TableColumn(prodTable, SWT.LEFT);
 		tblclmnSubtype.setWidth(84);
 		tblclmnSubtype.setText("Subtype");
 		
-		TableColumn tblclmnBrand = new TableColumn(prodTable, SWT.CENTER);
+		TableColumn tblclmnBrand = new TableColumn(prodTable, SWT.LEFT);
 		tblclmnBrand.setWidth(87);
 		tblclmnBrand.setText("Brand");
 		
-		TableColumn tblclmnPackaging = new TableColumn(prodTable, SWT.CENTER);
+		TableColumn tblclmnPackaging = new TableColumn(prodTable, SWT.LEFT);
 		tblclmnPackaging.setWidth(96);
 		tblclmnPackaging.setText("Packaging");
 		
-		TableColumn tblclmnPricekg = new TableColumn(prodTable, SWT.CENTER);
+		TableColumn tblclmnPricekg = new TableColumn(prodTable, SWT.LEFT);
 		tblclmnPricekg.setWidth(88);
 		tblclmnPricekg.setText("Price/KG");
 		
-		TableColumn tblclmnNewColumn = new TableColumn(prodTable, SWT.CENTER);
+		TableColumn tblclmnNewColumn = new TableColumn(prodTable, SWT.LEFT);
 		tblclmnNewColumn.setWidth(49);
 		tblclmnNewColumn.setText("Boxes");
 		
-		TableColumn tblclmnNewColumn_1 = new TableColumn(prodTable, SWT.CENTER);
+		TableColumn tblclmnNewColumn_1 = new TableColumn(prodTable, SWT.LEFT);
 		tblclmnNewColumn_1.setWidth(54);
 		tblclmnNewColumn_1.setText("Weight");
 		shell = new Shell();
@@ -294,7 +299,40 @@ public class ProductManage {
 //							System.out.println("No record selected");
 //						}
 					}
-				}				
+				}
+				
+				else if ((event.stateMask & SWT.SHIFT) != 0){ //SHIFT + CLICK
+					Point pt = new Point(event.x, event.y);
+					item = prodTable.getItem(pt);
+					if(item != null) {
+//						btnEdit.setEnabled(true);
+						btnDelete.setEnabled(true);
+						index = prodTable.indexOf(item);
+//						System.out.println("INDEX: "+index);
+//						indexes.add(Integer.valueOf(index));
+						range.add(Integer.valueOf(index));
+						System.out.println("Size: "+range.size());
+						if (range.size() == 2){
+							lowerBound = Collections.min(range);
+							upperBound = Collections.max(range);
+							for (int l = lowerBound; l <= upperBound; l++){
+								indexes.add(l);
+							}
+							for (int m = 0; m < indexes.size(); m++){
+								System.out.print(m+ ", ");
+							}
+						}
+						
+						
+//						if (selected.size()>0){
+//							selected.clear();
+//						}
+//						
+//						selected.add(Integer.valueOf(index));
+//						tblItems = prodTable.getItems();
+					}
+				}
+				
 				else{ //meaning that it is not a CTRL+CLICK
 					Point pt = new Point(event.x, event.y);
 					item = prodTable.getItem(pt);
@@ -310,15 +348,6 @@ public class ProductManage {
 						}
 						selected.add(Integer.valueOf(index));
 						tblItems = prodTable.getItems();
-//						System.out.println(tblItems[index].getText(0));
-//						System.out.println(i);
-//						String prodStr = tblItems[index].getText(0).toString();
-//						try{
-//							prodID = Integer.parseInt(prodStr);
-//						}
-//						catch(Exception e){
-//							System.out.println("No record selected");
-//						}
 					}
 				}
 			
@@ -342,6 +371,11 @@ public class ProductManage {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 //				System.out.println(prodID);
+				
+				for (int k = 0; k < selected.size(); k++){
+					System.out.print(selected.get(k)+", ");
+				}
+				
 				MessageBox messageBox = new MessageBox(shlProductManage, SWT.ICON_QUESTION
 			            | SWT.YES | SWT.NO);
 			        messageBox.setMessage("Delete this item?");
