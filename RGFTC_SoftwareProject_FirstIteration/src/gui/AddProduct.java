@@ -122,14 +122,14 @@ public class AddProduct {
 		spinPrice.setMaximum(10000);
 		spinPrice.setBounds(126, 186, 120, 22);
 		
-		Combo cmbCategory = new Combo(shlAddProduct, SWT.NONE);
+		Combo cmbCategory = new Combo(shlAddProduct, SWT.READ_ONLY);
 		cmbCategory.setItems(new String[] {"Meat", "Seafood"});
 		cmbCategory.setBounds(126, 56, 120, 23);
 		
 		
 		
-		Combo cmbSubtype = new Combo(shlAddProduct, SWT.NONE);
-		cmbSubtype.setItems(new String[] {"AA", "AB", "AC", "AD"});
+		Combo cmbSubtype = new Combo(shlAddProduct, SWT.READ_ONLY);
+		cmbSubtype.setItems(new String[] {});
 		cmbSubtype.setBounds(126, 91, 120, 23);
 		
 		Label lblErrProdName = new Label(shlAddProduct, SWT.NONE);

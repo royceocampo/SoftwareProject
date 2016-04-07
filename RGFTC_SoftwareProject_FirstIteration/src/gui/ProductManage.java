@@ -227,18 +227,29 @@ public class ProductManage {
 		tblclmnPricekg.setWidth(88);
 		tblclmnPricekg.setText("Price/KG");
 		
-		TableColumn tblclmnNewColumn = new TableColumn(prodTable, SWT.LEFT);
-		tblclmnNewColumn.setWidth(49);
-		tblclmnNewColumn.setText("Boxes");
+		TableColumn tblclmnBoxes = new TableColumn(prodTable, SWT.LEFT);
+		tblclmnBoxes.setText("Boxes");
 		
-		TableColumn tblclmnNewColumn_1 = new TableColumn(prodTable, SWT.LEFT);
-		tblclmnNewColumn_1.setWidth(54);
-		tblclmnNewColumn_1.setText("Weight");
+		TableColumn tblclmnWeight = new TableColumn(prodTable, SWT.LEFT);
+		tblclmnWeight.setWidth(45);
+		tblclmnWeight.setText("Weight");
 		shell = new Shell();
 		shell.setSize(450, 300);
 		shell.setText("SWT Application");
-		
-		ProductManager.displayProducts(prodTable);
+		if (ProductManager.getProductCount() > 0)
+			ProductManager.displayProducts(prodTable);
+		else{
+			MessageBox messageBox = new MessageBox(shlProductManage, SWT.ICON_ERROR | SWT.OK);
+			messageBox.setText("Error");
+			messageBox.setMessage("No data found.");
+			int buttonID = messageBox.open();
+//			String valString = "SWT.OK";
+			switch (buttonID){
+			case SWT.OK:
+				break;
+			}
+		}
+			
 		
 		prodTable.addListener(SWT.MouseDown, new Listener(){
 			public void handleEvent(Event event){
@@ -284,52 +295,58 @@ public class ProductManage {
 						else if (selected.size()== 0 || selected.size() > 1){
 //							System.out.println("NUMBER OF SELECTED ITEMS: "+selected.size());
 							btnEdit.setEnabled(false);
-							for (int k = 0; k < selected.size(); k++){
-//								System.out.print(selected.get(k)+", ");
-							}
+//							for (int k = 0; k < selected.size(); k++){
+////								System.out.print(selected.get(k)+", ");
+//							}
 						}
 						tblItems = prodTable.getItems();
-//						System.out.println(tblItems[index].getText(0));
-//						System.out.println(i);
-//						String prodStr = tblItems[index].getText(0).toString();
-//						try{
-//							prodID = Integer.parseInt(prodStr);
-//						}
-//						catch(Exception e){
-//							System.out.println("No record selected");
-//						}
 					}
 				}
 				
 				else if ((event.stateMask & SWT.SHIFT) != 0){ //SHIFT + CLICK
+//					selected.clear();
 					Point pt = new Point(event.x, event.y);
 					item = prodTable.getItem(pt);
 					if(item != null) {
-//						btnEdit.setEnabled(true);
+						btnEdit.setEnabled(false);
 						btnDelete.setEnabled(true);
 						index = prodTable.indexOf(item);
 //						System.out.println("INDEX: "+index);
 //						indexes.add(Integer.valueOf(index));
 						range.add(Integer.valueOf(index));
-						System.out.println("Size: "+range.size());
+						
 						if (range.size() == 2){
 							lowerBound = Collections.min(range);
+//							System.out.println("Lower bound: "+lowerBound);
 							upperBound = Collections.max(range);
-							for (int l = lowerBound; l <= upperBound; l++){
-								indexes.add(l);
+//							System.out.println("Upper bound: "+upperBound);
+						}
+						else{
+							if((index < lowerBound || index > lowerBound) && index < upperBound ){
+								range.remove(Integer.valueOf(lowerBound));
+								lowerBound = index;
+								range.add(Integer.valueOf(lowerBound));
 							}
-							for (int m = 0; m < indexes.size(); m++){
-								System.out.print(m+ ", ");
+							else if ((index < upperBound || index > upperBound) && index < lowerBound){
+								range.remove(Integer.valueOf(upperBound));
+								upperBound = index;
+								range.add(Integer.valueOf(upperBound));
 							}
 						}
-						
-						
-//						if (selected.size()>0){
-//							selected.clear();
+						for (int l = lowerBound; l <= upperBound; l++){
+							if (!selected.contains(Integer.valueOf(l))){
+								selected.add(Integer.valueOf(l));
+							}
+							if (!indexes.contains(Integer.valueOf(l))){
+								indexes.add(Integer.valueOf(l));
+							}
+						}
+//						System.out.println("Range Size: "+range.size());
+//						System.out.println("Index size: "+indexes.size());
+//						for (int m = 0; m < selected.size(); m++){
+//							System.out.print(selected.get(Integer.valueOf(m))+ ", ");
 //						}
-//						
-//						selected.add(Integer.valueOf(index));
-//						tblItems = prodTable.getItems();
+//						System.out.println("");
 					}
 				}
 				
@@ -342,11 +359,12 @@ public class ProductManage {
 						index = prodTable.indexOf(item);
 //						System.out.println("INDEX: "+index);
 						indexes.add(Integer.valueOf(index));
-						
+						selected.add(Integer.valueOf(index));
+						range.add(Integer.valueOf(index));
 						if (selected.size()>0){
 							selected.clear();
 						}
-						selected.add(Integer.valueOf(index));
+						
 						tblItems = prodTable.getItems();
 					}
 				}

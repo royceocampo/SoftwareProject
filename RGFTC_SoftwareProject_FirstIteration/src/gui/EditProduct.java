@@ -124,14 +124,14 @@ public class EditProduct {
 		spinPrice.setMaximum(10000);
 		spinPrice.setBounds(126, 186, 120, 22);
 		
-		Combo cmbCategory = new Combo(shlEditProduct, SWT.NONE);
+		Combo cmbCategory = new Combo(shlEditProduct, SWT.READ_ONLY);
 		cmbCategory.setItems(new String[] {"Meat", "Seafood"});
 		cmbCategory.setBounds(126, 56, 120, 23);
 		
 		
 		
 		Combo cmbSubtype = new Combo(shlEditProduct, SWT.NONE);
-		cmbSubtype.setItems(new String[] {"AA", "AB", "AC", "AD"});
+		cmbSubtype.setItems(new String[] {});
 		cmbSubtype.setBounds(126, 91, 120, 23);
 		
 		Label lblErrProdName = new Label(shlEditProduct, SWT.NONE);
@@ -171,6 +171,22 @@ public class EditProduct {
 		
 		txtProdName.setText(tblItms[idx].getText(1));
 		cmbCategory.setText(tblItms[idx].getText(2));
+		String setCategory = tblItms[idx].getText(2);
+		if (setCategory.equals("Meat")){
+			System.out.println("MEAT");
+			String foodList[] = { "Pork", "Beef", "Poultry", "Japanese Wagyu",
+			"Cuts"};
+			cmbSubtype.setItems(foodList);
+		}
+		else if (setCategory.equals("Fish")){
+			System.out.println("FISH");
+			String foodList[] = { "Black Tiger", "Shrimps", "Nobashi", "Japanese Wagyu",
+					"Norwegian Salmon", "Squid/Octopus", "Tuna", "Cream Dory", "Fish (Whole, Fillet, Steak)",
+					"Scallops and Shellfish"};
+			cmbSubtype.setItems(foodList);
+		}
+		
+		System.out.println("Category: "+setCategory);
 		cmbSubtype.setText(tblItms[idx].getText(3));
 		txtBrand.setText(tblItms[idx].getText(4));
 		txtPackaging.setText(tblItms[idx].getText(5));
