@@ -5,17 +5,17 @@
 		<item value="" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
-		<item value="true" key="wrap"/>
+		<item value="false" key="wrap"/>
 		<item value="true" key="wholeword"/>
 		<list key="findhistory">
+			<item value="edited"/>
+			<item value="product edited"/>
 			<item value="equals"/>
 			<item value="ewuals"/>
 			<item value="error"/>
 			<item value="display"/>
 			<item value="msg"/>
 			<item value="err"/>
-			<item value="Size:"/>
-			<item value="index"/>
 		</list>
 		<list key="replacehistory">
 		</list>

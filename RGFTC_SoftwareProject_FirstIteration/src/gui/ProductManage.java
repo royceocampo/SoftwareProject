@@ -28,7 +28,6 @@ import classes.ProductManager;
 public class ProductManage {
 
 	protected Shell shlProductManage;
-	private Text txtSearch;
 	protected Shell shell;
 	private Table prodTable;
 	public static int prodID;
@@ -146,20 +145,6 @@ public class ProductManage {
 		lblProductInventory.setBounds(10, 10, 249, 38);
 		lblProductInventory.setText("Product Management");
 		
-		Label lblViewBy = new Label(shlProductManage, SWT.NONE);
-		lblViewBy.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
-		lblViewBy.setBounds(151, 54, 55, 15);
-		lblViewBy.setText("View By:");
-		lblViewBy.setVisible(false);
-		
-		CCombo cmbCat = new CCombo(shlProductManage, SWT.BORDER);
-		cmbCat.setBounds(212, 54, 106, 21);
-		cmbCat.setVisible(false);
-		
-		CCombo cmbSubtype = new CCombo(shlProductManage, SWT.BORDER);
-		cmbSubtype.setBounds(339, 54, 106, 21);
-		cmbSubtype.setVisible(false);
-		
 		Button btnAddProduct = new Button(shlProductManage, SWT.NONE);
 		btnAddProduct.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -191,12 +176,8 @@ public class ProductManage {
 		btnDelete.setBounds(147, 360, 95, 35);
 		btnDelete.setEnabled(false);
 		
-		txtSearch = new Text(shlProductManage, SWT.BORDER);
-		txtSearch.setText("Search");
-		txtSearch.setBounds(467, 54, 127, 21);
-		
 		prodTable = new Table(shlProductManage, SWT.BORDER | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.MULTI);
-		prodTable.setBounds(27, 87, 680, 250);
+		prodTable.setBounds(27, 54, 680, 283);
 		prodTable.setHeaderVisible(true);
 		prodTable.setLinesVisible(true);
 		
@@ -204,19 +185,19 @@ public class ProductManage {
 		tblclmnProdID.setText("ID");
 		
 		TableColumn tblclmnProduct = new TableColumn(prodTable, SWT.LEFT);
-		tblclmnProduct.setWidth(125);
+		tblclmnProduct.setWidth(144);
 		tblclmnProduct.setText("Product");
 		
 		TableColumn tblclmnCategory = new TableColumn(prodTable, SWT.LEFT);
-		tblclmnCategory.setWidth(94);
+		tblclmnCategory.setWidth(105);
 		tblclmnCategory.setText("Category");
 		
 		TableColumn tblclmnSubtype = new TableColumn(prodTable, SWT.LEFT);
-		tblclmnSubtype.setWidth(84);
+		tblclmnSubtype.setWidth(129);
 		tblclmnSubtype.setText("Subtype");
 		
 		TableColumn tblclmnBrand = new TableColumn(prodTable, SWT.LEFT);
-		tblclmnBrand.setWidth(87);
+		tblclmnBrand.setWidth(120);
 		tblclmnBrand.setText("Brand");
 		
 		TableColumn tblclmnPackaging = new TableColumn(prodTable, SWT.LEFT);
@@ -231,7 +212,6 @@ public class ProductManage {
 		tblclmnBoxes.setText("Boxes");
 		
 		TableColumn tblclmnWeight = new TableColumn(prodTable, SWT.LEFT);
-		tblclmnWeight.setWidth(45);
 		tblclmnWeight.setText("Weight");
 		shell = new Shell();
 		shell.setSize(450, 300);
@@ -241,7 +221,7 @@ public class ProductManage {
 		else{
 			MessageBox messageBox = new MessageBox(shlProductManage, SWT.ICON_ERROR | SWT.OK);
 			messageBox.setText("Error");
-			messageBox.setMessage("No data found.");
+			messageBox.setMessage("No products found.");
 			int buttonID = messageBox.open();
 //			String valString = "SWT.OK";
 			switch (buttonID){

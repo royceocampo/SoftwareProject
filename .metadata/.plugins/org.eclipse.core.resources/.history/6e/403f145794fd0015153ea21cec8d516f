@@ -222,7 +222,7 @@ public class ProductManager {
 			ResultSet rs = pstmt.executeQuery(sql);
 			
 			while(rs.next()){
-				Product product = new Product(null, null, null, null, null, 0, 0);
+				Product product = new Product(sql, sql, sql, sql, sql, 0, 0);
 				
 				product.setProductID(rs.getInt("productID"));
 				product.setProductName(rs.getString("productName"));

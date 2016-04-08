@@ -146,20 +146,6 @@ public class ProductManage {
 		lblProductInventory.setBounds(10, 10, 249, 38);
 		lblProductInventory.setText("Product Management");
 		
-		Label lblViewBy = new Label(shlProductManage, SWT.NONE);
-		lblViewBy.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
-		lblViewBy.setBounds(151, 54, 55, 15);
-		lblViewBy.setText("View By:");
-		lblViewBy.setVisible(false);
-		
-		CCombo cmbCat = new CCombo(shlProductManage, SWT.BORDER);
-		cmbCat.setBounds(212, 54, 106, 21);
-		cmbCat.setVisible(false);
-		
-		CCombo cmbSubtype = new CCombo(shlProductManage, SWT.BORDER);
-		cmbSubtype.setBounds(339, 54, 106, 21);
-		cmbSubtype.setVisible(false);
-		
 		Button btnAddProduct = new Button(shlProductManage, SWT.NONE);
 		btnAddProduct.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -193,7 +179,7 @@ public class ProductManage {
 		
 		txtSearch = new Text(shlProductManage, SWT.BORDER);
 		txtSearch.setText("Search");
-		txtSearch.setBounds(467, 54, 127, 21);
+		txtSearch.setBounds(196, 54, 317, 21);
 		
 		prodTable = new Table(shlProductManage, SWT.BORDER | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.MULTI);
 		prodTable.setBounds(27, 87, 680, 250);
@@ -203,42 +189,53 @@ public class ProductManage {
 		TableColumn tblclmnProdID = new TableColumn(prodTable, SWT.NONE);
 		tblclmnProdID.setText("ID");
 		
-		TableColumn tblclmnProduct = new TableColumn(prodTable, SWT.CENTER);
+		TableColumn tblclmnProduct = new TableColumn(prodTable, SWT.LEFT);
 		tblclmnProduct.setWidth(125);
 		tblclmnProduct.setText("Product");
 		
-		TableColumn tblclmnCategory = new TableColumn(prodTable, SWT.CENTER);
+		TableColumn tblclmnCategory = new TableColumn(prodTable, SWT.LEFT);
 		tblclmnCategory.setWidth(94);
 		tblclmnCategory.setText("Category");
 		
-		TableColumn tblclmnSubtype = new TableColumn(prodTable, SWT.CENTER);
+		TableColumn tblclmnSubtype = new TableColumn(prodTable, SWT.LEFT);
 		tblclmnSubtype.setWidth(84);
 		tblclmnSubtype.setText("Subtype");
 		
-		TableColumn tblclmnBrand = new TableColumn(prodTable, SWT.CENTER);
+		TableColumn tblclmnBrand = new TableColumn(prodTable, SWT.LEFT);
 		tblclmnBrand.setWidth(87);
 		tblclmnBrand.setText("Brand");
 		
-		TableColumn tblclmnPackaging = new TableColumn(prodTable, SWT.CENTER);
+		TableColumn tblclmnPackaging = new TableColumn(prodTable, SWT.LEFT);
 		tblclmnPackaging.setWidth(96);
 		tblclmnPackaging.setText("Packaging");
 		
-		TableColumn tblclmnPricekg = new TableColumn(prodTable, SWT.CENTER);
+		TableColumn tblclmnPricekg = new TableColumn(prodTable, SWT.LEFT);
 		tblclmnPricekg.setWidth(88);
 		tblclmnPricekg.setText("Price/KG");
 		
-		TableColumn tblclmnNewColumn = new TableColumn(prodTable, SWT.CENTER);
-		tblclmnNewColumn.setWidth(49);
-		tblclmnNewColumn.setText("Boxes");
+		TableColumn tblclmnBoxes = new TableColumn(prodTable, SWT.LEFT);
+		tblclmnBoxes.setText("Boxes");
 		
-		TableColumn tblclmnNewColumn_1 = new TableColumn(prodTable, SWT.CENTER);
-		tblclmnNewColumn_1.setWidth(54);
-		tblclmnNewColumn_1.setText("Weight");
+		TableColumn tblclmnWeight = new TableColumn(prodTable, SWT.LEFT);
+		tblclmnWeight.setWidth(45);
+		tblclmnWeight.setText("Weight");
 		shell = new Shell();
 		shell.setSize(450, 300);
 		shell.setText("SWT Application");
-		
-		ProductManager.displayProducts(prodTable);
+		if (ProductManager.getProductCount() > 0)
+			ProductManager.displayProducts(prodTable);
+		else{
+			MessageBox messageBox = new MessageBox(shlProductManage, SWT.ICON_ERROR | SWT.OK);
+			messageBox.setText("Error");
+			messageBox.setMessage("No data found.");
+			int buttonID = messageBox.open();
+//			String valString = "SWT.OK";
+			switch (buttonID){
+			case SWT.OK:
+				break;
+			}
+		}
+			
 		
 		prodTable.addListener(SWT.MouseDown, new Listener(){
 			public void handleEvent(Event event){
@@ -284,28 +281,20 @@ public class ProductManage {
 						else if (selected.size()== 0 || selected.size() > 1){
 //							System.out.println("NUMBER OF SELECTED ITEMS: "+selected.size());
 							btnEdit.setEnabled(false);
-							for (int k = 0; k < selected.size(); k++){
-//								System.out.print(selected.get(k)+", ");
-							}
+//							for (int k = 0; k < selected.size(); k++){
+////								System.out.print(selected.get(k)+", ");
+//							}
 						}
 						tblItems = prodTable.getItems();
-//						System.out.println(tblItems[index].getText(0));
-//						System.out.println(i);
-//						String prodStr = tblItems[index].getText(0).toString();
-//						try{
-//							prodID = Integer.parseInt(prodStr);
-//						}
-//						catch(Exception e){
-//							System.out.println("No record selected");
-//						}
 					}
 				}
 				
 				else if ((event.stateMask & SWT.SHIFT) != 0){ //SHIFT + CLICK
+//					selected.clear();
 					Point pt = new Point(event.x, event.y);
 					item = prodTable.getItem(pt);
 					if(item != null) {
-//						btnEdit.setEnabled(true);
+						btnEdit.setEnabled(false);
 						btnDelete.setEnabled(true);
 						index = prodTable.indexOf(item);
 //						System.out.println("INDEX: "+index);
@@ -313,16 +302,37 @@ public class ProductManage {
 						range.add(Integer.valueOf(index));
 						
 						if (range.size() == 2){
-							
+							lowerBound = Collections.min(range);
+//							System.out.println("Lower bound: "+lowerBound);
+							upperBound = Collections.max(range);
+//							System.out.println("Upper bound: "+upperBound);
 						}
-						
-						
-						if (selected.size()>0){
-							selected.clear();
+						else{
+							if((index < lowerBound || index > lowerBound) && index < upperBound ){
+								range.remove(Integer.valueOf(lowerBound));
+								lowerBound = index;
+								range.add(Integer.valueOf(lowerBound));
+							}
+							else if ((index < upperBound || index > upperBound) && index < lowerBound){
+								range.remove(Integer.valueOf(upperBound));
+								upperBound = index;
+								range.add(Integer.valueOf(upperBound));
+							}
 						}
-						
-						selected.add(Integer.valueOf(index));
-						tblItems = prodTable.getItems();
+						for (int l = lowerBound; l <= upperBound; l++){
+							if (!selected.contains(Integer.valueOf(l))){
+								selected.add(Integer.valueOf(l));
+							}
+							if (!indexes.contains(Integer.valueOf(l))){
+								indexes.add(Integer.valueOf(l));
+							}
+						}
+//						System.out.println("Range Size: "+range.size());
+//						System.out.println("Index size: "+indexes.size());
+//						for (int m = 0; m < selected.size(); m++){
+//							System.out.print(selected.get(Integer.valueOf(m))+ ", ");
+//						}
+//						System.out.println("");
 					}
 				}
 				
@@ -335,11 +345,12 @@ public class ProductManage {
 						index = prodTable.indexOf(item);
 //						System.out.println("INDEX: "+index);
 						indexes.add(Integer.valueOf(index));
-						
+						selected.add(Integer.valueOf(index));
+						range.add(Integer.valueOf(index));
 						if (selected.size()>0){
 							selected.clear();
 						}
-						selected.add(Integer.valueOf(index));
+						
 						tblItems = prodTable.getItems();
 					}
 				}

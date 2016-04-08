@@ -136,7 +136,7 @@ public class EditProduct {
 		
 		Label lblErrProdName = new Label(shlEditProduct, SWT.NONE);
 		lblErrProdName.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
-		lblErrProdName.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
+		lblErrProdName.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.NORMAL));
 		lblErrProdName.setForeground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
 		lblErrProdName.setBounds(252, 29, 110, 15);
 		lblErrProdName.setText("!");
@@ -144,14 +144,12 @@ public class EditProduct {
 
 		
 		Label lblErrCat = new Label(shlEditProduct, SWT.NONE);
-		lblErrCat.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
 		lblErrCat.setForeground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
 		lblErrCat.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
 		lblErrCat.setBounds(252, 61, 110, 15);
 		lblErrCat.setText("!");
 		
 		Label lblErrSub = new Label(shlEditProduct, SWT.NONE);
-		lblErrSub.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
 		lblErrSub.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
 		lblErrSub.setForeground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
 		lblErrSub.setBounds(252, 93, 110, 15);
