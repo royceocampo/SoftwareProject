@@ -34,12 +34,13 @@ import classes.ProductManager;
 
 import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.events.DisposeEvent;
 
 public class EditOrder {
 
 	protected Shell shlRareGlobalFood;
 	protected Shell shell;
-
 	private Text txtClientName;
 	private Text txtQuantity;
 	private Text txtPrice;
@@ -47,6 +48,8 @@ public class EditOrder {
 	private Text txtYear;
 	private Text txtOtherNotes;
 	private Table tableCart;
+	private float totalPrice = 0;
+	private int orderID = 0;
 
 	/**
 	 * Launch the application.
@@ -133,8 +136,8 @@ public class EditOrder {
 		lblOrderManagement.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
 		lblOrderManagement.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_RED));
 		lblOrderManagement.setFont(SWTResourceManager.getFont("Segoe UI", 18, SWT.NORMAL));
-		lblOrderManagement.setBounds(20, 10, 139, 28);
-		lblOrderManagement.setText("EDIT ORDER");
+		lblOrderManagement.setBounds(20, 10, 172, 28);
+		lblOrderManagement.setText("MODIFY ORDER");
 
 		Label lblClientName = new Label(shlRareGlobalFood, SWT.NONE);
 		lblClientName.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
@@ -228,116 +231,20 @@ public class EditOrder {
 		});
 		txtPrice.setBounds(530, 59, 65, 23);
 
-		try {
-			int index = viewOrder.getIndex();
-			TableTreeItem item = viewOrder.getItem();
-			TableTreeItem[] tableItems = viewOrder.getAllItems();
-			String numDueDate = tableItems[index].getText(9);
-			String[] numDueDateParts = numDueDate.split("-");
+		Label lblTotal = new Label(shlRareGlobalFood, SWT.NONE);
+		lblTotal.setText("Total:");
+		lblTotal.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
+		lblTotal.setBounds(499, 250, 46, 20);
+		lblTotal.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.BOLD));
 
-			txtClientName.setText(tableItems[index].getText(1));
-			txtOrderReceiver.setText(tableItems[index].getText(2));
-			cmbProductOrdered.setText(tableItems[index].getText(3));
-			txtPrice.setText(tableItems[index].getText(6));
-			txtQuantity.setText(tableItems[index].getText(7));
-			cmbMonthDue.select(Integer.parseInt(numDueDateParts[1]));
-			cmbDayDue.select(Integer.parseInt(numDueDateParts[2]));
-			txtYear.setText(numDueDateParts[0]);
-			txtOtherNotes.setText(tableItems[index].getText(10));
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-			MessageBox errorMessage = new MessageBox(shlRareGlobalFood, SWT.Close);
-			errorMessage.setText("Error");
-			errorMessage.setMessage("Please select an order to edit.");
-			errorMessage.open();
-		}
-
-		Button btnAddToCart = new Button(shlRareGlobalFood, SWT.NONE);
-		btnAddToCart.addSelectionListener(new SelectionAdapter() {
-			// add a listener to the button
-			public void widgetSelected(SelectionEvent e) {
-
-				String productOrder;
-				float productQuantity = 0;
-				float orderPrice = 0;
-
-				// get data from input
-				try {
-					productOrder = cmbProductOrdered.getText();
-				} catch (Exception ex) {
-					ex.printStackTrace();
-					return;
-				}
-				try {
-					if (txtQuantity.getText().length() > 0)
-						productQuantity = Float.parseFloat(txtQuantity.getText());
-				} catch (Exception ex) {
-					ex.printStackTrace();
-					MessageBox errorMessage = new MessageBox(shlRareGlobalFood, SWT.Close);
-					errorMessage.setText("Error");
-					errorMessage.setMessage("Only numbers are allowed");
-					errorMessage.open();
-					return;
-				}
-				try {
-					if (txtPrice.getText().length() > 0)
-						orderPrice = Float.parseFloat(txtPrice.getText());
-				} catch (Exception ex) {
-					ex.printStackTrace();
-					MessageBox errorMessage = new MessageBox(shlRareGlobalFood, SWT.Close);
-					errorMessage.setText("Error");
-					errorMessage.setMessage("Only numbers are allowed");
-					errorMessage.open();
-					return;
-				}
-				int productID = cmbProductOrdered.getSelectionIndex() + 1;
-				// check null input
-				if (productOrder.length() > 0 && Float.toString(productQuantity).length() > 0 && productQuantity > 0
-						&& Float.toString(orderPrice).length() > 0 && orderPrice > 0) {
-					TableItem newOrder = new TableItem(tableCart, SWT.NULL);
-					newOrder.setText(0, Integer.toString(productID));
-					newOrder.setText(1, productOrder);
-					newOrder.setText(2, Float.toString(productQuantity));
-					newOrder.setText(3, Float.toString(orderPrice));
-
-					cmbProductOrdered.select(0);
-					txtQuantity.setText("0.0");
-					txtPrice.setText("0.0");
-				} else if (productOrder.length() == 0) {
-					MessageBox errorMessage = new MessageBox(shlRareGlobalFood, SWT.Close);
-					errorMessage.setText("Error");
-					errorMessage.setMessage("No products listed.");
-					errorMessage.open();
-				} else if (productQuantity <= 0 || orderPrice <= 0) {
-					MessageBox errorMessage = new MessageBox(shlRareGlobalFood, SWT.Close);
-					errorMessage.setText("Error");
-					errorMessage.setMessage("Please give a valid number greater than 0.");
-					errorMessage.open();
-				} else {
-					MessageBox errorMessage = new MessageBox(shlRareGlobalFood, SWT.Close);
-					errorMessage.setText("Error");
-					errorMessage.setMessage("Please fill out all fields.");
-					errorMessage.open();
-
-				}
-			}
-		});
-		btnAddToCart.setBounds(601, 55, 60, 28);
-		btnAddToCart.setText("Add");
+		Label lblTotalPrice = new Label(shlRareGlobalFood, SWT.NONE);
+		lblTotalPrice.setAlignment(SWT.RIGHT);
+		lblTotalPrice.setText("0.0");
+		lblTotalPrice.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
+		lblTotalPrice.setBounds(552, 250, 109, 20);
+		lblTotalPrice.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.NORMAL));
 
 		tableCart = new Table(shlRareGlobalFood, SWT.BORDER | SWT.FULL_SELECTION);
-		tableCart.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				TableItem[] contents = tableCart.getItems();
-				String clientName = contents[tableCart.getSelectionIndex()].getText(0);
-				String productOrdered = contents[tableCart.getSelectionIndex()].getText(1);
-				String prodQty = contents[tableCart.getSelectionIndex()].getText(2);
-				String prodPrice = contents[tableCart.getSelectionIndex()].getText(3);
-				System.out.println(clientName + " " + productOrdered + " " + prodQty + " " + prodPrice);
-			}
-		});
 		tableCart.setLinesVisible(true);
 		tableCart.setHeaderVisible(true);
 		tableCart.setBounds(305, 99, 356, 133);
@@ -361,12 +268,147 @@ public class EditOrder {
 		tblclmnPrice.setResizable(false);
 		tblclmnPrice.setWidth(80);
 		tblclmnPrice.setText("Price");
-		shell = new Shell();
-		shell.setSize(450, 300);
-		shell.setText("SWT Application");
+
+		// Get Order details.
+		try {
+			int index = viewOrder.getIndex();
+			TableTreeItem item = viewOrder.getItem();
+			TableTreeItem[] tableItems = viewOrder.getAllItems();
+			int orderID = Integer.parseInt(tableItems[index].getText(0));
+			this.orderID = orderID;
+			Order orderToEdit = new OrderManager().getOrder(orderID);
+			ArrayList<LineItem> storedList = new LineItemManager().getLineItems(orderID);
+
+			// Store order data in local variables.
+			String clientName = orderToEdit.getClientName();
+			String orderReceiver = orderToEdit.getOrderReceiver();
+			float totalPrice = orderToEdit.getPrice();
+			String notes = orderToEdit.getNotes();
+			Date dueDate = orderToEdit.getDeliveryDueDate();
+
+			String numDueDate = dueDate.toString();
+			String[] numDueDateParts = numDueDate.split("-");
+
+			// Set the text fields with the details.
+			txtClientName.setText(clientName);
+			txtOrderReceiver.setText(orderReceiver);
+			cmbMonthDue.select(Integer.parseInt(numDueDateParts[1]));
+			cmbDayDue.select(Integer.parseInt(numDueDateParts[2]));
+			txtYear.setText(numDueDateParts[0]);
+			txtOtherNotes.setText(notes);
+			lblTotalPrice.setText(Float.toString(totalPrice));
+
+			// Populate the table with the orders.
+			for (int currentIndex = 0; currentIndex < storedList.size(); currentIndex++) {
+				
+				int productID = storedList.get(currentIndex).getProductID();
+				String productName = new ProductManager().getProduct(productID).getProductName();
+				float productQuantity = storedList.get(currentIndex).getQuantity();
+				float productPrice = storedList.get(currentIndex).getPricePerKilo();
+
+				TableItem newOrder = new TableItem(tableCart, SWT.NONE);
+
+				newOrder.setText(new String[] { Integer.toString(productID), productName,
+						Float.toString(productQuantity), Float.toString(productPrice) });
+			}
+
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			MessageBox errorMessage = new MessageBox(shlRareGlobalFood, SWT.Close);
+			errorMessage.setText("Error");
+			errorMessage.setMessage("Please select an order to edit.");
+			errorMessage.open();
+		}
+
+		// Add Listeners
+		Button btnAddToCart = new Button(shlRareGlobalFood, SWT.NONE);
+		btnAddToCart.addSelectionListener(new SelectionAdapter() {
+			// add a listener to the button
+			public void widgetSelected(SelectionEvent e) {
+
+				String productOrder;
+				float productQuantity = 0;
+				float orderPrice = 0;
+				float totalPrice = 0;
+
+				// get data from input
+				try {
+					productOrder = cmbProductOrdered.getText();
+				} catch (Exception ex) {
+					ex.printStackTrace();
+					return;
+				}
+				try {
+					if (txtQuantity.getText().length() > 0)
+						productQuantity = Float.parseFloat(txtQuantity.getText());
+				} catch (Exception ex) {
+					ex.printStackTrace();
+					MessageBox errorMessage = new MessageBox(shlRareGlobalFood, SWT.Close);
+					errorMessage.setText("Error");
+					errorMessage.setMessage("Only numbers are allowed.");
+					errorMessage.open();
+					return;
+				}
+				try {
+					if (txtPrice.getText().length() > 0)
+						orderPrice = Float.parseFloat(txtPrice.getText());
+				} catch (Exception ex) {
+					ex.printStackTrace();
+					MessageBox errorMessage = new MessageBox(shlRareGlobalFood, SWT.Close);
+					errorMessage.setText("Error");
+					errorMessage.setMessage("Only numbers are allowed.");
+					errorMessage.open();
+					return;
+				}
+				int productID = cmbProductOrdered.getSelectionIndex() + 1;
+				// check null input
+				if (productOrder.length() > 0 && Float.toString(productQuantity).length() > 0 && productQuantity > 0
+						&& Float.toString(orderPrice).length() > 0 && orderPrice > 0) {
+					TableItem newOrder = new TableItem(tableCart, SWT.NULL);
+					newOrder.setText(0, Integer.toString(productID));
+					newOrder.setText(1, productOrder);
+					newOrder.setText(2, Float.toString(productQuantity));
+					newOrder.setText(3, Float.toString(orderPrice));
+
+					TableItem[] cartProducts = tableCart.getItems();
+
+					for (int row = 0; row < cartProducts.length; row++) {
+						String[] cartString = new String[4];
+						for (int col = 0; col < 4; col++) {
+							cartString[col] = cartProducts[row].getText(col);
+						}
+
+						totalPrice += Float.parseFloat(cartString[3]);
+					}
+
+					lblTotalPrice.setText(Float.toString(totalPrice));
+					cmbProductOrdered.setText("");
+					txtQuantity.setText("0.0");
+					txtPrice.setText("0.0");
+				} else if (productOrder.length() == 0) {
+					MessageBox errorMessage = new MessageBox(shlRareGlobalFood, SWT.Close);
+					errorMessage.setText("Error");
+					errorMessage.setMessage("No products listed.");
+					errorMessage.open();
+				} else if (productQuantity <= 0 || orderPrice <= 0) {
+					MessageBox errorMessage = new MessageBox(shlRareGlobalFood, SWT.Close);
+					errorMessage.setText("Error");
+					errorMessage.setMessage("Please give a valid number greater than 0.");
+					errorMessage.open();
+				} else {
+					MessageBox errorMessage = new MessageBox(shlRareGlobalFood, SWT.Close);
+					errorMessage.setText("Error");
+					errorMessage.setMessage("Please fill out all required fields.");
+					errorMessage.open();
+
+				}
+			}
+		});
+		btnAddToCart.setBounds(601, 55, 60, 28);
+		btnAddToCart.setText("Add");
 
 		Button btnEditOrder = new Button(shlRareGlobalFood, SWT.NONE);
-		btnEditOrder.setEnabled(true);
 		btnEditOrder.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -393,7 +435,7 @@ public class EditOrder {
 				if (contentCount == 0) {
 					MessageBox errorMessage = new MessageBox(shlRareGlobalFood, SWT.Close);
 					errorMessage.setText("Error");
-					errorMessage.setMessage("There are no orders to edit.");
+					errorMessage.setMessage("There are no products in the cart.");
 					errorMessage.open();
 				} else if (selectedIndex != -1) {
 					cmbProductOrdered.setText(productOrdered);
@@ -402,6 +444,20 @@ public class EditOrder {
 
 					tableCart.remove(selectedIndex);
 					tableCart.redraw();
+
+					TableItem[] cartProducts = tableCart.getItems();
+
+					totalPrice = 0;
+					for (int row = 0; row < cartProducts.length; row++) {
+						String[] cartString = new String[4];
+						for (int col = 0; col < 4; col++) {
+							cartString[col] = cartProducts[row].getText(col);
+						}
+
+						totalPrice += Float.parseFloat(cartString[3]);
+					}
+
+					lblTotalPrice.setText(Float.toString(totalPrice));
 				} else {
 					MessageBox errorMessage = new MessageBox(shlRareGlobalFood, SWT.Close);
 					errorMessage.setText("Error");
@@ -413,7 +469,10 @@ public class EditOrder {
 		btnEditOrder.setText("Edit");
 		btnEditOrder.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 		btnEditOrder.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
-		btnEditOrder.setBounds(503, 247, 73, 28);
+		btnEditOrder.setBounds(305, 247, 73, 28);
+		shell = new Shell();
+		shell.setSize(450, 300);
+		shell.setText("SWT Application");
 
 		Button btnDeleteOrder = new Button(shlRareGlobalFood, SWT.NONE);
 		btnDeleteOrder.addSelectionListener(new SelectionAdapter() {
@@ -427,6 +486,20 @@ public class EditOrder {
 					if (selectedIndex != -1) {
 						tableCart.remove(selectedIndex);
 						tableCart.redraw();
+						TableItem[] cartProducts = tableCart.getItems();
+
+						totalPrice = 0;
+						for (int row = 0; row < cartProducts.length; row++) {
+							String[] cartString = new String[4];
+							for (int col = 0; col < 4; col++) {
+								cartString[col] = cartProducts[row].getText(col);
+								System.out.print(cartProducts[row].getText(col) + " ");
+							}
+
+							totalPrice += Float.parseFloat(cartString[3]);
+						}
+
+						lblTotalPrice.setText(Float.toString(totalPrice));
 					}
 				} catch (Exception ex) {
 					ex.printStackTrace();
@@ -435,7 +508,7 @@ public class EditOrder {
 				if (contentCount == 0) {
 					MessageBox errorMessage = new MessageBox(shlRareGlobalFood, SWT.Close);
 					errorMessage.setText("Error");
-					errorMessage.setMessage("There are no orders to delete.");
+					errorMessage.setMessage("There are no products in the cart.");
 					errorMessage.open();
 				} else if (selectedIndex == -1) {
 					MessageBox errorMessage = new MessageBox(shlRareGlobalFood, SWT.Close);
@@ -448,7 +521,7 @@ public class EditOrder {
 		btnDeleteOrder.setText("Delete");
 		btnDeleteOrder.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 		btnDeleteOrder.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
-		btnDeleteOrder.setBounds(587, 247, 73, 28);
+		btnDeleteOrder.setBounds(384, 247, 73, 28);
 
 		Button btnAddOrder = new Button(shlRareGlobalFood, SWT.NONE);
 		btnAddOrder.addSelectionListener(new SelectionAdapter() {
@@ -485,11 +558,22 @@ public class EditOrder {
 						}
 					}
 
+					TableItem[] cartProducts = tableCart.getItems();
+
+					for (int row = 0; row < cartProducts.length; row++) {
+						String[] cartString = new String[4];
+						for (int col = 0; col < 4; col++) {
+							cartString[col] = cartProducts[row].getText(col);
+						}
+
+						totalPrice += Float.parseFloat(cartString[3]);
+					}
+
 				} catch (Exception ex) {
 					ex.printStackTrace();
 					MessageBox errorBox = new MessageBox(shlRareGlobalFood, SWT.Close);
 					errorBox.setText("Error");
-					errorBox.setMessage("Please give a valid year beyond 2000");
+					errorBox.setMessage("Please give a valid year beyond 2000.");
 					errorBox.open();
 					return;
 				}
@@ -521,58 +605,44 @@ public class EditOrder {
 				} else if (contentCount == 0) {
 					MessageBox errorBox = new MessageBox(shlRareGlobalFood, SWT.Close);
 					errorBox.setText("Error");
-					errorBox.setMessage("There are no orders.");
+					errorBox.setMessage("Please add products to order.");
 					errorBox.open();
 				} else {
 					MessageBox confirmBox = new MessageBox(shlRareGlobalFood, SWT.YES | SWT.NO);
 					confirmBox.setText("Confirmation");
-					confirmBox.setMessage("Are you sure with this order?");
+					confirmBox.setMessage("Are you sure with this update?");
 					int buttonID = confirmBox.open();
 					switch (buttonID) {
 					case SWT.YES:
 						TableItem[] cartItems = tableCart.getItems();
+						
+						new LineItemManager().deleteLineItem(orderID);
+
+						Order newOrder = new Order(clientName, totalPrice, orderReceiver, sqlDueDate, isDelivered,
+								otherNotes);
+						new OrderManager().editOrder(orderID, newOrder);
 
 						for (int row = 0; row < cartItems.length; row++) {
 							String[] itemsString = new String[4];
 							for (int col = 0; col < 4; col++) {
 								itemsString[col] = cartItems[row].getText(col);
-								System.out.print(cartItems[row].getText(col) + " ");
-							}
-							Order newOrder = new Order(clientName, Float.parseFloat(itemsString[3]), orderReceiver,
-									sqlDueDate, isDelivered, otherNotes);
-							OrderManager manageOrder = new OrderManager();
-							manageOrder.addOrder(newOrder);
-
-							try {
-								int selectedID = 0;
-								int index = viewOrder.getIndex();
-								TableTreeItem item = viewOrder.getItem();
-								TableTreeItem[] tableItems = viewOrder.getAllItems();
-								selectedID = Integer.parseInt(tableItems[index].getText(0));
-								manageOrder.deleteOrder(selectedID);
-							} catch (Exception e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
 							}
 
-							int orderID = manageOrder.getLastOrder().getPurchase_orderID();
 							LineItem newLineItem = new LineItem(orderID, Integer.parseInt(itemsString[0]),
 									Float.parseFloat(itemsString[3]), Float.parseFloat(itemsString[2]));
 							LineItemManager manageLineItem = new LineItemManager();
-							System.out.println("Order ID: " + orderID);
-							System.out.println("Prod ID: " + Integer.parseInt(itemsString[0]));
-							System.out.println("Price: " + Float.parseFloat(itemsString[3]));
-							System.out.println("Quantity: " + Float.parseFloat(itemsString[2]));
 							manageLineItem.addLineItem(newLineItem);
 						}
+						totalPrice = 0;
+						lblTotalPrice.setText("0.0");
 						tableCart.removeAll();
 						tableCart.redraw();
-
+						
 						MessageBox successBox = new MessageBox(shlRareGlobalFood, SWT.Close);
-						successBox.setText("Notice");
-						successBox.setMessage("Successfully edited order!");
+						successBox.setText("Notification");
+						successBox.setMessage("Successfully updated order.");
 						successBox.open();
-
+						
 						shlRareGlobalFood.close();
 						break;
 					case SWT.NO:
@@ -582,9 +652,8 @@ public class EditOrder {
 			}
 		});
 		btnAddOrder.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
-		btnAddOrder.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 		btnAddOrder.setBounds(563, 312, 95, 35);
-		btnAddOrder.setText("Submit");
-		btnAddOrder.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
+		btnAddOrder.setText("Update");
+
 	}
 }
