@@ -91,9 +91,9 @@ public class ProductManage {
 	protected void createContents() {
 		shlProductManage = new Shell();
 
-		shlProductManage.setMinimumSize(new Point(500, 200));
+		shlProductManage.setMinimumSize(new Point(615, 420));
 		shlProductManage.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
-		shlProductManage.setSize(615, 385);
+		shlProductManage.setSize(615, 420);
 		shlProductManage.setText("Rare Global Food Trading Corp.");
 
 		Menu menu = new Menu(shlProductManage, SWT.BAR);
@@ -151,8 +151,7 @@ public class ProductManage {
 			}
 		});
 		btnNewButton.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
-		btnNewButton.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
-		btnNewButton.setBounds(494, 285, 95, 33);
+		btnNewButton.setBounds(494, 311, 95, 33);
 		btnNewButton.setText("Add Product");
 
 		Button btnEdit = new Button(shlProductManage, SWT.NONE);
@@ -160,7 +159,7 @@ public class ProductManage {
 		btnEdit.setText("Edit");
 		btnEdit.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 		btnEdit.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
-		btnEdit.setBounds(10, 285, 95, 33);
+		btnEdit.setBounds(10, 311, 95, 33);
 		btnEdit.setEnabled(false);
 
 		Button btnDelete = new Button(shlProductManage, SWT.NONE);
@@ -168,7 +167,7 @@ public class ProductManage {
 		btnDelete.setText("Delete");
 		btnDelete.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 		btnDelete.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
-		btnDelete.setBounds(111, 285, 95, 33);
+		btnDelete.setBounds(111, 311, 95, 33);
 		btnDelete.setEnabled(false);
 
 		txtSearch = new Text(shlProductManage, SWT.BORDER);
@@ -176,6 +175,17 @@ public class ProductManage {
 			@Override
 			public void focusGained(FocusEvent e) {
 				txtSearch.setText("");
+				if(txtSearch.getText().length() == 0){
+					prodTable.removeAll();
+					ProductManager.displayProducts(prodTable);
+				}
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(txtSearch.getText().length() == 0){
+					prodTable.removeAll();
+					ProductManager.displayProducts(prodTable);
+				}
 			}
 		});
 		txtSearch.setText("Search");
