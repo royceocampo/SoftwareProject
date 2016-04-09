@@ -604,7 +604,7 @@ public class viewOrder {
 
 			}
 		});
-		btnEditOrder.setText("Edit");
+		btnEditOrder.setText("Modify");
 		btnEditOrder.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 		btnEditOrder.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
 		btnEditOrder.setBounds(10, 311, 95, 35);
