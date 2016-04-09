@@ -34,8 +34,6 @@ import classes.ProductManager;
 
 import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.DisposeListener;
-import org.eclipse.swt.events.DisposeEvent;
 
 public class EditOrder {
 
@@ -94,8 +92,11 @@ public class EditOrder {
 		if (prodCount == 0) {
 			MessageBox errorMessage = new MessageBox(shlRareGlobalFood, SWT.Close);
 			errorMessage.setText("Error");
-			errorMessage.setMessage("No products listed.");
+			errorMessage.setMessage("There are no products in the inventory.");
 			errorMessage.open();
+
+			shlRareGlobalFood.close();
+
 		}
 		String[] products = new String[prodCount];
 
@@ -131,13 +132,20 @@ public class EditOrder {
 
 		MenuItem mntmInventory = new MenuItem(menu, SWT.NONE);
 		mntmInventory.setText("Inventory");
+		
+		Label lblInvalidHelp = new Label(shlRareGlobalFood, SWT.NONE);
+		lblInvalidHelp.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
+		lblInvalidHelp.setForeground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
+		lblInvalidHelp.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
+		lblInvalidHelp.setBounds(20, 339, 212, 15);
+		lblInvalidHelp.setText("Fields marked with an ! are required");
 
 		Label lblOrderManagement = new Label(shlRareGlobalFood, SWT.NONE);
 		lblOrderManagement.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
 		lblOrderManagement.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_RED));
 		lblOrderManagement.setFont(SWTResourceManager.getFont("Segoe UI", 18, SWT.NORMAL));
-		lblOrderManagement.setBounds(20, 10, 172, 28);
-		lblOrderManagement.setText("MODIFY ORDER");
+		lblOrderManagement.setBounds(20, 10, 139, 28);
+		lblOrderManagement.setText("ADD ORDER");
 
 		Label lblClientName = new Label(shlRareGlobalFood, SWT.NONE);
 		lblClientName.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
@@ -148,6 +156,13 @@ public class EditOrder {
 		txtClientName.setTextLimit(20);
 		txtClientName.setBounds(108, 59, 172, 19);
 
+		Label lblInvalidName = new Label(shlRareGlobalFood, SWT.NONE);
+		lblInvalidName.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.BOLD));
+		lblInvalidName.setForeground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
+		lblInvalidName.setText("!");
+		lblInvalidName.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
+		lblInvalidName.setBounds(283, 58, 16, 16);
+
 		Label lblOrderReceiver = new Label(shlRareGlobalFood, SWT.NONE);
 		lblOrderReceiver.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
 		lblOrderReceiver.setBounds(20, 88, 87, 14);
@@ -156,6 +171,13 @@ public class EditOrder {
 		txtOrderReceiver = new Text(shlRareGlobalFood, SWT.BORDER);
 		txtOrderReceiver.setTextLimit(20);
 		txtOrderReceiver.setBounds(108, 84, 172, 19);
+
+		Label lblInvalidReceiver = new Label(shlRareGlobalFood, SWT.NONE);
+		lblInvalidReceiver.setText("!");
+		lblInvalidReceiver.setForeground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
+		lblInvalidReceiver.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.BOLD));
+		lblInvalidReceiver.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
+		lblInvalidReceiver.setBounds(283, 84, 16, 16);
 
 		Label lblDateDue = new Label(shlRareGlobalFood, SWT.NONE);
 		lblDateDue.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
@@ -181,6 +203,13 @@ public class EditOrder {
 		txtYear.setTextLimit(4);
 		txtYear.setBounds(240, 113, 40, 18);
 
+		Label lblInvalidDate = new Label(shlRareGlobalFood, SWT.NONE);
+		lblInvalidDate.setText("!");
+		lblInvalidDate.setForeground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
+		lblInvalidDate.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.BOLD));
+		lblInvalidDate.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
+		lblInvalidDate.setBounds(283, 109, 16, 16);
+
 		Label lblOtherNotes = new Label(shlRareGlobalFood, SWT.NONE);
 		lblOtherNotes.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
 		lblOtherNotes.setBounds(20, 141, 73, 14);
@@ -194,6 +223,13 @@ public class EditOrder {
 		lblProductOrdered.setBounds(305, 39, 95, 14);
 		lblProductOrdered.setText("*Product Ordered:");
 
+		Label lblEmptyProducts = new Label(shlRareGlobalFood, SWT.NONE);
+		lblEmptyProducts.setText("!");
+		lblEmptyProducts.setForeground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
+		lblEmptyProducts.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.BOLD));
+		lblEmptyProducts.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
+		lblEmptyProducts.setBounds(402, 35, 8, 16);
+
 		Combo cmbProductOrdered = new Combo(shlRareGlobalFood, SWT.READ_ONLY);
 		cmbProductOrdered.setItems(products);
 		cmbProductOrdered.setBounds(305, 59, 150, 23);
@@ -203,6 +239,13 @@ public class EditOrder {
 		lblQuantity.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
 		lblQuantity.setBounds(460, 39, 60, 14);
 		lblQuantity.setText("*Qty (kilos)");
+
+		Label lblInvalidQty = new Label(shlRareGlobalFood, SWT.NONE);
+		lblInvalidQty.setText("!");
+		lblInvalidQty.setForeground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
+		lblInvalidQty.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.BOLD));
+		lblInvalidQty.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
+		lblInvalidQty.setBounds(521, 35, 8, 16);
 
 		txtQuantity = new Text(shlRareGlobalFood, SWT.BORDER);
 		txtQuantity.setTextLimit(6);
@@ -217,8 +260,15 @@ public class EditOrder {
 
 		Label lblPrice = new Label(shlRareGlobalFood, SWT.NONE);
 		lblPrice.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
-		lblPrice.setBounds(530, 39, 46, 14);
+		lblPrice.setBounds(530, 39, 34, 14);
 		lblPrice.setText("*Price:");
+
+		Label lblInvalidPrice = new Label(shlRareGlobalFood, SWT.NONE);
+		lblInvalidPrice.setText("!");
+		lblInvalidPrice.setForeground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
+		lblInvalidPrice.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.BOLD));
+		lblInvalidPrice.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
+		lblInvalidPrice.setBounds(568, 35, 8, 16);
 
 		txtPrice = new Text(shlRareGlobalFood, SWT.BORDER);
 		txtPrice.setTextLimit(6);
@@ -243,6 +293,13 @@ public class EditOrder {
 		lblTotalPrice.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
 		lblTotalPrice.setBounds(552, 250, 109, 20);
 		lblTotalPrice.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.NORMAL));
+
+		Label lblEmptyCart = new Label(shlRareGlobalFood, SWT.NONE);
+		lblEmptyCart.setText("!");
+		lblEmptyCart.setForeground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
+		lblEmptyCart.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.BOLD));
+		lblEmptyCart.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
+		lblEmptyCart.setBounds(663, 58, 8, 16);
 
 		tableCart = new Table(shlRareGlobalFood, SWT.BORDER | SWT.FULL_SELECTION);
 		tableCart.setLinesVisible(true);
@@ -300,7 +357,7 @@ public class EditOrder {
 
 			// Populate the table with the orders.
 			for (int currentIndex = 0; currentIndex < storedList.size(); currentIndex++) {
-				
+
 				int productID = storedList.get(currentIndex).getProductID();
 				String productName = new ProductManager().getProduct(productID).getProductName();
 				float productQuantity = storedList.get(currentIndex).getQuantity();
@@ -319,9 +376,10 @@ public class EditOrder {
 			errorMessage.setText("Error");
 			errorMessage.setMessage("Please select an order to edit.");
 			errorMessage.open();
+			shlRareGlobalFood.close();
 		}
+		
 
-		// Add Listeners
 		Button btnAddToCart = new Button(shlRareGlobalFood, SWT.NONE);
 		btnAddToCart.addSelectionListener(new SelectionAdapter() {
 			// add a listener to the button
@@ -340,28 +398,35 @@ public class EditOrder {
 					return;
 				}
 				try {
-					if (txtQuantity.getText().length() > 0)
+					if (txtQuantity.getText().length() > 0) {
 						productQuantity = Float.parseFloat(txtQuantity.getText());
+						lblInvalidQty.setForeground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
+					}
 				} catch (Exception ex) {
 					ex.printStackTrace();
 					MessageBox errorMessage = new MessageBox(shlRareGlobalFood, SWT.Close);
 					errorMessage.setText("Error");
 					errorMessage.setMessage("Only numbers are allowed.");
 					errorMessage.open();
+					lblInvalidQty.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
 					return;
 				}
 				try {
-					if (txtPrice.getText().length() > 0)
+					if (txtPrice.getText().length() > 0) {
 						orderPrice = Float.parseFloat(txtPrice.getText());
+						lblInvalidPrice.setForeground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
+					}
 				} catch (Exception ex) {
 					ex.printStackTrace();
 					MessageBox errorMessage = new MessageBox(shlRareGlobalFood, SWT.Close);
 					errorMessage.setText("Error");
 					errorMessage.setMessage("Only numbers are allowed.");
 					errorMessage.open();
+					lblInvalidPrice.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
 					return;
 				}
 				int productID = cmbProductOrdered.getSelectionIndex() + 1;
+
 				// check null input
 				if (productOrder.length() > 0 && Float.toString(productQuantity).length() > 0 && productQuantity > 0
 						&& Float.toString(orderPrice).length() > 0 && orderPrice > 0) {
@@ -375,10 +440,10 @@ public class EditOrder {
 
 					for (int row = 0; row < cartProducts.length; row++) {
 						String[] cartString = new String[4];
+
 						for (int col = 0; col < 4; col++) {
 							cartString[col] = cartProducts[row].getText(col);
 						}
-
 						totalPrice += Float.parseFloat(cartString[3]);
 					}
 
@@ -386,22 +451,43 @@ public class EditOrder {
 					cmbProductOrdered.setText("");
 					txtQuantity.setText("0.0");
 					txtPrice.setText("0.0");
-				} else if (productOrder.length() == 0) {
-					MessageBox errorMessage = new MessageBox(shlRareGlobalFood, SWT.Close);
-					errorMessage.setText("Error");
-					errorMessage.setMessage("No products listed.");
-					errorMessage.open();
-				} else if (productQuantity <= 0 || orderPrice <= 0) {
-					MessageBox errorMessage = new MessageBox(shlRareGlobalFood, SWT.Close);
-					errorMessage.setText("Error");
-					errorMessage.setMessage("Please give a valid number greater than 0.");
-					errorMessage.open();
+					lblEmptyCart.setForeground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
+				} else if (productOrder.length() == 0 || productQuantity <= 0 || orderPrice <= 0) {
+					if (productOrder.length() == 0) {
+						MessageBox errorMessage = new MessageBox(shlRareGlobalFood, SWT.Close);
+						errorMessage.setText("Error");
+						errorMessage.setMessage("There are no products in the inventory.");
+						errorMessage.open();
+						lblEmptyProducts.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
+					} else {
+						lblEmptyProducts.setForeground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
+					}
+
+					if (productQuantity <= 0) {
+						MessageBox errorMessage = new MessageBox(shlRareGlobalFood, SWT.Close);
+						errorMessage.setText("Error");
+						errorMessage.setMessage("Please give a valid number greater than 0 for the quantity.");
+						errorMessage.open();
+						lblInvalidQty.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
+					} else {
+						lblInvalidQty.setForeground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
+					}
+
+					if (orderPrice <= 0) {
+						MessageBox errorMessage = new MessageBox(shlRareGlobalFood, SWT.Close);
+						errorMessage.setText("Error");
+						errorMessage.setMessage("Please give a valid number greater than 0 for the price.");
+						errorMessage.open();
+						lblInvalidPrice.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
+					} else {
+						lblInvalidPrice.setForeground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
+					}
+
 				} else {
 					MessageBox errorMessage = new MessageBox(shlRareGlobalFood, SWT.Close);
 					errorMessage.setText("Error");
 					errorMessage.setMessage("Please fill out all required fields.");
 					errorMessage.open();
-
 				}
 			}
 		});
@@ -437,7 +523,9 @@ public class EditOrder {
 					errorMessage.setText("Error");
 					errorMessage.setMessage("There are no products in the cart.");
 					errorMessage.open();
+					lblEmptyCart.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
 				} else if (selectedIndex != -1) {
+					lblEmptyCart.setForeground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
 					cmbProductOrdered.setText(productOrdered);
 					txtQuantity.setText(prodQty);
 					txtPrice.setText(prodPrice);
@@ -470,9 +558,6 @@ public class EditOrder {
 		btnEditOrder.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 		btnEditOrder.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
 		btnEditOrder.setBounds(305, 247, 73, 28);
-		shell = new Shell();
-		shell.setSize(450, 300);
-		shell.setText("SWT Application");
 
 		Button btnDeleteOrder = new Button(shlRareGlobalFood, SWT.NONE);
 		btnDeleteOrder.addSelectionListener(new SelectionAdapter() {
@@ -510,7 +595,9 @@ public class EditOrder {
 					errorMessage.setText("Error");
 					errorMessage.setMessage("There are no products in the cart.");
 					errorMessage.open();
+					lblEmptyCart.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
 				} else if (selectedIndex == -1) {
+					lblEmptyCart.setForeground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
 					MessageBox errorMessage = new MessageBox(shlRareGlobalFood, SWT.Close);
 					errorMessage.setText("Error");
 					errorMessage.setMessage("Please select an item to delete.");
@@ -522,14 +609,16 @@ public class EditOrder {
 		btnDeleteOrder.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 		btnDeleteOrder.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
 		btnDeleteOrder.setBounds(384, 247, 73, 28);
+		shell = new Shell();
+		shell.setSize(450, 300);
+		shell.setText("SWT Application");
 
-		Button btnAddOrder = new Button(shlRareGlobalFood, SWT.NONE);
-		btnAddOrder.addSelectionListener(new SelectionAdapter() {
+		Button btnModifyOrder = new Button(shlRareGlobalFood, SWT.NONE);
+		btnModifyOrder.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				int contentCount = 0;
 				String clientName = null;
-				// String prodPrice;
 				String orderReceiver = null;
 				String monthDue;
 				String dayDue;
@@ -571,43 +660,104 @@ public class EditOrder {
 
 				} catch (Exception ex) {
 					ex.printStackTrace();
-					MessageBox errorBox = new MessageBox(shlRareGlobalFood, SWT.Close);
-					errorBox.setText("Error");
-					errorBox.setMessage("Please give a valid year beyond 2000.");
-					errorBox.open();
+					/*
+					 * lblInvalidDate.setForeground(SWTResourceManager.getColor(
+					 * SWT.COLOR_RED)); MessageBox errorBox = new
+					 * MessageBox(shlRareGlobalFood, SWT.Close);
+					 * errorBox.setText("Error"); errorBox.setMessage(
+					 * "Please give a valid year beyond 2000.");
+					 * errorBox.open();
+					 */
 					return;
 				}
-				if (clientName.length() == 0 || orderReceiver.length() == 0) {
-					MessageBox errorBox = new MessageBox(shlRareGlobalFood, SWT.Close);
-					errorBox.setText("Error");
-					errorBox.setMessage("Please fill out all required fields.");
-					errorBox.open();
-				} else if (cmbMonthDue.getSelectionIndex() == 0) {
-					MessageBox errorBox = new MessageBox(shlRareGlobalFood, SWT.Close);
-					errorBox.setText("Error");
-					errorBox.setMessage("Please select a month.");
-					errorBox.open();
-				} else if (cmbDayDue.getSelectionIndex() == 0) {
-					MessageBox errorBox = new MessageBox(shlRareGlobalFood, SWT.Close);
-					errorBox.setText("Error");
-					errorBox.setMessage("Please select a day.");
-					errorBox.open();
-				} else if (txtYear.getText().length() == 0) {
-					MessageBox errorBox = new MessageBox(shlRareGlobalFood, SWT.Close);
-					errorBox.setText("Error");
-					errorBox.setMessage("Please set the year.");
-					errorBox.open();
-				} else if (Integer.parseInt(yearDue) <= 2000) {
-					MessageBox errorBox = new MessageBox(shlRareGlobalFood, SWT.Close);
-					errorBox.setText("Error");
-					errorBox.setMessage("Please set the year beyond 2000.");
-					errorBox.open();
-				} else if (contentCount == 0) {
-					MessageBox errorBox = new MessageBox(shlRareGlobalFood, SWT.Close);
-					errorBox.setText("Error");
-					errorBox.setMessage("Please add products to order.");
-					errorBox.open();
+				if (clientName.length() == 0 || orderReceiver.length() == 0 || cmbMonthDue.getSelectionIndex() == 0
+						|| cmbDayDue.getSelectionIndex() == 0 || txtYear.getText().length() == 0
+						|| Integer.parseInt(yearDue) <= 2000 || contentCount == 0) {
+
+					MessageBox mainErrorBox = new MessageBox(shlRareGlobalFood, SWT.Close);
+					mainErrorBox.setText("Error");
+					mainErrorBox.setMessage("Please fill out all required fields.");
+					mainErrorBox.open();
+					lblInvalidHelp.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
+
+					if (clientName.length() == 0) {
+						MessageBox errorBox = new MessageBox(shlRareGlobalFood, SWT.Close);
+						errorBox.setText("Error");
+						errorBox.setMessage("Please set the client name.");
+						errorBox.open();
+						lblInvalidName.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
+					} else {
+						lblInvalidName.setForeground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
+					}
+
+					if (orderReceiver.length() == 0) {
+						MessageBox errorBox = new MessageBox(shlRareGlobalFood, SWT.Close);
+						errorBox.setText("Error");
+						errorBox.setMessage("Please set the order receiver.");
+						errorBox.open();
+						lblInvalidReceiver.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
+					} else {
+						lblInvalidReceiver.setForeground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
+					}
+
+					if (cmbMonthDue.getSelectionIndex() == 0) {
+						MessageBox errorBox = new MessageBox(shlRareGlobalFood, SWT.Close);
+						errorBox.setText("Error");
+						errorBox.setMessage("Please select a month.");
+						errorBox.open();
+						lblInvalidDate.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
+					} else {
+						lblInvalidDate.setForeground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
+					}
+
+					if (cmbDayDue.getSelectionIndex() == 0) {
+						MessageBox errorBox = new MessageBox(shlRareGlobalFood, SWT.Close);
+						errorBox.setText("Error");
+						errorBox.setMessage("Please select a day.");
+						errorBox.open();
+						lblInvalidDate.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
+					} else {
+						lblInvalidDate.setForeground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
+					}
+
+					if (txtYear.getText().length() == 0) {
+						MessageBox errorBox = new MessageBox(shlRareGlobalFood, SWT.Close);
+						errorBox.setText("Error");
+						errorBox.setMessage("Please set the year.");
+						errorBox.open();
+						lblInvalidDate.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
+					} else {
+						lblInvalidDate.setForeground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
+					}
+
+					try {
+						if (Integer.parseInt(yearDue) <= 2000) {
+							MessageBox errorBox = new MessageBox(shlRareGlobalFood, SWT.Close);
+							errorBox.setText("Error");
+							errorBox.setMessage("Please set the year beyond 2000.");
+							errorBox.open();
+							lblInvalidDate.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
+						} else {
+							lblInvalidDate.setForeground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
+						}
+					} catch (NumberFormatException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+						lblInvalidDate.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
+					}
+
+					if (contentCount == 0) {
+						MessageBox errorBox = new MessageBox(shlRareGlobalFood, SWT.Close);
+						errorBox.setText("Error");
+						errorBox.setMessage("Please add products to order.");
+						errorBox.open();
+						lblEmptyCart.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
+					} else {
+						lblEmptyCart.setForeground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
+					}
+
 				} else {
+					lblInvalidHelp.setForeground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
 					MessageBox confirmBox = new MessageBox(shlRareGlobalFood, SWT.YES | SWT.NO);
 					confirmBox.setText("Confirmation");
 					confirmBox.setMessage("Are you sure with this update?");
@@ -651,9 +801,9 @@ public class EditOrder {
 				}
 			}
 		});
-		btnAddOrder.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
-		btnAddOrder.setBounds(563, 312, 95, 35);
-		btnAddOrder.setText("Update");
+		btnModifyOrder.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
+		btnModifyOrder.setBounds(563, 312, 95, 35);
+		btnModifyOrder.setText("Modify");
 
 	}
 }
