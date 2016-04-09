@@ -444,7 +444,7 @@ public class EditOrder {
 						for (int col = 0; col < 4; col++) {
 							cartString[col] = cartProducts[row].getText(col);
 						}
-						totalPrice += Float.parseFloat(cartString[3]);
+						totalPrice += (Float.parseFloat(cartString[3]) * Float.parseFloat(cartString[2]));
 					}
 
 					lblTotalPrice.setText(Float.toString(totalPrice));
@@ -542,7 +542,7 @@ public class EditOrder {
 							cartString[col] = cartProducts[row].getText(col);
 						}
 
-						totalPrice += Float.parseFloat(cartString[3]);
+						totalPrice += (Float.parseFloat(cartString[3]) * Float.parseFloat(cartString[2]));
 					}
 
 					lblTotalPrice.setText(Float.toString(totalPrice));
@@ -581,7 +581,7 @@ public class EditOrder {
 								System.out.print(cartProducts[row].getText(col) + " ");
 							}
 
-							totalPrice += Float.parseFloat(cartString[3]);
+							totalPrice += (Float.parseFloat(cartString[3]) * Float.parseFloat(cartString[2]));
 						}
 
 						lblTotalPrice.setText(Float.toString(totalPrice));
@@ -655,7 +655,7 @@ public class EditOrder {
 							cartString[col] = cartProducts[row].getText(col);
 						}
 
-						totalPrice += Float.parseFloat(cartString[3]);
+						totalPrice += (Float.parseFloat(cartString[3]) * Float.parseFloat(cartString[2]));
 					}
 
 				} catch (Exception ex) {
