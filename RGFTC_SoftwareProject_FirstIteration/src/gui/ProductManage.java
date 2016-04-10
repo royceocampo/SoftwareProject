@@ -297,9 +297,9 @@ public class ProductManage {
 						
 						if (range.size() == 2){
 							lowerBound = Collections.min(range);
-//							System.out.println("Lower bound: "+lowerBound);
+							System.out.println("Lower bound: "+lowerBound);
 							upperBound = Collections.max(range);
-//							System.out.println("Upper bound: "+upperBound);
+							System.out.println("Upper bound: "+upperBound);
 						}
 						else{
 							if((index < lowerBound || index > lowerBound) && index < upperBound ){
@@ -393,6 +393,7 @@ public class ProductManage {
 							}
 //			        		System.out.println(prodID);
 			        		ProductManager.deleteProduct(prodID);
+			        		
 			        	}
 			        	
 			        	
@@ -406,6 +407,9 @@ public class ProductManage {
 //							ProductManager.displayProducts(prodTable);
 							btnEdit.setEnabled(false);
 							btnDelete.setEnabled(false);
+							indexes.clear();
+							selected.clear();
+							range.clear();
 						}
 			        }
 			      }
