@@ -410,6 +410,7 @@ public class viewOrder {
 								            : "Selected";
 								    System.out.println(event.item + " " + string);*/
 									//System.out.println(item.size());
+									try{
 									boolean checkMark = false;
 									for(int i = 0; i < item.size() ;i++ ){
 										if(item.get(i).getChecked()){
@@ -423,6 +424,9 @@ public class viewOrder {
 									if(!checkMark){
 										btnMarkOrder.setVisible(false);
 										btnDeleteOrder.setVisible(false);
+									}
+									}catch(Exception e){
+										e.printStackTrace();
 									}
 								}
 							}
@@ -469,6 +473,7 @@ public class viewOrder {
 								            : "Selected";
 								    System.out.println(event.item + " " + string);*/
 									//System.out.println(item.size());
+									try{
 									boolean checkMark = false;
 									for(int i = 0; i < item.size() ;i++ ){
 										if(item.get(i).getChecked()){
@@ -485,7 +490,11 @@ public class viewOrder {
 										btnMarkOrder.setVisible(false);
 										btnDeleteOrder.setVisible(false);
 									}
+									}catch(Exception e){
+										e.printStackTrace();
+									}
 								}
+									
 							}
 						});
 						parent.setText(0, Integer.toString(la.get(i).getPurchaseID()));
@@ -523,6 +532,7 @@ public class viewOrder {
 								            : "Selected";
 								    System.out.println(event.item + " " + string);*/
 									//System.out.println(item.size());
+									try{
 									boolean checkMark = false;
 									for(int i = 0; i < item.size() ;i++ ){
 										if(item.get(i).getChecked()){
@@ -536,6 +546,9 @@ public class viewOrder {
 									if(!checkMark){
 										btnMarkOrder.setVisible(false);
 										btnDeleteOrder.setVisible(false);
+									}
+									}catch(Exception e){
+										e.printStackTrace();
 									}
 								}
 							}
