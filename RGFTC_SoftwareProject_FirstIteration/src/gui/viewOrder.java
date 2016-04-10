@@ -417,6 +417,7 @@ public class viewOrder {
 									try{
 									boolean checkMark = false;
 									for(int i = 0; i < item.size() ;i++ ){
+										
 										if(item.get(i).getChecked()){
 											btnMarkOrder.setEnabled(true);
 											btnDeleteOrder.setEnabled(true);
@@ -424,11 +425,13 @@ public class viewOrder {
 											
 										}
 									}
-
+									
 									if(!checkMark){
 										btnMarkOrder.setEnabled(false);
 										btnDeleteOrder.setEnabled(false);
+										item.clear();
 									}
+									
 									}catch(Exception e){
 										e.printStackTrace();
 									}
@@ -494,7 +497,7 @@ public class viewOrder {
 									if(!checkMark){
 										btnMarkOrder.setEnabled(false);
 										btnDeleteOrder.setEnabled(false);
-										
+										item.clear();
 									}
 									}catch(Exception e){
 										e.printStackTrace();
@@ -542,6 +545,7 @@ public class viewOrder {
 									try{
 									boolean checkMark = false;
 									for(int i = 0; i < item.size() ;i++ ){
+										
 										if(item.get(i).getChecked()){
 											btnMarkOrder.setEnabled(true);
 											btnDeleteOrder.setEnabled(true);
@@ -553,7 +557,7 @@ public class viewOrder {
 									if(!checkMark){
 										btnMarkOrder.setEnabled(false);
 										btnDeleteOrder.setEnabled(false);
-									
+										item.clear();
 									}
 									}catch(Exception e){
 										e.printStackTrace();
@@ -585,10 +589,9 @@ public class viewOrder {
 					System.out.println("ERROR");
 				}
 				
-				
-				
-				
+					
 			}
+			
 		});
 		
 		Button btnAddOrder = new Button(shlOrderManage, SWT.NONE);
