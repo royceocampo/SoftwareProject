@@ -362,6 +362,9 @@ public class ProductManage {
 				ProductManager.displayProducts(prodTable);
 				btnEdit.setEnabled(false);
 				btnDelete.setEnabled(false);
+				indexes.clear();
+				selected.clear();
+				range.clear();
 			}
 		});
 		
