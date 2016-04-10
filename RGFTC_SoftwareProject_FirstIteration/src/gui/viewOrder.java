@@ -211,7 +211,7 @@ public class viewOrder {
 		btnMarkOrder.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 		btnMarkOrder.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
 		btnMarkOrder.setBounds(248, 360, 131, 35);
-		btnMarkOrder.setVisible(false);
+		btnMarkOrder.setEnabled(false);
 		btnMarkOrder.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				MessageBox msg = new MessageBox(shlOrderManage, SWT.ICON_INFORMATION | SWT.OK);
@@ -223,18 +223,20 @@ public class viewOrder {
 				}
 				item.clear();
 				
+				btnMarkOrder.setEnabled(false);
 			}
 			
 		});
 		
 		Button btnDeleteOrder = new Button(shlOrderManage, SWT.NONE);
-		btnDeleteOrder.setVisible(false);
+		btnDeleteOrder.setEnabled(false);
 		combo_1.addSelectionListener(new SelectionAdapter() {
 			@SuppressWarnings({ "unused", "deprecation" })
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				
 				if(combo_1.getText().equals("Due Date")){
+					item.clear();
 					tableTree.removeAll();
 					//DueDateBoxs dd = new DueDateBoxs();
 					DueIto dd = new DueIto(shlOrderManage, 1);
@@ -265,16 +267,16 @@ public class viewOrder {
 									boolean checkMark = false;
 									for(int i = 0; i < item.size() ;i++ ){
 										if(item.get(i).getChecked()){
-											btnMarkOrder.setVisible(true);
-											btnDeleteOrder.setVisible(true);
+											btnMarkOrder.setEnabled(true);
+											btnDeleteOrder.setEnabled(true);
 											checkMark=true;
 											
 										}
 									}
 
 									if(!checkMark){
-										btnMarkOrder.setVisible(false);
-										btnDeleteOrder.setVisible(false);
+										btnMarkOrder.setEnabled(false);
+										btnDeleteOrder.setEnabled(false);
 									}
 								}
 							}
@@ -314,10 +316,11 @@ public class viewOrder {
 						 Error er = new Error(shlOrderManage,1);
 						 er.open();
 					 }
-			
+					 
 				}
 				
 				else if(combo_1.getText().equals("Client Name")){
+					item.clear();
 					tableTree.removeAll();
 					ClientBox cc = new ClientBox(shlOrderManage,1);
 					cc.open();
@@ -345,16 +348,16 @@ public class viewOrder {
 									boolean checkMark = false;
 									for(int i = 0; i < item.size() ;i++ ){
 										if(item.get(i).getChecked()){
-											btnMarkOrder.setVisible(true);
-											btnDeleteOrder.setVisible(true);
+											btnMarkOrder.setEnabled(true);
+											btnDeleteOrder.setEnabled(true);
 											checkMark=true;
 											
 										}
 									}
 
 									if(!checkMark){
-										btnMarkOrder.setVisible(false);
-										btnDeleteOrder.setVisible(false);
+										btnMarkOrder.setEnabled(false);
+										btnDeleteOrder.setEnabled(false);
 									}
 								}
 							}
@@ -395,6 +398,7 @@ public class viewOrder {
 					 }
 				}
 				else if(combo_1.getText().equals("Pending")){
+					item.clear();
 					lp = gl.getLinePending();
 					tableTree.removeAll();
 					for(int i = 0; i < lp.size() ;i++ ){
@@ -414,16 +418,16 @@ public class viewOrder {
 									boolean checkMark = false;
 									for(int i = 0; i < item.size() ;i++ ){
 										if(item.get(i).getChecked()){
-											btnMarkOrder.setVisible(true);
-											btnDeleteOrder.setVisible(true);
+											btnMarkOrder.setEnabled(true);
+											btnDeleteOrder.setEnabled(true);
 											checkMark=true;
 											
 										}
 									}
 
 									if(!checkMark){
-										btnMarkOrder.setVisible(false);
-										btnDeleteOrder.setVisible(false);
+										btnMarkOrder.setEnabled(false);
+										btnDeleteOrder.setEnabled(false);
 									}
 									}catch(Exception e){
 										e.printStackTrace();
@@ -458,6 +462,7 @@ public class viewOrder {
 					}
 				}
 				else if(combo_1.getText().equals("View All")){
+					item.clear();
 					tableTree.removeAll();
 					la = gl.getLineAll();
 					for(int i = 0; i < la.size() ;i++ ){
@@ -477,8 +482,8 @@ public class viewOrder {
 									boolean checkMark = false;
 									for(int i = 0; i < item.size() ;i++ ){
 										if(item.get(i).getChecked()){
-											btnMarkOrder.setVisible(true);
-											btnDeleteOrder.setVisible(true);
+											btnMarkOrder.setEnabled(true);
+											btnDeleteOrder.setEnabled(true);
 											checkMark=true;
 											
 											
@@ -487,8 +492,9 @@ public class viewOrder {
 									}
 
 									if(!checkMark){
-										btnMarkOrder.setVisible(false);
-										btnDeleteOrder.setVisible(false);
+										btnMarkOrder.setEnabled(false);
+										btnDeleteOrder.setEnabled(false);
+										
 									}
 									}catch(Exception e){
 										e.printStackTrace();
@@ -517,6 +523,7 @@ public class viewOrder {
 					}
 				}	
 				else if(combo_1.getText().equals("Delivered Client")){
+					item.clear();
 					tableTree.removeAll();
 					ldc = gl.getLineDelivered();
 					for(int i = 0; i < ldc.size() ;i++ ){
@@ -536,16 +543,17 @@ public class viewOrder {
 									boolean checkMark = false;
 									for(int i = 0; i < item.size() ;i++ ){
 										if(item.get(i).getChecked()){
-											btnMarkOrder.setVisible(true);
-											btnDeleteOrder.setVisible(true);
+											btnMarkOrder.setEnabled(true);
+											btnDeleteOrder.setEnabled(true);
 											checkMark=true;
 											
 										}
 									}
 
 									if(!checkMark){
-										btnMarkOrder.setVisible(false);
-										btnDeleteOrder.setVisible(false);
+										btnMarkOrder.setEnabled(false);
+										btnDeleteOrder.setEnabled(false);
+									
 									}
 									}catch(Exception e){
 										e.printStackTrace();
@@ -669,7 +677,7 @@ public class viewOrder {
 				
 					
 				}
-				btnDeleteOrder.setVisible(false);
+				btnDeleteOrder.setEnabled(false);
 			}
 				/*else{
 					MessageBox msg3 = new MessageBox(shlOrderManage, SWT.ICON_INFORMATION | SWT.OK);
