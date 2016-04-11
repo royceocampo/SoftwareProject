@@ -7,6 +7,7 @@ import java.util.Locale;
 import java.util.Date;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.TableTreeItem;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
@@ -34,7 +35,7 @@ import classes.ProductManager;
 import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
 
-public class AddOrder {
+public class EditOrder {
 
 	protected Shell shlRareGlobalFood;
 	protected Shell shell;
@@ -46,6 +47,7 @@ public class AddOrder {
 	private Text txtOtherNotes;
 	private Table tableCart;
 	private float totalPrice = 0;
+	private int orderID = 0;
 
 	/**
 	 * Launch the application.
@@ -130,7 +132,7 @@ public class AddOrder {
 
 		MenuItem mntmInventory = new MenuItem(menu, SWT.NONE);
 		mntmInventory.setText("Inventory");
-
+		
 		Label lblInvalidHelp = new Label(shlRareGlobalFood, SWT.NONE);
 		lblInvalidHelp.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
 		lblInvalidHelp.setForeground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
@@ -324,6 +326,60 @@ public class AddOrder {
 		tblclmnPrice.setWidth(80);
 		tblclmnPrice.setText("Price");
 
+		// Get Order details.
+		try {
+			int index = viewOrder.getIndex();
+			TableTreeItem item = viewOrder.getItem();
+			TableTreeItem[] tableItems = viewOrder.getAllItems();
+			int orderID = Integer.parseInt(tableItems[index].getText(0));
+			this.orderID = orderID;
+			Order orderToEdit = new OrderManager().getOrder(orderID);
+			ArrayList<LineItem> storedList = new LineItemManager().getLineItems(orderID);
+
+			// Store order data in local variables.
+			String clientName = orderToEdit.getClientName();
+			String orderReceiver = orderToEdit.getOrderReceiver();
+			float totalPrice = orderToEdit.getPrice();
+			String notes = orderToEdit.getNotes();
+			Date dueDate = orderToEdit.getDeliveryDueDate();
+
+			String numDueDate = dueDate.toString();
+			String[] numDueDateParts = numDueDate.split("-");
+
+			// Set the text fields with the details.
+			txtClientName.setText(clientName);
+			txtOrderReceiver.setText(orderReceiver);
+			cmbMonthDue.select(Integer.parseInt(numDueDateParts[1]));
+			cmbDayDue.select(Integer.parseInt(numDueDateParts[2]));
+			txtYear.setText(numDueDateParts[0]);
+			txtOtherNotes.setText(notes);
+			lblTotalPrice.setText(Float.toString(totalPrice));
+
+			// Populate the table with the orders.
+			for (int currentIndex = 0; currentIndex < storedList.size(); currentIndex++) {
+
+				int productID = storedList.get(currentIndex).getProductID();
+				String productName = new ProductManager().getProduct(productID).getProductName();
+				float productQuantity = storedList.get(currentIndex).getQuantity();
+				float productPrice = storedList.get(currentIndex).getPricePerKilo();
+
+				TableItem newOrder = new TableItem(tableCart, SWT.NONE);
+
+				newOrder.setText(new String[] { Integer.toString(productID), productName,
+						Float.toString(productQuantity), Float.toString(productPrice) });
+			}
+
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			MessageBox errorMessage = new MessageBox(shlRareGlobalFood, SWT.Close);
+			errorMessage.setText("Error");
+			errorMessage.setMessage("Please select an order to edit.");
+			errorMessage.open();
+			shlRareGlobalFood.close();
+		}
+		
+
 		Button btnAddToCart = new Button(shlRareGlobalFood, SWT.NONE);
 		btnAddToCart.addSelectionListener(new SelectionAdapter() {
 			// add a listener to the button
@@ -380,7 +436,6 @@ public class AddOrder {
 					newOrder.setText(2, Float.toString(productQuantity));
 					newOrder.setText(3, Float.toString(orderPrice));
 
-					
 					TableItem[] cartProducts = tableCart.getItems();
 
 					for (int row = 0; row < cartProducts.length; row++) {
@@ -558,8 +613,8 @@ public class AddOrder {
 		shell.setSize(450, 300);
 		shell.setText("SWT Application");
 
-		Button btnAddOrder = new Button(shlRareGlobalFood, SWT.NONE);
-		btnAddOrder.addSelectionListener(new SelectionAdapter() {
+		Button btnModifyOrder = new Button(shlRareGlobalFood, SWT.NONE);
+		btnModifyOrder.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				int contentCount = 0;
@@ -705,16 +760,17 @@ public class AddOrder {
 					lblInvalidHelp.setForeground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
 					MessageBox confirmBox = new MessageBox(shlRareGlobalFood, SWT.YES | SWT.NO);
 					confirmBox.setText("Confirmation");
-					confirmBox.setMessage("Are you sure with this order?");
+					confirmBox.setMessage("Are you sure with this update?");
 					int buttonID = confirmBox.open();
 					switch (buttonID) {
 					case SWT.YES:
 						TableItem[] cartItems = tableCart.getItems();
+						
+						new LineItemManager().deleteLineItem(orderID);
 
 						Order newOrder = new Order(clientName, totalPrice, orderReceiver, sqlDueDate, isDelivered,
 								otherNotes);
-						OrderManager manageOrder = new OrderManager();
-						manageOrder.addOrder(newOrder);
+						new OrderManager().editOrder(orderID, newOrder);
 
 						for (int row = 0; row < cartItems.length; row++) {
 							String[] itemsString = new String[4];
@@ -722,7 +778,6 @@ public class AddOrder {
 								itemsString[col] = cartItems[row].getText(col);
 							}
 
-							int orderID = manageOrder.getLastOrder().getPurchase_orderID();
 							LineItem newLineItem = new LineItem(orderID, Integer.parseInt(itemsString[0]),
 									Float.parseFloat(itemsString[3]), Float.parseFloat(itemsString[2]));
 							LineItemManager manageLineItem = new LineItemManager();
@@ -732,11 +787,13 @@ public class AddOrder {
 						lblTotalPrice.setText("0.0");
 						tableCart.removeAll();
 						tableCart.redraw();
-
+						
 						MessageBox successBox = new MessageBox(shlRareGlobalFood, SWT.Close);
 						successBox.setText("Notification");
-						successBox.setMessage("Successfully added order.");
+						successBox.setMessage("Successfully updated order.");
 						successBox.open();
+						
+						shlRareGlobalFood.close();
 						break;
 					case SWT.NO:
 						break;
@@ -744,9 +801,9 @@ public class AddOrder {
 				}
 			}
 		});
-		btnAddOrder.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
-		btnAddOrder.setBounds(563, 312, 95, 35);
-		btnAddOrder.setText("Submit");
+		btnModifyOrder.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
+		btnModifyOrder.setBounds(563, 312, 95, 35);
+		btnModifyOrder.setText("Modify");
 
 	}
 }
