@@ -54,7 +54,7 @@ public class LineItem {
 		return quantity;
 	}
 
-	public void setQuantity(float quantity) {
+	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
 

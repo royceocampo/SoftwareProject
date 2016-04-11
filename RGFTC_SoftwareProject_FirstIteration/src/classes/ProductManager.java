@@ -18,13 +18,14 @@ import dbconnection.DBConnection;
 import managers.Product;
 
 public class ProductManager {
-	public static void addProduct(Product newProduct) throws Exception {
-
-		Connection conn = (Connection) DBConnection.getConnection();
+	public static void addProduct(Product newProduct) throws Exception{	
+		
+		Connection conn = (Connection)DBConnection.getConnection();
 		PreparedStatement pstmt = null;
-		try {
+		try{
 			pstmt = conn.prepareStatement("INSERT INTO products_table"
-					+ "(productName, category, subtype, brand, packaging, pricePerKilo)" + "VALUES (?, ?, ?, ?, ?, ?)");
+					+"(productName, category, subtype, brand, packaging, pricePerKilo)"
+				     + "VALUES (?, ?, ?, ?, ?, ?)");
 			pstmt.setString(1, newProduct.getProductName());
 			pstmt.setString(2, newProduct.getProdCategory());
 			pstmt.setString(3, newProduct.getProdSubtype());
@@ -32,73 +33,82 @@ public class ProductManager {
 			pstmt.setString(5, newProduct.getProdPackaging());
 			pstmt.setFloat(6, newProduct.getProdPrice());
 			pstmt.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
 		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}	
 	}
-
-	public static void displayProducts(Table table) {
-		Connection conn = (Connection) DBConnection.getConnection();
+	
+	public static void displayProducts(Table table){
+		Connection conn = (Connection)DBConnection.getConnection();
 		PreparedStatement pst = null;
 		ResultSet rs = null;
-
+		
 		String query = "SELECT productID, productName, category, subtype, brand, packaging, priceperkilo FROM products_table ORDER BY category ASC";
-		try {
+		try{
 			pst = conn.prepareStatement(query);
 			rs = pst.executeQuery();
 			ResultSetMetaData rsmd = rs.getMetaData();
 			TableItem item = null;
 			int numColumns = rsmd.getColumnCount();
-			while (rs.next()) {
+			while (rs.next()){
 				item = new TableItem(table, SWT.NONE);
-				for (int i = 1; i <= numColumns; i++) {
-					if (rs.getString(i) != null) {
-						if (i == 6) {
+				for (int i = 1; i<=numColumns; i++){
+					if(rs.getString(i) != null){
+						if(i == 6){
 							item.toString();
 						}
 						item.setText(i - 1, rs.getString(i));
 					}
 				}
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e){
 			e.printStackTrace();
 		}
 	}
 
-	public Product getProduct(int id) {
-		Product product = new Product();
-
-		try {
-			Connection conn = DBConnection.getConnection();
-			PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM products_table WHERE productID = ?");
-			pstmt.setInt(1, id);
-			ResultSet rs = pstmt.executeQuery();
-
-			if (rs.next()) {
-				product.setProductName(rs.getString("productName"));
-				product.setProdCategory(rs.getString("category"));
-				product.setProdSubtype(rs.getString("subtype"));
-				product.setProdBrand(rs.getString("brand"));
-				product.setProdPackaging(rs.getString("packaging"));
-				product.setProdPrice(rs.getFloat("pricePerKilo"));
-				product.setProdStocks(rs.getInt("stocks"));
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return product;
-	}
-
-	public static void editProduct(Product modProduct, int productID) throws Exception {
-		System.out.println("ProductID (editProduct): " + productID);
-		Connection conn = (Connection) DBConnection.getConnection();
+//	public Product getProduct(int id) {
+//		Product product = new Product( null, null, null, null, null, id, id);
+//
+//		try {
+//			Connection conn = DBConnection.getConnection();
+//			PreparedStatement pstmt = conn
+//					.prepareStatement("SELECT * FROM products_table WHERE productID = ?");
+//			pstmt.setInt(1, id);
+//			ResultSet rs = pstmt.executeQuery();
+//
+//			if (rs.next()) {
+//				product.setProductName(rs.getString("productName"));
+//				product.setProdCategory(rs.getString("category"));
+//				product.setProdSubtype(rs.getString("subtype"));
+//				product.setProdBrand(rs.getString("brand"));
+//				product.setProdPackaging(rs.getString("packaging"));
+//				product.setProdPrice(rs.getFloat("pricePerKilo"));
+//				product.setProdStocks(rs.getInt("stocks"));
+//			}
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//
+//		return product;
+//	}
+	
+	public static void editProduct(Product modProduct, int productID)throws Exception{
+		System.out.println("ProductID (editProduct): "+productID);
+		Connection conn = (Connection)DBConnection.getConnection();
 		PreparedStatement pstmt = null;
-
-		String sql = "UPDATE products_table" + " SET productName = ?," + " category = ?," + " subtype = ?,"
-				+ " brand = ?," + " packaging = ?," + " pricePerKilo = ?" + " WHERE productID = ?";
-		try {
+		
+		String sql = "UPDATE products_table"
+				+" SET productName = ?,"
+				+" category = ?,"
+				+" subtype = ?,"
+				+" brand = ?,"
+				+" packaging = ?,"
+				+" pricePerKilo = ?"
+				+" WHERE productID = ?";
+		try{
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(7, productID);
 			pstmt.setString(1, modProduct.getProductName());
@@ -109,19 +119,21 @@ public class ProductManager {
 			pstmt.setFloat(6, modProduct.getProdPrice());
 			System.out.println(pstmt);
 			pstmt.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
 		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}	
 	}
-
-	public static void deleteProduct(int id) {
-		try {
+	
+	public static void deleteProduct(int id){
+		try{
 			Connection conn = DBConnection.getConnection();
-			String sql = "DELETE FROM products_table WHERE productID = " + id;
+			String sql = "DELETE FROM products_table WHERE productID = " +id;
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.executeUpdate();
-
-		} catch (SQLException e) {
+					
+		}
+		catch(SQLException e){
 			e.printStackTrace();
 		}
 	}
@@ -130,11 +142,12 @@ public class ProductManager {
 		Connection conn = DBConnection.getConnection();
 		ArrayList<Product> productList = new ArrayList<Product>();
 		try {
-			PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM products_table");
+			PreparedStatement pstmt = conn
+					.prepareStatement("SELECT * FROM products_table");
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
-				Product product = new Product(null, null, null, null, null, 0, 0);
-
+				Product product = new Product( null, null, null, null, null, 0, 0);
+				
 				product.setProductID(rs.getInt("productID"));
 				product.setProductName(rs.getString("productName"));
 				product.setProdCategory(rs.getString("category"));
@@ -143,7 +156,7 @@ public class ProductManager {
 				product.setProdPackaging(rs.getString("packaging"));
 				product.setProdPrice(rs.getFloat("pricePerKilo"));
 				product.setProdStocks(rs.getInt("stocks"));
-
+				
 				productList.add(product);
 			}
 		} catch (SQLException e) {
@@ -152,12 +165,12 @@ public class ProductManager {
 		}
 		return productList;
 	}
-
-	public int getProductsCount() {
+	
+	public int getProductsCount(){
 		Connection conn = DBConnection.getConnection();
 		String sql = "SELECT COUNT(*) AS 'prodCount' FROM products_table";
 		int productsCount = 0;
-		try {
+		try{
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
 			if (rs.next()) {
@@ -169,42 +182,7 @@ public class ProductManager {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		
 		return productsCount;
-	}
-
-	public ArrayList<Product> searchProduct(String searchList) {
-		Connection conn = DBConnection.getConnection();
-		ArrayList<Product> resultsList = new ArrayList<Product>();
-
-		try {
-			PreparedStatement pstmt = conn.prepareStatement(
-					"SELECT * FROM products_table WHERE (productName LIKE ? OR category LIKE ? OR subtype LIKE ?)");
-			pstmt.setString(1, "%" + searchList + "%");
-			pstmt.setString(2, "%" + searchList + "%");
-			pstmt.setString(3, "%" + searchList + "%");
-			ResultSet rs = pstmt.executeQuery();
-			if (!rs.isBeforeFirst()) {
-				return null;
-			} else {
-				while (rs.next()) {
-					Product product = new Product();
-					product.setProductID(rs.getInt("productID"));
-					product.setProductName(rs.getString("productName"));
-					product.setProdCategory(rs.getString("category"));
-					product.setProdSubtype(rs.getString("subtype"));
-					product.setProdBrand(rs.getString("brand"));
-					product.setProdPackaging(rs.getString("packaging"));
-					product.setProdPrice(rs.getFloat("pricePerKilo"));
-					product.setProdStocks(rs.getInt("stocks"));
-
-					resultsList.add(product);
-				}
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return resultsList;
 	}
 }
