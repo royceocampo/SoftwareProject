@@ -14,14 +14,12 @@ public class LineData {
 	private int status;
 	
 	private String clientName;
-	private String orderReceiver;
 	private String deliveryDueDate;
 	private String deliveryNotes;
 	
-	public LineData(int purchase_orderID, String clientName, String orderReceiver, String productName, String category, String subtype, String brand, String packaging, int pricePerKilo, int quantity, int weight, String deliveryDueDate, String deliveryNotes, int status){
+	public LineData(int purchase_orderID, String clientName, String productName, String category, String subtype, String brand, String packaging, int pricePerKilo, int quantity, int weight, String deliveryDueDate, String deliveryNotes, int status){
 		this.purchase_orderID = purchase_orderID;
 		this.clientName = clientName;
-		this.orderReceiver = orderReceiver;
 		this.productName = productName;
 		this.subtype = subtype;
 		this.brand = brand;
@@ -139,23 +137,6 @@ public class LineData {
 	public void setDeliveryNotes(String deliveryNotes) {
 		this.deliveryNotes = deliveryNotes;
 	}
-
-	public int getPurchase_orderID() {
-		return purchase_orderID;
-	}
-
-	public void setPurchase_orderID(int purchase_orderID) {
-		this.purchase_orderID = purchase_orderID;
-	}
-
-	public String getOrderReceiver() {
-		return orderReceiver;
-	}
-
-	public void setOrderReceiverr(String orderReceiver) {
-		this.orderReceiver = orderReceiver;
-	}
-	
 	
 	
 	

@@ -16,8 +16,6 @@ public class Product {
 //		this(0, productName, prodCategory, prodSubtype, prodBrand, prodPackaging, prodPrice, prodStocks);
 //	}
 	
-	public Product(){}
-	
 	public Product(String productName, String prodCategory, String prodSubtype,
 			String prodBrand, String prodPackaging, float prodPrice, int prodStocks){
 		super();
