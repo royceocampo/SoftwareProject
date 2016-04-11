@@ -38,17 +38,12 @@ public class OrderManager {
 		}
 	}
 
-	public void editOrder() {
-
-	}
-
 	public Order getOrder(int id) {
 		Order order = new Order();
 
 		try {
 			Connection conn = DBConnection.getConnection();
-			PreparedStatement pstmt = conn
-					.prepareStatement("SELECT * FROM orders_table WHERE purchase_orderID = ?");
+			PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM orders_table WHERE purchase_orderID = ?");
 			pstmt.setInt(1, id);
 			ResultSet rs = pstmt.executeQuery();
 
@@ -73,8 +68,7 @@ public class OrderManager {
 		ArrayList<Order> orderList = new ArrayList<Order>();
 
 		try {
-			PreparedStatement pstmt = conn
-					.prepareStatement("SELECT * FROM orders_table");
+			PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM orders_table");
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
 				Order order = new Order();
@@ -121,7 +115,7 @@ public class OrderManager {
 		}
 
 		return order;
-	}						
+	}
 
 	public void deleteOrder(int id) {
 		String sql = "DELETE FROM orders_table WHERE purchase_orderID = ?";
@@ -133,6 +127,29 @@ public class OrderManager {
 			pstmt.executeUpdate();
 			pstmt.close();
 			conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void editOrder(int orderid, Order order){
+		String sql = "UPDATE orders_table SET clientName = ?, price = ?, orderReceiver = ?, deliveryDueDate = ?, notes = ? WHERE purchase_orderID = ?;";
+		
+		Connection conn = DBConnection.getConnection();
+		try{
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, order.getClientName());
+			pstmt.setFloat(2, order.getPrice());
+			pstmt.setString(3, order.getOrderReceiver());
+			pstmt.setDate(4, (Date) order.getDeliveryDueDate());
+			pstmt.setString(5, order.getNotes());
+			pstmt.setInt(6, orderid);
+
+			pstmt.executeUpdate();
+			conn.close();
+			pstmt.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
