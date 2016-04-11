@@ -77,19 +77,19 @@ public class AddProduct {
 		lblProductName.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.NORMAL));
 		lblProductName.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
 		lblProductName.setBounds(10, 24, 110, 26);
-		lblProductName.setText("Product Name:");
+		lblProductName.setText("*Product Name:");
 		
 		Label lblCategory = new Label(shlAddProduct, SWT.NONE);
-		lblCategory.setText("Category:");
+		lblCategory.setText("*Category:");
 		lblCategory.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.NORMAL));
 		lblCategory.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
 		lblCategory.setBounds(46, 56, 71, 26);
 		
 		Label lblSubtype = new Label(shlAddProduct, SWT.NONE);
-		lblSubtype.setText("Subtype:");
+		lblSubtype.setText("*Subtype:");
 		lblSubtype.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.NORMAL));
 		lblSubtype.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
-		lblSubtype.setBounds(46, 88, 60, 26);
+		lblSubtype.setBounds(31, 88, 75, 26);
 		
 		Label lblBrand = new Label(shlAddProduct, SWT.NONE);
 		lblBrand.setText("Brand:");
@@ -104,7 +104,7 @@ public class AddProduct {
 		lblPackaging.setBounds(31, 152, 79, 26);
 		
 		Label lblPrice = new Label(shlAddProduct, SWT.NONE);
-		lblPrice.setText("Price:");
+		lblPrice.setText("*Price:");
 		lblPrice.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.NORMAL));
 		lblPrice.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
 		lblPrice.setBounds(60, 184, 42, 26);
@@ -122,42 +122,51 @@ public class AddProduct {
 		spinPrice.setMaximum(10000);
 		spinPrice.setBounds(126, 186, 120, 22);
 		
-		Combo cmbCategory = new Combo(shlAddProduct, SWT.NONE);
+		Combo cmbCategory = new Combo(shlAddProduct, SWT.READ_ONLY);
 		cmbCategory.setItems(new String[] {"Meat", "Seafood"});
 		cmbCategory.setBounds(126, 56, 120, 23);
 		
 		
 		
 		Combo cmbSubtype = new Combo(shlAddProduct, SWT.NONE);
-		cmbSubtype.setItems(new String[] {"AA", "AB", "AC", "AD"});
+		cmbSubtype.setItems(new String[] {});
 		cmbSubtype.setBounds(126, 91, 120, 23);
 		
 		Label lblErrProdName = new Label(shlAddProduct, SWT.NONE);
 		lblErrProdName.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
-		lblErrProdName.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.NORMAL));
+		lblErrProdName.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
 		lblErrProdName.setForeground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
 		lblErrProdName.setBounds(252, 29, 110, 15);
-		lblErrProdName.setText("This field is required.");
+		lblErrProdName.setText("!");
 //		lblErrProdName.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));     -> visible when error
 
 		
 		Label lblErrCat = new Label(shlAddProduct, SWT.NONE);
+		lblErrCat.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
 		lblErrCat.setForeground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
 		lblErrCat.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
 		lblErrCat.setBounds(252, 61, 110, 15);
-		lblErrCat.setText("This field is required.");
+		lblErrCat.setText("!");
 		
 		Label lblErrSub = new Label(shlAddProduct, SWT.NONE);
+		lblErrSub.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
 		lblErrSub.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
 		lblErrSub.setForeground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
 		lblErrSub.setBounds(252, 93, 110, 15);
-		lblErrSub.setText("This field is required.");
+		lblErrSub.setText("!");
 		
 		Label lblErrPri = new Label(shlAddProduct, SWT.NONE);
+		lblErrPri.setFont(SWTResourceManager.getFont("Segoe UI", 8, SWT.NORMAL));
 		lblErrPri.setForeground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
 		lblErrPri.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
-		lblErrPri.setBounds(252, 189, 110, 15);
-		lblErrPri.setText("This field is required.");
+		lblErrPri.setBounds(252, 189, 127, 31);
+		lblErrPri.setText("Value must be greater\r\nthan 0");
+		
+		Label lblRequired = new Label(shlAddProduct, SWT.NONE);
+		lblRequired.setForeground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
+		lblRequired.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
+		lblRequired.setBounds(10, 3, 236, 15);
+		lblRequired.setText("Fields marked with an ! are required");
 		
 		cmbCategory.addSelectionListener(new SelectionAdapter(){
 			public void widgetSelected(SelectionEvent e){
@@ -202,13 +211,15 @@ public class AddProduct {
 					 fPrice == 0){
 					MessageBox msg = new MessageBox(shlAddProduct, SWT.ICON_ERROR | SWT.OK);
 					msg.setText("Error");
-					msg.setMessage("Required fields have no input.");
+					msg.setMessage("Please fill out all required fields.");
 					int buttonID = msg.open();
 //					String valString = "SWT.OK";
 					switch (buttonID){
-					case SWT.NO:
+					case SWT.OK:
+						
 						break;
 					}
+					lblRequired.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
 					if (strProdName.equals("")){
 						lblErrProdName.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
 					}
@@ -223,9 +234,11 @@ public class AddProduct {
 						lblErrPri.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
 					}
 				}
+			
 				else{
 					saveProduct(strProdName, strCategory, strSubtype, strBrand, strPackaging, fPrice, nStocks);
 					MessageBox msg = new MessageBox(shlAddProduct, SWT.ICON_INFORMATION | SWT.OK);
+					lblRequired.setForeground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
 					lblErrProdName.setForeground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
 					lblErrCat.setForeground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
 					lblErrSub.setForeground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));

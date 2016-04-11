@@ -119,13 +119,13 @@ CREATE TABLE `products_table` (
   `productName` varchar(45) NOT NULL,
   `category` varchar(45) NOT NULL,
   `subtype` varchar(45) NOT NULL,
-  `brand` varchar(45) NOT NULL,
-  `packaging` varchar(45) NOT NULL,
+  `brand` varchar(45) DEFAULT NULL,
+  `packaging` varchar(45) DEFAULT NULL,
   `pricePerKilo` float NOT NULL,
   `stocks` int(11) unsigned zerofill NOT NULL DEFAULT '00000000000',
   `weight` float unsigned zerofill NOT NULL DEFAULT '000000000000',
   PRIMARY KEY (`productID`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -134,7 +134,7 @@ CREATE TABLE `products_table` (
 
 LOCK TABLES `products_table` WRITE;
 /*!40000 ALTER TABLE `products_table` DISABLE KEYS */;
-INSERT INTO `products_table` VALUES (1,'Baby Back Ribs','Meat','Pork','Patel',' ',420,00000000010,000000000000),(2,'Brisket','Meat','Beef','Excel/US','',650,00000000005,000000000000),(3,'Cream Dory Trimmed','Seafood','Cream Dory',' ','10kg/box',110,00000000002,000000000000),(4,'Rib Eye Roll','Meat','Beef','Cargill/US','',860,00000000000,000000000000);
+INSERT INTO `products_table` VALUES (1,'Baby Back Ribs','Meat','Pork','Patel',' ',420,00000000010,000000000000),(2,'Brisket','Meat','Beef','Excel/US','',650,00000000005,000000000000),(3,'Cream Dory Trimmed','Seafood','Cream Dory',' ','10kg/box',110,00000000002,000000000000),(4,'Rib Eye Roll','Meat','Beef','Cargill/US','',860,00000000000,000000000000),(5,'Shank, Fore Tarsus On','Meat','Beef','Wilson Hellaby/NZ',NULL,216,00000000000,000000000000),(8,'Matsusaka Beef','Meat','Japanese Wagyu',NULL,NULL,12000,00000000000,000000000000),(9,'Wagyu Tenderloin','Meat','Beef','SRF/US',NULL,5760,00000000000,000000000000),(10,'Vannamei','Seafood','Shrimp',NULL,NULL,660,00000000000,000000000000),(11,'Squid Rings','Seafood','Squid/Octopus',NULL,NULL,220,00000000000,000000000000),(12,'Mussels Half Shell','Seafood','Scallops and Shellfish',NULL,NULL,500,00000000000,000000000000),(13,'Tuna Panga','Seafood','Tuna',NULL,NULL,150,00000000000,000000000000),(14,'Gindara Steak','Seafood','Fish (Whole, Fillet, Steak)',NULL,NULL,1700,00000000000,000000000000),(15,'Tilapia Fillet','Seafood','Fish (Whole, Fillet, Steak)',NULL,NULL,450,00000000000,000000000000),(16,'Salmon Fillet Slab','Seafood','Norwegian Salmon',NULL,NULL,635,00000000000,000000000000),(17,'Cream Dory Untrimmed','Seafood','Cream Dory',NULL,NULL,110,00000000000,000000000000),(18,'Vannamei','Seafood','Shrimps',NULL,NULL,650,00000000000,000000000000),(19,'Chicken Wingette/Lollipop','Meat','Poultry',NULL,NULL,245,00000000000,000000000000),(20,'Jowls','Meat','Pork','Westvlees/Belgium',NULL,156,00000000000,000000000000);
 /*!40000 ALTER TABLE `products_table` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -147,4 +147,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-03-26 18:11:40
+-- Dump completed on 2016-04-07 22:10:18

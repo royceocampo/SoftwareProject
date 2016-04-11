@@ -18,9 +18,17 @@ import dbconnection.DBConnection;
 import managers.Product;
 
 public class ProductManager {
-	public static void addProduct(Product newProduct) throws Exception {
+// <<<<<<< HEAD
+// 	public static void addProduct(Product newProduct) throws Exception {
 
-		Connection conn = (Connection) DBConnection.getConnection();
+// 		Connection conn = (Connection) DBConnection.getConnection();
+// =======
+	public ProductManager() {}
+	
+	public static void addProduct(Product newProduct) throws Exception{	
+		
+		Connection conn = (Connection)DBConnection.getConnection();
+// >>>>>>> Royce_ProductMethods_modified
 		PreparedStatement pstmt = null;
 		try {
 			pstmt = conn.prepareStatement("INSERT INTO products_table"
@@ -89,6 +97,30 @@ public class ProductManager {
 		}
 
 		return product;
+	}
+	
+	public static int getProductCount(){
+		int productCount = 0;
+		
+		Connection conn = DBConnection.getConnection();
+		String query = "SELECT COUNT(*) FROM products_table";
+		
+		try{
+			PreparedStatement pstmt = conn.prepareStatement(query);
+			ResultSet rs = pstmt.executeQuery();
+			
+			if(rs.next()){
+				productCount = rs.getInt(1);
+			}
+			
+			 rs.close();
+		     pstmt.close();
+		     conn.close();
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}
+		return productCount;
 	}
 
 	public static void editProduct(Product modProduct, int productID) throws Exception {
@@ -173,38 +205,67 @@ public class ProductManager {
 		return productsCount;
 	}
 
-	public ArrayList<Product> searchProduct(String searchList) {
+// <<<<<<< HEAD
+// 	public ArrayList<Product> searchProduct(String searchList) {
+// 		Connection conn = DBConnection.getConnection();
+// 		ArrayList<Product> resultsList = new ArrayList<Product>();
+
+// 		try {
+// 			PreparedStatement pstmt = conn.prepareStatement(
+// 					"SELECT * FROM products_table WHERE (productName LIKE ? OR category LIKE ? OR subtype LIKE ?)");
+// 			pstmt.setString(1, "%" + searchList + "%");
+// 			pstmt.setString(2, "%" + searchList + "%");
+// 			pstmt.setString(3, "%" + searchList + "%");
+// 			ResultSet rs = pstmt.executeQuery();
+// 			if (!rs.isBeforeFirst()) {
+// 				return null;
+// 			} else {
+// 				while (rs.next()) {
+// 					Product product = new Product();
+// 					product.setProductID(rs.getInt("productID"));
+// 					product.setProductName(rs.getString("productName"));
+// 					product.setProdCategory(rs.getString("category"));
+// 					product.setProdSubtype(rs.getString("subtype"));
+// 					product.setProdBrand(rs.getString("brand"));
+// 					product.setProdPackaging(rs.getString("packaging"));
+// 					product.setProdPrice(rs.getFloat("pricePerKilo"));
+// 					product.setProdStocks(rs.getInt("stocks"));
+
+// 					resultsList.add(product);
+// 				}
+// 			}
+// 		} catch (SQLException e) {
+// 			// TODO Auto-generated catch block
+// 			e.printStackTrace();
+// 		}
+// 		return resultsList;
+// =======
+	public ArrayList<Product> getAllProduct(){
+		String sql = "SELECT * FROM products_table;";
+		ArrayList<Product> productList = new ArrayList<Product>();
 		Connection conn = DBConnection.getConnection();
-		ArrayList<Product> resultsList = new ArrayList<Product>();
-
+		
 		try {
-			PreparedStatement pstmt = conn.prepareStatement(
-					"SELECT * FROM products_table WHERE (productName LIKE ? OR category LIKE ? OR subtype LIKE ?)");
-			pstmt.setString(1, "%" + searchList + "%");
-			pstmt.setString(2, "%" + searchList + "%");
-			pstmt.setString(3, "%" + searchList + "%");
-			ResultSet rs = pstmt.executeQuery();
-			if (!rs.isBeforeFirst()) {
-				return null;
-			} else {
-				while (rs.next()) {
-					Product product = new Product();
-					product.setProductID(rs.getInt("productID"));
-					product.setProductName(rs.getString("productName"));
-					product.setProdCategory(rs.getString("category"));
-					product.setProdSubtype(rs.getString("subtype"));
-					product.setProdBrand(rs.getString("brand"));
-					product.setProdPackaging(rs.getString("packaging"));
-					product.setProdPrice(rs.getFloat("pricePerKilo"));
-					product.setProdStocks(rs.getInt("stocks"));
-
-					resultsList.add(product);
-				}
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery(sql);
+			
+			while(rs.next()){
+				Product product = new Product(null, null, null, null, null, 0, 0);
+				
+				product.setProductID(rs.getInt("productID"));
+				product.setProductName(rs.getString("productName"));
+				productList.add(product);
 			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
+			rs.close();
+			pstmt.close();
+			conn.close();
+		} catch (Exception e) {
+			// TODO: handle exception
 			e.printStackTrace();
 		}
-		return resultsList;
+		
+		return productList;
+// >>>>>>> Royce_ProductMethods_modified
 	}
 }

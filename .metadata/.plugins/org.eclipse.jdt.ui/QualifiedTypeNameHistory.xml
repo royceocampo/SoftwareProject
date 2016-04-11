@@ -10,4 +10,7 @@
 <fullyQualifiedTypeName name="org.eclipse.swt.graphics.Rectangle"/>
 <fullyQualifiedTypeName name="classes.ProductManager"/>
 <fullyQualifiedTypeName name="org.eclipse.swt.widgets.Text"/>
+<fullyQualifiedTypeName name="java.awt.Event"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="java.util.Collections"/>
 </qualifiedTypeNameHistroy>

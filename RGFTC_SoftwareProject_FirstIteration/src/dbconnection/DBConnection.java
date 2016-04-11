@@ -9,10 +9,10 @@ public class DBConnection {
 	public static Connection getConnection(){
 		try{
 			Class.forName("com.mysql.jdbc.Driver");
-			System.out.println("Connection successful!");
+//			System.out.println("Connection successful!");
 			
 			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/rgftc_inventory", "root", "p@ssword");
-			System.out.println("Connected!");
+//			System.out.println("Connected!");
 			return conn;
 		}
 		catch(Exception e){
