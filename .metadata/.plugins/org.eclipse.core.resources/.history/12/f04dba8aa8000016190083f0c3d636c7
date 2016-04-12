@@ -249,7 +249,7 @@ public class DepWith {
 						break;
 					}
 					label_1.setVisible(true);
-					error4 = true;
+					error4 = true
 				} 
 				if(check.equals("DW")){
 					MessageBox msg = new MessageBox(shlDepWith, SWT.ICON_ERROR | SWT.OK);
