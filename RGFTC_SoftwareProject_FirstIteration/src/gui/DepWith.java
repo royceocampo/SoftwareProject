@@ -192,6 +192,7 @@ public class DepWith {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				String check="";
+				boolean error4 = false;
 				label.setVisible(false);
 				label_1.setVisible(false);
 				label_2.setVisible(false);
@@ -236,7 +237,7 @@ public class DepWith {
 					} if(text_person.getText().equals("")) {
 						label_4.setVisible(true);
 					}
-
+					error4 = true;
 				} if(quantity <= 0){
 					MessageBox msg = new MessageBox(shlDepWith, SWT.ICON_ERROR | SWT.OK);
 					msg.setText("Error");
@@ -248,6 +249,7 @@ public class DepWith {
 						break;
 					}
 					label_1.setVisible(true);
+					error4 = true
 				} 
 				if(check.equals("DW")){
 					MessageBox msg = new MessageBox(shlDepWith, SWT.ICON_ERROR | SWT.OK);
@@ -260,6 +262,7 @@ public class DepWith {
 						break;
 					}
 					label_2.setVisible(true);
+					error4 = true;
 				}
 				else if(error){
 					MessageBox msg = new MessageBox(shlDepWith, SWT.ICON_ERROR | SWT.OK);
@@ -281,7 +284,7 @@ public class DepWith {
 					case SWT.NO:
 						break;
 					}
-				} else{
+				} else if (!error4){
 					String date = transDate.getYear()+"-"+(transDate.getMonth()+1)+"-"+transDate.getDay();
 					Inventory inventory = new Inventory();
 					InventoryManager inventoryManager = new InventoryManager();
