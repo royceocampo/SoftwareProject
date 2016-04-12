@@ -17,6 +17,7 @@ public class InventoryManager {
 		
 		Connection conn = DBConnection.getConnection();
 		String quantity = inventoryManager.checkInventory(i.getProduct());
+		// System.out.println(quantity);
 		if(quantity != null){
 			String sql = "UPDATE products_table SET stocks = ? WHERE productName = ?;";
 			
@@ -40,6 +41,7 @@ public class InventoryManager {
 					pstmt1.executeUpdate();
 				} else{
 					pstmt.setInt(1, Integer.parseInt(quantity));
+					// System.out.println("haha");
 					error="Overflow";
 				}
 				pstmt.setString(2, i.getProduct());

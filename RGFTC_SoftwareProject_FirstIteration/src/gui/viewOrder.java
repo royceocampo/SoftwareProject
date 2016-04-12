@@ -42,12 +42,43 @@ public class viewOrder {
 	private GetOrders od = new GetOrders();
 	private ArrayList<Order> ol = od.getOrder();
 	private GetLine gl = new GetLine();
+	private static int index;
+	private static TableTreeItem[] tblItems;
+	private static TableTreeItem item2;
+	
 	
 	private ArrayList<LineData> lp = gl.getLinePending();
 	private ArrayList<LineData> la = gl.getLineAll();
 	private ArrayList<LineData> ldc = gl.getLineDelivered();
 	private boolean checkMark2 = false;
 	private ArrayList<TableTreeItem> item = new ArrayList<TableTreeItem>();
+	
+	
+	
+	public static int getIndex() {
+		return index;
+	}
+
+	public static void setIndex(int index) {
+		viewOrder.index = index;
+	}
+
+	public static TableTreeItem getItem() {
+		return item2;
+	}
+
+	public static void setItem(TableTreeItem item) {
+		viewOrder.item2 = item;
+	}
+
+	public static TableTreeItem[] getAllItems() {
+		return tblItems;
+	}
+
+	public static void setAllItems(TableTreeItem[] tblItems) {
+		viewOrder.tblItems = tblItems;
+	}
+
 	
 	
 	/**

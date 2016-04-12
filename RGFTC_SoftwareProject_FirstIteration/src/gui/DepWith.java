@@ -162,10 +162,41 @@ public class DepWith {
 		Button btnWithdrawal = new Button(shlDepWith, SWT.RADIO);
 		btnWithdrawal.setBounds(169, 124, 91, 18);
 		btnWithdrawal.setText("Withdrawal");
+
+		Label label = new Label(shlDepWith, SWT.NONE);
+		label.setBounds(147, 18, 10, 14);
+		label.setText("*");
+		label.setVisible(false);
+		
+		Label label_1 = new Label(shlDepWith, SWT.NONE);
+		label_1.setText("*");
+		label_1.setBounds(147, 55, 10, 14);
+		label_1.setVisible(false);
+		
+		Label label_2 = new Label(shlDepWith, SWT.NONE);
+		label_2.setText("*");
+		label_2.setBounds(147, 113, 10, 14);
+		label_2.setVisible(false);
+		
+		Label label_3 = new Label(shlDepWith, SWT.NONE);
+		label_3.setText("*");
+		label_3.setBounds(147, 170, 10, 14);
+		label_3.setVisible(false);
+		
+		Label label_4 = new Label(shlDepWith, SWT.NONE);
+		label_4.setText("*");
+		label_4.setBounds(147, 213, 10, 14);
+		label_4.setVisible(false);
 		
 		btnSubmit.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				String check="";
+				label.setVisible(false);
+				label_1.setVisible(false);
+				label_2.setVisible(false);
+				label_3.setVisible(false);
+				label_4.setVisible(false);
 				boolean error = true;
 				boolean error1 = false;
 				int quantity = 0;
@@ -181,6 +212,13 @@ public class DepWith {
 						error = false;
 					}
 				}
+
+				if(!btnDeposit.getSelection() && !btnWithdrawal.getSelection()){
+					check = "DW";
+				}
+				else {
+					check = "none";
+				}
 				
 				if(combo.getText().equals("") || text_person.getText().equals("")){
 					MessageBox msg = new MessageBox(shlDepWith, SWT.ICON_ERROR | SWT.OK);
@@ -192,20 +230,41 @@ public class DepWith {
 					case SWT.NO:
 						break;
 					}
-				} else if(quantity <= 0){
+
+					if(combo.getText().equals("")){
+						label.setVisible(true);
+					} if(text_person.getText().equals("")) {
+						label_4.setVisible(true);
+					}
+
+				} if(quantity <= 0){
 					MessageBox msg = new MessageBox(shlDepWith, SWT.ICON_ERROR | SWT.OK);
 					msg.setText("Error");
-					msg.setMessage("Number of Boxes cannot be lower than 1.");
+					msg.setMessage("Please give a valid number greater than 0 for number of boxes.");
 					int buttonID = msg.open();
 //					String valString = "SWT.OK";
 					switch (buttonID){
 					case SWT.NO:
 						break;
 					}
-				} else if(error){
+					label_1.setVisible(true);
+				} 
+				if(check.equals("DW")){
 					MessageBox msg = new MessageBox(shlDepWith, SWT.ICON_ERROR | SWT.OK);
 					msg.setText("Error");
-					msg.setMessage("The product still doesn't exist.");
+					msg.setMessage("Check either Withdraw or Deposit.");
+					int buttonID = msg.open();
+//					String valString = "SWT.OK";
+					switch (buttonID){
+					case SWT.NO:
+						break;
+					}
+					label_2.setVisible(true);
+				}
+				else if(error){
+					MessageBox msg = new MessageBox(shlDepWith, SWT.ICON_ERROR | SWT.OK);
+					msg.setText("Error");
+					msg.setMessage("Product you want does not exist.");
 					int buttonID = msg.open();
 //					String valString = "SWT.OK";
 					switch (buttonID){
@@ -231,12 +290,16 @@ public class DepWith {
 					inventory.setQuantity(Integer.parseInt(spinner.getText()));
 					inventory.setDate(date);
 					inventory.setProductID(1);
-					String check;
+					// String check;
+
 					if(btnDeposit.getSelection()){
 						check = inventoryManager.addInventory(inventory, btnDeposit.getText());
-					} else{
+					} else if(btnWithdrawal.getSelection()){
 						check = inventoryManager.addInventory(inventory, btnWithdrawal.getText());
+					} else {
+						check = "DW";
 					}
+
 					if(check.equals("No")){
 						MessageBox msg = new MessageBox(shlDepWith, SWT.ICON_ERROR | SWT.OK);
 						msg.setText("Error");
@@ -250,16 +313,17 @@ public class DepWith {
 					} else if(check.equals("Overflow")){
 						MessageBox msg = new MessageBox(shlDepWith, SWT.ICON_ERROR | SWT.OK);
 						msg.setText("Error");
-						msg.setMessage(combo.getText() + " contains less than the desired amount.");
+						msg.setMessage(combo.getText() + " has less stock than the desired withdrawal amount.");
 						int buttonID = msg.open();
 //						String valString = "SWT.OK";
 						switch (buttonID){
 						case SWT.NO:
 							break;
 						}
+						label_1.setVisible(true);
 					} else {
 						MessageBox msg = new MessageBox(shlDepWith, SWT.ICON_ERROR | SWT.OK);
-						msg.setText("Error");
+						msg.setText("Success");
 						msg.setMessage("Succesful.");
 						int buttonID = msg.open();
 //						String valString = "SWT.OK";
@@ -267,6 +331,11 @@ public class DepWith {
 						case SWT.NO:
 							break;
 						}
+						combo.setText("");
+						spinner.setSelection(0);
+						btnDeposit.setSelection(false);
+						btnWithdrawal.setSelection(false);
+						text_person.setText("");
 					}
 				
 				}

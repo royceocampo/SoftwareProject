@@ -28,7 +28,7 @@ import classes.MarkManager;
 import managers.LineData;
 import managers.Order;
 
-public class viewOrder3 {
+public class viewOrder {
 
 	protected Shell shlOrderManage;
 	private Text txtSearch;
