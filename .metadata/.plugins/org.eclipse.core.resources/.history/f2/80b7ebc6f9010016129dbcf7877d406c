@@ -507,7 +507,6 @@ public class ProductManage {
 						range.add(Integer.valueOf(index));
 						if (selected.size()>0){
 							selected.clear();
-							selected.add(Integer.valueOf(index));
 						}
 						
 						tblItems = prodTable.getItems();
