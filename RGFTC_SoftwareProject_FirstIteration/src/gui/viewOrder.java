@@ -60,6 +60,7 @@ public class viewOrder {
 	public static boolean orderOpen = false;
 	
 	
+	
 	public static boolean isOrderOpen() {
 		return orderOpen;
 	}
@@ -175,9 +176,12 @@ public class viewOrder {
 		mntmProduct.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				ProductManage pm = new ProductManage();
-				pm.open();
+				ProductManage ProductManage = new ProductManage();
+//				ProductManage pm = new ProductManage();
+//				ProductManage.close();
 				shlOrderManage.close();
+				ProductManage.open();
+				
 			}
 		});
 		mntmProduct.setText("Product");
@@ -186,7 +190,11 @@ public class viewOrder {
 		mntmInventory.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-//				shlOrderManage.close();
+				DepWith dw = new DepWith();
+				shlOrderManage.close();
+				dw.open();
+				
+				
 			}
 		});
 		mntmInventory.setText("Deposit or Withdraw");

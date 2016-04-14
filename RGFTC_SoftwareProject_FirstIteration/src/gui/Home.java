@@ -32,7 +32,13 @@ public class Home {
 	protected Shell shlRareGlobalFood;
 	private TableTree tableDelivery;
 	private TableTree table;
-
+	public static int productManage = 0;
+	public static int viewOrder = 0;
+	public static int depWith = 0;
+	viewOrder vOrder = new viewOrder();
+	DepWith dw = new DepWith();
+	ProductManage pm = new ProductManage();
+	
 	/**
 	 * Launch the application.
 	 * @param args
@@ -213,12 +219,6 @@ public class Home {
 		btnMarkAsDelivered.setBounds(293, 39, 100, 25);
 		btnMarkAsDelivered.setText("Mark as Delivered");
 		
-		Button btnOrderDetails = new Button(shlRareGlobalFood, SWT.NONE);
-		//only enabled when a row in the table is selected.
-		btnOrderDetails.setEnabled(false);
-		btnOrderDetails.setBounds(207, 39, 80, 25);
-		btnOrderDetails.setText("Order Details");
-		
 		Menu menu = new Menu(shlRareGlobalFood, SWT.BAR);
 		shlRareGlobalFood.setMenuBar(menu);
 		
@@ -226,7 +226,8 @@ public class Home {
 		mntmOrder.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				viewOrder vOrder = new viewOrder();
+				pm.close();
+				dw.close();
 				vOrder.open();
 			}
 		});
@@ -236,13 +237,22 @@ public class Home {
 		mntmProduct.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				ProductManage pm = new ProductManage();
+				vOrder.close();				
+				dw.close();
 				pm.open();
 			}
 		});
 		mntmProduct.setText("Product");
 		
 		MenuItem mntmInventoryHistory = new MenuItem(menu, SWT.NONE);
+		mntmInventoryHistory.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				vOrder.close();
+				pm.close();
+				dw.open();
+			}
+		});
 		mntmInventoryHistory.setText("Deposit or Withdraw");
 	}
 }

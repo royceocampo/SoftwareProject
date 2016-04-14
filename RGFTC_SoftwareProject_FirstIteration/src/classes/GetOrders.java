@@ -45,7 +45,10 @@ public class GetOrders {
 				o.add(od);
 				
 			}
-			return o;	
+			return o;
+//			rs.close();
+//			ps.close();
+//			conn.close();
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

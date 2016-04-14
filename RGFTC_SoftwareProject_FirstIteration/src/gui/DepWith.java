@@ -31,6 +31,7 @@ public class DepWith {
 	private Text text_person;
 	ProductManager productManager = new ProductManager();
 	private ArrayList<Product> productList = productManager.getAllProduct();
+	viewOrder viewOrder = new viewOrder();
 
 	/**
 	 * Launch the application.
@@ -84,6 +85,14 @@ public class DepWith {
 		mntmHome.setText("Home");
 		
 		MenuItem mntmOrder = new MenuItem(menu, SWT.NONE);
+		mntmOrder.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				viewOrder vo = new viewOrder();
+				shlDepWith.close();
+				vo.open();
+			}
+		});
 		mntmOrder.setText("Order");
 		
 		MenuItem mntmProduct = new MenuItem(menu, SWT.NONE);
@@ -91,8 +100,8 @@ public class DepWith {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				ProductManage pm = new ProductManage();
-				pm.open();
 				shlDepWith.close();
+				pm.open();
 			}
 		});
 		mntmProduct.setText("Product");
@@ -338,5 +347,12 @@ public class DepWith {
 				
 			}
 		});
+	}
+	public void close(){
+		try {
+			shlDepWith.dispose();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 }

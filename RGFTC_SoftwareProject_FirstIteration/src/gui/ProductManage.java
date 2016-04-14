@@ -46,7 +46,8 @@ public class ProductManage {
 	ArrayList <Integer> range = new ArrayList<Integer>();
 	public static int lowerBound = 0;
 	public static int upperBound = 0;
-	viewOrder viewOrder = new viewOrder();
+	
+	
 		
 
 	public static int getProdID() {
@@ -128,7 +129,7 @@ public class ProductManage {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				System.out.println("Selected");
-				
+				viewOrder viewOrder = new viewOrder();
 //				if (orderOpen == true){
 //					System.out.println("open");
 //				}
@@ -138,7 +139,9 @@ public class ProductManage {
 //					System.out.println("closed");
 //					orderOpen = true;
 //				}
-				viewOrder.close();
+//				viewOrder.close();
+//				DepWith.close();
+				shlProductManage.close();
 				viewOrder.open();
 			}
 		});
@@ -148,9 +151,14 @@ public class ProductManage {
 		mntmInventory.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				DepWith DepWith = new DepWith();
 				// InventoryHistory ih = new InventoryHistory();
 				// ih.open();
 				// shlProductManage.close();
+//				DepWith.close();
+//				viewOrder.close();
+				shlProductManage.close();
+				DepWith.open();
 			}
 		});
 		mntmInventory.setText("Deposit or Withdraw");
@@ -192,7 +200,7 @@ public class ProductManage {
 // >>>>>>> Royce_ProductMethods_modified
 		Button btnEdit = new Button(shlProductManage, SWT.NONE);
 
-		btnEdit.setText("Edit");
+		btnEdit.setText("Modify");
 		btnEdit.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 		btnEdit.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
 // <<<<<<< HEAD
@@ -632,5 +640,12 @@ public class ProductManage {
 			}
 		}
 		// }
+	}
+	public void close(){
+		try {
+			shlProductManage.dispose();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 }

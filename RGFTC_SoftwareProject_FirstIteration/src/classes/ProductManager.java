@@ -40,7 +40,10 @@ public class ProductManager {
 			pstmt.setString(5, newProduct.getProdPackaging());
 			pstmt.setFloat(6, newProduct.getProdPrice());
 			pstmt.executeUpdate();
-		} catch (SQLException e) {
+			pstmt.close();
+			conn.close();
+		}
+		catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
@@ -68,6 +71,9 @@ public class ProductManager {
 					}
 				}
 			}
+			pst.close();
+			rs.close();
+			conn.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -91,6 +97,9 @@ public class ProductManager {
 				product.setProdPrice(rs.getFloat("pricePerKilo"));
 				product.setProdStocks(rs.getInt("stocks"));
 			}
+			pstmt.close();
+			rs.close();
+			conn.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -141,7 +150,12 @@ public class ProductManager {
 			pstmt.setFloat(6, modProduct.getProdPrice());
 			System.out.println(pstmt);
 			pstmt.executeUpdate();
-		} catch (SQLException e) {
+			
+			pstmt.close();
+			conn.close();
+		} 
+		
+		catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
@@ -152,7 +166,8 @@ public class ProductManager {
 			String sql = "DELETE FROM products_table WHERE productID = " + id;
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.executeUpdate();
-
+			conn.close();
+			pstmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -178,6 +193,9 @@ public class ProductManager {
 
 				productList.add(product);
 			}
+			rs.close();
+			pstmt.close();
+			conn.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
