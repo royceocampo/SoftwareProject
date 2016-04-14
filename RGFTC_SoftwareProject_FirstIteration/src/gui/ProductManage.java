@@ -46,6 +46,7 @@ public class ProductManage {
 	ArrayList <Integer> range = new ArrayList<Integer>();
 	public static int lowerBound = 0;
 	public static int upperBound = 0;
+		
 
 	public static int getProdID() {
 		return prodID;
@@ -125,15 +126,20 @@ public class ProductManage {
 		mntmOrder.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				viewOrder vo = new viewOrder();
-				vo.open();
-				shlProductManage.close();
+				System.out.println("Selected");
+				
+//				if (orderOpen == true){
+//					System.out.println("open");
+//				}
+//				else if (orderOpen == false){
+//					viewOrder vo = new viewOrder();
+//					vo.open();
+//					System.out.println("closed");
+//					orderOpen = true;
+//				}
 			}
 		});
 		mntmOrder.setText("Order");
-
-		MenuItem mntmProduct = new MenuItem(menu, SWT.NONE);
-		mntmProduct.setText("Product");
 
 		MenuItem mntmInventory = new MenuItem(menu, SWT.NONE);
 		mntmInventory.addSelectionListener(new SelectionAdapter() {
@@ -144,7 +150,7 @@ public class ProductManage {
 				// shlProductManage.close();
 			}
 		});
-		mntmInventory.setText("Inventory History");
+		mntmInventory.setText("Deposit or Withdraw");
 
 		Label lblProductInventory = new Label(shlProductManage, SWT.NONE);
 		lblProductInventory.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));

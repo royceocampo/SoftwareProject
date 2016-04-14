@@ -222,9 +222,6 @@ public class Home {
 		Menu menu = new Menu(shlRareGlobalFood, SWT.BAR);
 		shlRareGlobalFood.setMenuBar(menu);
 		
-		MenuItem mntmHome = new MenuItem(menu, SWT.NONE);
-		mntmHome.setText("Home");
-		
 		MenuItem mntmOrder = new MenuItem(menu, SWT.NONE);
 		mntmOrder.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -246,6 +243,6 @@ public class Home {
 		mntmProduct.setText("Product");
 		
 		MenuItem mntmInventoryHistory = new MenuItem(menu, SWT.NONE);
-		mntmInventoryHistory.setText("Inventory History");
+		mntmInventoryHistory.setText("Deposit or Withdraw");
 	}
 }

@@ -1,0 +1,13 @@
+package managers;
+
+public class Widgets {
+	public static boolean productOpen;
+	public static boolean orderOpen;
+	public static boolean inventoryOpen;
+	
+	
+	
+	
+	
+	
+}

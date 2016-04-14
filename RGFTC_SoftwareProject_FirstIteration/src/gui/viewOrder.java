@@ -51,10 +51,37 @@ public class viewOrder {
 	private ArrayList<LineData> la = gl.getLineAll();
 	private ArrayList<LineData> ldc = gl.getLineDelivered();
 	private boolean checkMark2 = false;
+	@SuppressWarnings("deprecation")
 	private ArrayList<TableTreeItem> item = new ArrayList<TableTreeItem>();
+	public static boolean productOpen = false;
+	public static boolean inventoryOpen = false;
+	public static boolean orderOpen = false;
 	
 	
-	
+	public static boolean isOrderOpen() {
+		return orderOpen;
+	}
+
+	public static void setOrderOpen(boolean orderOpen) {
+		viewOrder.orderOpen = orderOpen;
+	}
+
+	public static boolean isProductOpen() {
+		return productOpen;
+	}
+
+	public static void setProductOpen(boolean productOpen) {
+		viewOrder.productOpen = productOpen;
+	}
+
+	public static boolean isInventoryOpen() {
+		return inventoryOpen;
+	}
+
+	public static void setInventoryOpen(boolean inventoryOpen) {
+		viewOrder.inventoryOpen = inventoryOpen;
+	}
+
 	public static int getIndex() {
 		return index;
 	}
@@ -142,9 +169,6 @@ public class viewOrder {
 		});
 		mntmHome.setText("Home");
 		
-		MenuItem mntmOrder = new MenuItem(menu, SWT.NONE);
-		mntmOrder.setText("Order");
-		
 		MenuItem mntmProduct = new MenuItem(menu, SWT.NONE);
 		mntmProduct.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -163,7 +187,7 @@ public class viewOrder {
 //				shlOrderManage.close();
 			}
 		});
-		mntmInventory.setText("Inventory");
+		mntmInventory.setText("Deposit or Withdraw");
 		
 		Label lblOrderManagement = new Label(shlOrderManage, SWT.NONE);
 		lblOrderManagement.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));

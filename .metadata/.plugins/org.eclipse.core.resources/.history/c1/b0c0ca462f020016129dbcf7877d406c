@@ -1,0 +1,39 @@
+package managers;
+
+public class ShellCheck {
+	private static boolean productOpen = false;
+	private static boolean orderOpen = false;
+	private static boolean inventoryOpen = false;
+	
+	public ShellCheck(boolean productOpen, boolean orderOpen, boolean inventoryOpen) {
+		super();
+		this.productOpen = productOpen;
+		this.orderOpen = orderOpen;
+		this.inventoryOpen = inventoryOpen;
+	}
+
+	public static boolean isProductOpen() {
+		return productOpen;
+	}
+
+	public static void setProductOpen(boolean productOpen) {
+		this.productOpen = productOpen;
+	}
+
+	public static boolean isOrderOpen() {
+		return orderOpen;
+	}
+
+	public static void setOrderOpen(boolean orderOpen) {
+		this.orderOpen = orderOpen;
+	}
+
+	public static boolean isInventoryOpen() {
+		return inventoryOpen;
+	}
+
+	public static void setInventoryOpen(boolean inventoryOpen) {
+		this.inventoryOpen = inventoryOpen;
+	}
+		
+}

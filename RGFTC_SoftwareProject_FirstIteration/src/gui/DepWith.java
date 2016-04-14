@@ -97,15 +97,6 @@ public class DepWith {
 		});
 		mntmProduct.setText("Product");
 		
-		MenuItem mntmInventory = new MenuItem(menu, SWT.NONE);
-		mntmInventory.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-//				shlOrderManage.close();
-			}
-		});
-		mntmInventory.setText("Inventory History");
-		
 		Label lblProductName = new Label(shlDepWith, SWT.NONE);
 		lblProductName.setAlignment(SWT.RIGHT);
 		lblProductName.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));

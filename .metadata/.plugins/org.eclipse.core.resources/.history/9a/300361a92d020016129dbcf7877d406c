@@ -1,0 +1,43 @@
+package managers;
+
+public class Widgets {
+	public boolean productOpen;
+	public boolean orderOpen;
+	public boolean inventoryOpen;
+	
+	public Widgets(boolean productOpen, boolean orderOpen, boolean inventoryOpen) {
+		super();
+		this.productOpen = productOpen;
+		this.orderOpen = orderOpen;
+		this.inventoryOpen = inventoryOpen;
+	}
+
+	public boolean isProductOpen() {
+		return productOpen;
+	}
+
+	public void setProductOpen(boolean productOpen) {
+		this.productOpen = productOpen;
+	}
+
+	public boolean isOrderOpen() {
+		return orderOpen;
+	}
+
+	public void setOrderOpen(boolean orderOpen) {
+		this.orderOpen = orderOpen;
+	}
+
+	public boolean isInventoryOpen() {
+		return inventoryOpen;
+	}
+
+	public void setInventoryOpen(boolean inventoryOpen) {
+		this.inventoryOpen = inventoryOpen;
+	}
+	
+	
+	
+	
+	
+}
