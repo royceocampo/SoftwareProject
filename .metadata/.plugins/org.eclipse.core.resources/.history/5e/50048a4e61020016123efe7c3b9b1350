@@ -206,7 +206,7 @@ public class ProductManage {
 // <<<<<<< HEAD
 // 		btnEdit.setBounds(10, 311, 95, 33);
 // =======
-		btnEdit.setBounds(27, 360, 95, 35);
+		btnEdit.setBounds(46, 360, 95, 35);
 // >>>>>>> Royce_ProductMethods_modified
 		btnEdit.setEnabled(false);
 
@@ -243,7 +243,7 @@ public class ProductManage {
 // 		prodTable = new Table(shlProductManage, SWT.BORDER | SWT.V_SCROLL | SWT.FULL_SELECTION);
 // 		prodTable.setBounds(10, 54, 579, 225);
 // =======
-		btnDelete.setBounds(128, 360, 95, 35);
+		btnDelete.setBounds(147, 360, 95, 35);
 		btnDelete.setEnabled(false);
 		
 		prodTable = new Table(shlProductManage, SWT.BORDER | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.MULTI);

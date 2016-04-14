@@ -45,18 +45,30 @@ public class viewOrder {
 	private static int index;
 	private static TableTreeItem[] tblItems;
 	private static TableTreeItem item2;
+	Event hello;
+	boolean remove = false;
 	
 	
 	private ArrayList<LineData> lp = gl.getLinePending();
 	private ArrayList<LineData> la = gl.getLineAll();
 	private ArrayList<LineData> ldc = gl.getLineDelivered();
 	private boolean checkMark2 = false;
+	@SuppressWarnings("deprecation")
 	private ArrayList<TableTreeItem> item = new ArrayList<TableTreeItem>();
 	public static boolean productOpen = false;
 	public static boolean inventoryOpen = false;
-	public static boolean orderOpem = false;
+	public static boolean orderOpen = false;
 	
 	
+	
+	public static boolean isOrderOpen() {
+		return orderOpen;
+	}
+
+	public static void setOrderOpen(boolean orderOpen) {
+		viewOrder.orderOpen = orderOpen;
+	}
+
 	public static boolean isProductOpen() {
 		return productOpen;
 	}
@@ -133,7 +145,7 @@ public class viewOrder {
 		createContents();
 		shlOrderManage.open();
 		shlOrderManage.layout();
-		while (!shlOrderManage.isDisposed()) {
+		while (!shell.isDisposed()) {
 			if (!display.readAndDispatch()) {
 				display.sleep();
 			}
@@ -164,9 +176,12 @@ public class viewOrder {
 		mntmProduct.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				ProductManage pm = new ProductManage();
-				pm.open();
+				ProductManage ProductManage = new ProductManage();
+//				ProductManage pm = new ProductManage();
+//				ProductManage.close();
 				shlOrderManage.close();
+				ProductManage.open();
+				
 			}
 		});
 		mntmProduct.setText("Product");
@@ -175,7 +190,11 @@ public class viewOrder {
 		mntmInventory.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-//				shlOrderManage.close();
+				DepWith dw = new DepWith();
+				shlOrderManage.close();
+				dw.open();
+				
+				
 			}
 		});
 		mntmInventory.setText("Deposit or Withdraw");
@@ -458,6 +477,7 @@ public class viewOrder {
 								// TODO Auto-generated method stub
 								if(event.detail == SWT.CHECK){
 									item.add((TableTreeItem) event.item);
+									hello=event;
 									/*String string = event.detail == SWT.CHECK ? "Checked"
 								            : "Selected";
 								    System.out.println(event.item + " " + string);*/
@@ -470,7 +490,10 @@ public class viewOrder {
 											btnMarkOrder.setEnabled(true);
 											btnDeleteOrder.setEnabled(true);
 											checkMark=true;
-											
+											remove = false;
+										}
+										else{
+											remove = true;
 										}
 									}
 									
@@ -482,6 +505,12 @@ public class viewOrder {
 									
 									}catch(Exception e){
 										e.printStackTrace();
+									}
+									for(int i = 0; i < item.size() ;i++ ){
+										if(hello.item.equals(item.get(i)) && remove){
+											item.remove(i);
+											i--;
+										}
 									}
 								}
 							}
@@ -787,7 +816,13 @@ public class viewOrder {
 			e.printStackTrace();
 		}
 	}
-		
+	public void close(){
+		try {
+			shlOrderManage.dispose();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
 }
 
 
