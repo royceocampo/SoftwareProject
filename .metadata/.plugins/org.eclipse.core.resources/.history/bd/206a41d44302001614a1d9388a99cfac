@@ -128,16 +128,6 @@ public class ProductManage {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				System.out.println("Selected");
-				
-//				if (orderOpen == true){
-//					System.out.println("open");
-//				}
-//				else if (orderOpen == false){
-//					viewOrder vo = new viewOrder();
-//					vo.open();
-//					System.out.println("closed");
-//					orderOpen = true;
-//				}
 				viewOrder.close();
 				viewOrder.open();
 			}

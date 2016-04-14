@@ -55,58 +55,7 @@ public class viewOrder {
 	private boolean checkMark2 = false;
 	@SuppressWarnings("deprecation")
 	private ArrayList<TableTreeItem> item = new ArrayList<TableTreeItem>();
-	public static boolean productOpen = false;
-	public static boolean inventoryOpen = false;
-	public static boolean orderOpen = false;
-	
-	
-	public static boolean isOrderOpen() {
-		return orderOpen;
-	}
 
-	public static void setOrderOpen(boolean orderOpen) {
-		viewOrder.orderOpen = orderOpen;
-	}
-
-	public static boolean isProductOpen() {
-		return productOpen;
-	}
-
-	public static void setProductOpen(boolean productOpen) {
-		viewOrder.productOpen = productOpen;
-	}
-
-	public static boolean isInventoryOpen() {
-		return inventoryOpen;
-	}
-
-	public static void setInventoryOpen(boolean inventoryOpen) {
-		viewOrder.inventoryOpen = inventoryOpen;
-	}
-
-	public static int getIndex() {
-		return index;
-	}
-
-	public static void setIndex(int index) {
-		viewOrder.index = index;
-	}
-
-	public static TableTreeItem getItem() {
-		return item2;
-	}
-
-	public static void setItem(TableTreeItem item) {
-		viewOrder.item2 = item;
-	}
-
-	public static TableTreeItem[] getAllItems() {
-		return tblItems;
-	}
-
-	public static void setAllItems(TableTreeItem[] tblItems) {
-		viewOrder.tblItems = tblItems;
-	}
 
 	
 	
@@ -144,7 +93,7 @@ public class viewOrder {
 		createContents();
 		shlOrderManage.open();
 		shlOrderManage.layout();
-		while (!shell.isDisposed()) {
+		while (!shlOrderManage.isDisposed()) {
 			if (!display.readAndDispatch()) {
 				display.sleep();
 			}

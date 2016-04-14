@@ -144,7 +144,7 @@ public class viewOrder {
 		createContents();
 		shlOrderManage.open();
 		shlOrderManage.layout();
-		while (!shell.isDisposed()) {
+		while (!shlOrderManage.isDisposed()) {
 			if (!display.readAndDispatch()) {
 				display.sleep();
 			}

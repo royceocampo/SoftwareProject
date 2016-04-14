@@ -45,8 +45,6 @@ public class viewOrder {
 	private static int index;
 	private static TableTreeItem[] tblItems;
 	private static TableTreeItem item2;
-	Event hello;
-	boolean remove = false;
 	
 	
 	private ArrayList<LineData> lp = gl.getLinePending();
@@ -144,7 +142,7 @@ public class viewOrder {
 		createContents();
 		shlOrderManage.open();
 		shlOrderManage.layout();
-		while (!shell.isDisposed()) {
+		while (!shlOrderManage.isDisposed()) {
 			if (!display.readAndDispatch()) {
 				display.sleep();
 			}
@@ -469,7 +467,6 @@ public class viewOrder {
 								// TODO Auto-generated method stub
 								if(event.detail == SWT.CHECK){
 									item.add((TableTreeItem) event.item);
-									hello=event;
 									/*String string = event.detail == SWT.CHECK ? "Checked"
 								            : "Selected";
 								    System.out.println(event.item + " " + string);*/
@@ -482,10 +479,7 @@ public class viewOrder {
 											btnMarkOrder.setEnabled(true);
 											btnDeleteOrder.setEnabled(true);
 											checkMark=true;
-											remove = false;
-										}
-										else{
-											remove = true;
+											
 										}
 									}
 									
@@ -497,12 +491,6 @@ public class viewOrder {
 									
 									}catch(Exception e){
 										e.printStackTrace();
-									}
-									for(int i = 0; i < item.size() ;i++ ){
-										if(hello.item.equals(item.get(i)) && remove){
-											item.remove(i);
-											i--;
-										}
 									}
 								}
 							}
@@ -808,13 +796,7 @@ public class viewOrder {
 			e.printStackTrace();
 		}
 	}
-	public void close(){
-		try {
-			shlOrderManage.dispose();
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-	}
+		
 }
 
 

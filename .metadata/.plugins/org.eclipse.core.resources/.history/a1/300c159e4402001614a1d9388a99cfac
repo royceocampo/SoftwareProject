@@ -46,7 +46,6 @@ public class ProductManage {
 	ArrayList <Integer> range = new ArrayList<Integer>();
 	public static int lowerBound = 0;
 	public static int upperBound = 0;
-	viewOrder viewOrder = new viewOrder();
 		
 
 	public static int getProdID() {
@@ -138,8 +137,6 @@ public class ProductManage {
 //					System.out.println("closed");
 //					orderOpen = true;
 //				}
-				viewOrder.close();
-				viewOrder.open();
 			}
 		});
 		mntmOrder.setText("Order");
