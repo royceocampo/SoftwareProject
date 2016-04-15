@@ -230,8 +230,9 @@ public class Home {
 		mntmHome.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				close();
-				open();
+				pm.close();
+				dw.close();
+				vOrder.open();
 			}
 		});
 		mntmHome.setText("Home");
@@ -268,12 +269,5 @@ public class Home {
 			}
 		});
 		mntmInventoryHistory.setText("Deposit or Withdraw");
-	}
-	public void close(){
-		try {
-			shlRareGlobalFood.dispose();
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
 	}
 }

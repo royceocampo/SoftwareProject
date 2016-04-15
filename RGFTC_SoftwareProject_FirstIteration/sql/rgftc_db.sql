@@ -65,7 +65,7 @@ CREATE TABLE `lineitems_table` (
   KEY `productKey_idx` (`productID`),
   CONSTRAINT `orderKey` FOREIGN KEY (`purchase_orderID`) REFERENCES `orders_table` (`purchase_orderID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `productsKey` FOREIGN KEY (`productID`) REFERENCES `products_table` (`productID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -74,7 +74,7 @@ CREATE TABLE `lineitems_table` (
 
 LOCK TABLES `lineitems_table` WRITE;
 /*!40000 ALTER TABLE `lineitems_table` DISABLE KEYS */;
-INSERT INTO `lineitems_table` VALUES (1,1,1,430,2),(2,2,2,650,1),(3,3,3,110,1),(4,4,1,430,2),(5,5,1,430,2),(6,6,3,110,2),(7,7,2,430,1),(8,8,3,650,1),(9,9,3,110,1),(20,21,1,2,2),(21,22,3,2,4),(22,23,2,1,1),(23,24,1,900,1);
+INSERT INTO `lineitems_table` VALUES (1,1,1,430,2),(2,2,2,650,1),(3,3,3,110,1),(4,4,1,430,2),(5,5,1,430,2),(6,6,3,110,2),(7,7,2,430,1),(8,8,3,650,1),(9,9,3,110,1),(20,21,1,2,2),(21,22,3,2,4),(22,23,2,1,1),(23,24,1,900,1),(24,25,1,100,1),(25,26,1,30,1),(26,26,3,100,2),(28,28,1,50,1),(29,29,1,50,1),(31,31,3,50,1),(35,35,5,50,1),(36,36,7,5760,1);
 /*!40000 ALTER TABLE `lineitems_table` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -94,7 +94,7 @@ CREATE TABLE `orders_table` (
   `notes` varchar(45) NOT NULL,
   `deliveryStatus` tinyint(1) NOT NULL,
   PRIMARY KEY (`purchase_orderID`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -103,7 +103,7 @@ CREATE TABLE `orders_table` (
 
 LOCK TABLES `orders_table` WRITE;
 /*!40000 ALTER TABLE `orders_table` DISABLE KEYS */;
-INSERT INTO `orders_table` VALUES (1,'Waye',10,'Rod','2016-03-04','1',1),(2,'Waye',20,'Rod','2016-03-04','2',0),(3,'Waye',30,'Rod','2016-03-05','3',0),(4,'Thomas',40,'JP','2016-03-04','4',1),(5,'Thomas',50,'Rod','2016-03-05','5',0),(6,'Dane',60,'JP','2016-03-04','6',0),(7,'Dane',70,'Rod','2016-03-05','7',0),(8,'Dane',80,'Rod','2016-03-06','8',0),(9,'Thomas',90,'JP','2016-03-07','9',0),(21,'W',2,'R','2016-03-07','',0),(22,'W',2,'R','2016-03-07','',0),(23,'W',1,'R','2016-03-07','',0),(24,'adasd',900,'asdsad','2016-06-03','',0);
+INSERT INTO `orders_table` VALUES (1,'Waye',10,'Rod','2016-03-04','1',1),(2,'Waye',20,'Rod','2016-03-04','2',0),(3,'Waye',30,'Rod','2016-03-05','3',0),(4,'Thomas',40,'JP','2016-03-04','4',1),(5,'Thomas',50,'Rod','2016-03-05','5',0),(6,'Dane',60,'JP','2016-03-04','6',0),(7,'Dane',70,'Rod','2016-03-05','7',0),(8,'Dane',80,'Rod','2016-03-06','8',0),(9,'Thomas',90,'JP','2016-03-07','9',0),(21,'W',2,'R','2016-03-07','',0),(22,'W',2,'R','2016-03-07','',0),(23,'W',1,'R','2016-03-07','',0),(24,'adasd',900,'asdsad','2016-06-03','',0),(25,'asd',100,'asd','2016-04-15','asd	',0),(26,'Waye',260,'Franco','2016-04-17','1 BBR - 30\r\n2 CDT - 100',0),(27,'Thomas',50,'Rod','2016-04-15','1 WT - 50',0),(28,'HEllo',50,'haha','2016-04-17','hgasdg',0),(29,'wer',50,'werefa','2016-04-15','asdgvr',0),(30,'Thomas',50,'Rod','2016-04-15','1 WT - 50',0),(31,'Thomas',50,'Rod','2016-04-15','1 WT - 50',0),(32,'Thomas',50,'Rod','2016-04-15','1 WT - 50',0),(33,'Thomas',50,'Rod','2016-04-15','1 WT - 50',0),(34,'Thomas',50,'Rod','2016-04-15','1 WT - 50',0),(35,'Thomas',50,'Rod','2016-04-15','1 WT - 50',0),(36,'Max\'s',5760,'Waye','2016-04-16','',0);
 /*!40000 ALTER TABLE `orders_table` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -125,7 +125,7 @@ CREATE TABLE `products_table` (
   `stocks` int(11) unsigned zerofill NOT NULL DEFAULT '00000000000',
   `weight` float unsigned zerofill NOT NULL DEFAULT '000000000000',
   PRIMARY KEY (`productID`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -134,7 +134,7 @@ CREATE TABLE `products_table` (
 
 LOCK TABLES `products_table` WRITE;
 /*!40000 ALTER TABLE `products_table` DISABLE KEYS */;
-INSERT INTO `products_table` VALUES (1,'Baby Back Ribs','Meat','Pork','Patel',' ',420,00000000010,000000000000),(2,'Brisket','Meat','Beef','Excel/US','',650,00000000005,000000000000),(3,'Cream Dory Trimmed','Seafood','Cream Dory',' ','10kg/box',110,00000000002,000000000000),(4,'Rib Eye Roll','Meat','Beef','Cargill/US','',860,00000000000,000000000000),(5,'Shank, Fore Tarsus On','Meat','Beef','Wilson Hellaby/NZ',NULL,216,00000000000,000000000000),(8,'Matsusaka Beef','Meat','Japanese Wagyu',NULL,NULL,12000,00000000000,000000000000),(9,'Wagyu Tenderloin','Meat','Beef','SRF/US',NULL,5760,00000000000,000000000000),(10,'Vannamei','Seafood','Shrimp',NULL,NULL,660,00000000000,000000000000),(11,'Squid Rings','Seafood','Squid/Octopus',NULL,NULL,220,00000000000,000000000000),(12,'Mussels Half Shell','Seafood','Scallops and Shellfish',NULL,NULL,500,00000000000,000000000000),(13,'Tuna Panga','Seafood','Tuna',NULL,NULL,150,00000000000,000000000000),(14,'Gindara Steak','Seafood','Fish (Whole, Fillet, Steak)',NULL,NULL,1700,00000000000,000000000000),(15,'Tilapia Fillet','Seafood','Fish (Whole, Fillet, Steak)',NULL,NULL,450,00000000000,000000000000),(16,'Salmon Fillet Slab','Seafood','Norwegian Salmon',NULL,NULL,635,00000000000,000000000000),(17,'Cream Dory Untrimmed','Seafood','Cream Dory',NULL,NULL,110,00000000000,000000000000),(18,'Vannamei','Seafood','Shrimps',NULL,NULL,650,00000000000,000000000000),(19,'Chicken Wingette/Lollipop','Meat','Poultry',NULL,NULL,245,00000000000,000000000000),(20,'Jowls','Meat','Pork','Westvlees/Belgium',NULL,156,00000000000,000000000000);
+INSERT INTO `products_table` VALUES (1,'Baby Back Ribs','Meat','Pork','Patel',' ',420,00000000010,000000000000),(2,'Brisket','Meat','Beef','Excel/US','',650,00000000005,000000000000),(3,'Cream Dory Trimmed','Seafood','Cream Dory',' ','10kg/box',110,00000000002,000000000000),(4,'Rib Eye Roll','Meat','Beef','Cargill/US','',860,00000000000,000000000000),(5,'Shank, Fore Tarsus On','Meat','Beef','Wilson Hellaby/NZ',NULL,216,00000000000,000000000000),(6,'Matsusaka Beef','Meat','Japanese Wagyu',NULL,NULL,12000,00000000000,000000000000),(7,'Wagyu Tenderloin','Meat','Beef','SRF/US',NULL,5760,00000000000,000000000000),(8,'Vannamei','Seafood','Shrimp',NULL,NULL,660,00000000000,000000000000),(9,'Squid Rings','Seafood','Squid/Octopus',NULL,NULL,220,00000000000,000000000000),(10,'Mussels Half Shell','Seafood','Scallops and Shellfish',NULL,NULL,500,00000000000,000000000000),(11,'Tuna Panga','Seafood','Tuna',NULL,NULL,150,00000000000,000000000000),(12,'Gindara Steak','Seafood','Fish (Whole, Fillet, Steak)',NULL,NULL,1700,00000000000,000000000000),(13,'Tilapia Fillet','Seafood','Fish (Whole, Fillet, Steak)',NULL,NULL,450,00000000000,000000000000),(14,'Salmon Fillet Slab','Seafood','Norwegian Salmon',NULL,NULL,635,00000000000,000000000000),(15,'Cream Dory Untrimmed','Seafood','Cream Dory',NULL,NULL,110,00000000000,000000000000),(16,'Vannamei','Seafood','Shrimps',NULL,NULL,650,00000000000,000000000000),(17,'Chicken Wingette/Lollipop','Meat','Poultry',NULL,NULL,245,00000000000,000000000000),(18,'Jowls','Meat','Pork','Westvlees/Belgium',NULL,156,00000000000,000000000000),(19,'Striploin','Meat','Pork',NULL,NULL,245,00000000000,000000000000),(20,'Tripes','Meat','Pork',NULL,NULL,245,00000000000,000000000000),(21,'Shortribs Bone In','Meat','Beef','St. Helens/US',NULL,1600,00000000000,000000000000);
 /*!40000 ALTER TABLE `products_table` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -147,4 +147,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-04-07 22:10:18
+-- Dump completed on 2016-04-15 14:29:23

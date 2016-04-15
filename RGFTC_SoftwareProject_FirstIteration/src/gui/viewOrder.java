@@ -313,6 +313,11 @@ public class viewOrder {
 					ArrayList<LineData> l1 = gl.getLineSum(date);
 					
 					boolean foundItems = false;
+					if(dm == 1){
+						foundItems = true;
+					} else{
+						foundItems = false;
+					}
 					
 					for(int i = 0; i < l.size()  ;i++ ){
 						
@@ -394,6 +399,11 @@ public class viewOrder {
 					ArrayList<LineData> la = gl.getLineClientName(name);
 					ArrayList<LineData> l2= gl.getLineSumName(name);
 					boolean foundClient = false;
+					if (name == null){
+						foundClient = true;
+					}else {
+						foundClient = false;
+					}
 					
 					//la = gl.getLineAll();
 					
