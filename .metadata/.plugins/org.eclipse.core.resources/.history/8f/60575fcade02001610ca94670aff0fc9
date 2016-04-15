@@ -35,10 +35,10 @@ public class InventoryManager {
 				
 				if(type.equals("Deposit")){
 					pstmt.setInt(1, Integer.parseInt(quantity)+i.getQuantity());
-					//pstmt1.executeUpdate();
+					pstmt1.executeUpdate();
 				} else if(Integer.parseInt(quantity)>=i.getQuantity()){
 					pstmt.setInt(1, Integer.parseInt(quantity)-i.getQuantity());
-					//pstmt1.executeUpdate();
+					pstmt1.executeUpdate();
 				} else{
 					pstmt.setInt(1, Integer.parseInt(quantity));
 					// System.out.println("haha");

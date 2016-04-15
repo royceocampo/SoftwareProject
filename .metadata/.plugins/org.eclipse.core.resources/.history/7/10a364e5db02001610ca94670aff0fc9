@@ -143,8 +143,8 @@ public class EditOrder {
 		lblOrderManagement.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
 		lblOrderManagement.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_RED));
 		lblOrderManagement.setFont(SWTResourceManager.getFont("Segoe UI", 18, SWT.NORMAL));
-		lblOrderManagement.setBounds(20, 10, 172, 28);
-		lblOrderManagement.setText("MODIFY ORDER");
+		lblOrderManagement.setBounds(20, 10, 139, 28);
+		lblOrderManagement.setText("ADD ORDER");
 
 		Label lblClientName = new Label(shlRareGlobalFood, SWT.NONE);
 		lblClientName.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));

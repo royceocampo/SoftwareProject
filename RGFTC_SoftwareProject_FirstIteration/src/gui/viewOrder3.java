@@ -573,7 +573,30 @@ public class viewOrder3 {
 		btnEditOrder.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				
+				try {
+					TableTreeItem[] item = tableTree.getSelection();
+					
+					if(item.length > 0){
+						viewOrder.setAllItems(item);
+						EditOrder editOrder = new EditOrder();
+						editOrder.open();
+						tableTree.removeAll();
+						combo_1.select(0);
+					} else{
+						MessageBox errorMessage = new MessageBox(shlOrderManage, SWT.Close);
+						errorMessage.setText("Error");
+						errorMessage.setMessage("Please select an order to edit.");
+						errorMessage.open();
+					}
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+					MessageBox errorMessage = new MessageBox(shlOrderManage, SWT.Close);
+					errorMessage.setText("Error");
+					errorMessage.setMessage("Please select an order to edit.");
+					errorMessage.open();
+				}
+
 			}
 		});
 		btnEditOrder.setText("Edit");
