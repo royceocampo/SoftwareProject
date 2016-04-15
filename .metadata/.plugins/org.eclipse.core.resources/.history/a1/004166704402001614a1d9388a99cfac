@@ -32,6 +32,7 @@ import managers.Order;
 public class viewOrder {
 
 	protected Shell shlOrderManage;
+	private Text txtSearch;
 	protected Shell shell;
 	private Order o;
 
@@ -44,8 +45,6 @@ public class viewOrder {
 	private static int index;
 	private static TableTreeItem[] tblItems;
 	private static TableTreeItem item2;
-	Event hello;
-	boolean remove = false;
 	
 	
 	private ArrayList<LineData> lp = gl.getLinePending();
@@ -57,8 +56,7 @@ public class viewOrder {
 	public static boolean productOpen = false;
 	public static boolean inventoryOpen = false;
 	public static boolean orderOpen = false;
-	
-	
+	ProductManage pm = new ProductManage();
 	
 	public static boolean isOrderOpen() {
 		return orderOpen;
@@ -144,7 +142,7 @@ public class viewOrder {
 		createContents();
 		shlOrderManage.open();
 		shlOrderManage.layout();
-		while (!shell.isDisposed()) {
+		while (!shlOrderManage.isDisposed()) {
 			if (!display.readAndDispatch()) {
 				display.sleep();
 			}
@@ -175,12 +173,9 @@ public class viewOrder {
 		mntmProduct.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				ProductManage ProductManage = new ProductManage();
-//				ProductManage pm = new ProductManage();
-//				ProductManage.close();
-				shlOrderManage.close();
-				ProductManage.open();
-				
+				pm.close();
+//				pm.open();
+//				shlOrderManage.close();
 			}
 		});
 		mntmProduct.setText("Product");
@@ -189,11 +184,7 @@ public class viewOrder {
 		mntmInventory.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				DepWith dw = new DepWith();
-				shlOrderManage.close();
-				dw.open();
-				
-				
+//				shlOrderManage.close();
 			}
 		});
 		mntmInventory.setText("Deposit or Withdraw");
@@ -207,7 +198,7 @@ public class viewOrder {
 		
 		CCombo combo_1 = new CCombo(shlOrderManage, SWT.BORDER);
 		
-		combo_1.setBounds(627, 21, 80, 21);
+		combo_1.setBounds(230, 50, 80, 21);
 		
 		combo_1.add(" ");
 		combo_1.add("Due Date");
@@ -218,7 +209,7 @@ public class viewOrder {
 		
 		TableTree tableTree = new TableTree(shlOrderManage, SWT.CHECK | SWT.BORDER | SWT.FULL_SELECTION);
 		//tableTree.getTable().setForeground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
-		tableTree.setBounds(27, 54, 680, 283);
+		tableTree.setBounds(27, 87, 680, 250);
 		tableTree.getTable().setHeaderVisible(true);
 		tableTree.getTable().setLinesVisible(true);
 		
@@ -274,7 +265,7 @@ public class viewOrder {
 		btnMarkOrder.setText("Mark as Delivered");
 		btnMarkOrder.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 		btnMarkOrder.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
-		btnMarkOrder.setBounds(229, 360, 131, 35);
+		btnMarkOrder.setBounds(248, 360, 131, 35);
 		btnMarkOrder.setEnabled(false);
 		btnMarkOrder.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
@@ -313,11 +304,6 @@ public class viewOrder {
 					ArrayList<LineData> l1 = gl.getLineSum(date);
 					
 					boolean foundItems = false;
-					if(dm == 1){
-						foundItems = true;
-					} else{
-						foundItems = false;
-					}
 					
 					for(int i = 0; i < l.size()  ;i++ ){
 						
@@ -396,7 +382,6 @@ public class viewOrder {
 					cc.open();
 					GetLine gl = new GetLine();
 					name = cc.s;
-					System.out.println(name);
 					ArrayList<LineData> la = gl.getLineClientName(name);
 					ArrayList<LineData> l2= gl.getLineSumName(name);
 					boolean foundClient = false;
@@ -482,7 +467,6 @@ public class viewOrder {
 								// TODO Auto-generated method stub
 								if(event.detail == SWT.CHECK){
 									item.add((TableTreeItem) event.item);
-									hello=event;
 									/*String string = event.detail == SWT.CHECK ? "Checked"
 								            : "Selected";
 								    System.out.println(event.item + " " + string);*/
@@ -495,10 +479,7 @@ public class viewOrder {
 											btnMarkOrder.setEnabled(true);
 											btnDeleteOrder.setEnabled(true);
 											checkMark=true;
-											remove = false;
-										}
-										else{
-											remove = true;
+											
 										}
 									}
 									
@@ -510,12 +491,6 @@ public class viewOrder {
 									
 									}catch(Exception e){
 										e.printStackTrace();
-									}
-									for(int i = 0; i < item.size() ;i++ ){
-										if(hello.item.equals(item.get(i)) && remove){
-											item.remove(i);
-											i--;
-										}
 									}
 								}
 							}
@@ -686,7 +661,7 @@ public class viewOrder {
 		});
 		btnAddOrder.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
 		btnAddOrder.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
-		btnAddOrder.setBounds(612, 360, 95, 35);
+		btnAddOrder.setBounds(385, 360, 95, 35);
 		btnAddOrder.setText("Add Order");
 		btnAddOrder.setBackground(SWTResourceManager.getColor(SWT.COLOR_DARK_RED));
 		
@@ -721,7 +696,7 @@ public class viewOrder {
 		});
 		btnDeleteAllOrder.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
 		btnDeleteAllOrder.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
-		btnDeleteAllOrder.setBounds(366, 360, 150, 35);
+		btnDeleteAllOrder.setBounds(500, 360, 150, 35);
 		btnDeleteAllOrder.setText("Delete All Delivered");
 		btnDeleteAllOrder.setBackground(SWTResourceManager.getColor(SWT.COLOR_DARK_RED));
 	
@@ -734,10 +709,10 @@ public class viewOrder {
 				
 			}
 		});
-		btnEditOrder.setText("Modify");
+		btnEditOrder.setText("Edit");
 		btnEditOrder.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 		btnEditOrder.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
-		btnEditOrder.setBounds(27, 360, 95, 35);
+		btnEditOrder.setBounds(46, 360, 95, 35);
 		
 		btnDeleteOrder.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -777,12 +752,25 @@ public class viewOrder {
 		btnDeleteOrder.setText("Delete");
 		btnDeleteOrder.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION_TEXT));
 		btnDeleteOrder.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
-		btnDeleteOrder.setBounds(128, 360, 95, 35);
+		btnDeleteOrder.setBounds(147, 360, 95, 35);
+		
+		txtSearch = new Text(shlOrderManage, SWT.BORDER);
+		txtSearch.setText("Search");
+		txtSearch.setBounds(327, 50, 97, 21);
 		
 		Label lblFilterBy = new Label(shlOrderManage, SWT.NONE);
 		lblFilterBy.setText("Filter By:");
 		lblFilterBy.setBackground(SWTResourceManager.getColor(SWT.COLOR_INFO_BACKGROUND));
-		lblFilterBy.setBounds(572, 21, 55, 15);
+		lblFilterBy.setBounds(175, 54, 55, 15);
+		
+		Button btnSearchOrder = new Button(shlOrderManage, SWT.NONE);
+		btnSearchOrder.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+			}
+		});
+		btnSearchOrder.setBounds(424, 47, 66, 28);
+		btnSearchOrder.setText("Search");
 		shell = new Shell();
 		shell.setSize(450, 300);
 		shell.setText("SWT Application");
@@ -808,6 +796,7 @@ public class viewOrder {
 			e.printStackTrace();
 		}
 	}
+	
 	public void close(){
 		try {
 			shlOrderManage.dispose();
@@ -815,6 +804,7 @@ public class viewOrder {
 			// TODO: handle exception
 		}
 	}
+		
 }
 
 

@@ -141,10 +141,6 @@ public class Home {
 		tblclmnSupplyStatus.setWidth(114);
 		tblclmnSupplyStatus.setText("Supply Status");
 		
-		TableColumn tblclmnClientName = new TableColumn(table.getTable(), SWT.NONE);
-		tblclmnClientName.setWidth(196);
-		tblclmnClientName.setText("Client Name");
-		
 		TableColumn tblclmnProduct = new TableColumn(table.getTable(), SWT.NONE);
 		tblclmnProduct.setWidth(196);
 		tblclmnProduct.setText("Product Name");
@@ -199,9 +195,9 @@ public class Home {
 			else{
 				parent.setText(0, " Not Delivered");
 			}
+			
 			parent.setText(1, l2.get(i).getClientName());
-			parent.setText(2, l2.get(i).getProductName());
-			parent.setText(3, Integer.toString(l2.get(i).getQuantity()));
+			parent.setText(2, Integer.toString(l2.get(i).getQuantity()));
 			
 			
 		}
@@ -225,16 +221,6 @@ public class Home {
 		
 		Menu menu = new Menu(shlRareGlobalFood, SWT.BAR);
 		shlRareGlobalFood.setMenuBar(menu);
-		
-		MenuItem mntmHome = new MenuItem(menu, SWT.NONE);
-		mntmHome.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				close();
-				open();
-			}
-		});
-		mntmHome.setText("Home");
 		
 		MenuItem mntmOrder = new MenuItem(menu, SWT.NONE);
 		mntmOrder.addSelectionListener(new SelectionAdapter() {
@@ -268,12 +254,5 @@ public class Home {
 			}
 		});
 		mntmInventoryHistory.setText("Deposit or Withdraw");
-	}
-	public void close(){
-		try {
-			shlRareGlobalFood.dispose();
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
 	}
 }
